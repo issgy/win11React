@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 
 export const Icon = (props) => {
-  console.log(props);
   const dispatch = useDispatch();
 
   const clickDispatch = (event) => {

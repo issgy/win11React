@@ -1,11 +1,24 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Icon } from "../../utils/general";
+import "./startmenu.scss";
 
 export const DesktopApp = () => {
   const deskApps = useSelector((state) => state.desktop);
   const dispatch = useDispatch();
 
-  return <div>desktop</div>;
+  return (
+    <div className="desktopCont">
+      {deskApps.apps.map((desk, i) => {
+        return (
+          <div key={i} value={i} className="dskApp">
+            <Icon className="dskIcon" src={desk.icon} width={36} />
+            <div className="appName">{desk.name}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 export const StartMenu = () => {
