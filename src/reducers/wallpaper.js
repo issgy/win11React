@@ -5,13 +5,9 @@ const defState = {
 };
 
 const wallReducer = (state = defState, action) => {
-  if (action.payload) {
-    return {
-      them: action.type,
-      src: action.src,
-    };
-  } else {
-    return state;
+  switch (action.type) {
+    default:
+      return state;
   }
 };
 

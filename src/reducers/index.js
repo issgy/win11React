@@ -5,6 +5,7 @@ import taskReducer from "./taskbar";
 const allReducers = combineReducers({
   wallpaper: wallReducer,
   taskbar: taskReducer,
+  // desktop:
 });
 
 export default allReducers;
