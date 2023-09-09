@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 
+// Icon图标
 export const Icon = (props) => {
   const dispatch = useDispatch();
 
+  // 暂时只taskbar任务栏的startmenu图标触发
   const clickDispatch = (event) => {
     dispatch({
       type: event.target.dataset.action,
