@@ -3,6 +3,7 @@ import { act } from "react-dom/test-utils";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
 import "./startmenu.scss";
+import "./sidepane.scss";
 
 export const DesktopApp = () => {
   const deskApps = useSelector((state) => state.desktop);
@@ -77,7 +78,6 @@ export const StartMenu = () => {
     };
 
     dispatch(action);
-    console.log("click", action, start);
 
     if (action.type === "STARTALPHA") {
       var target = document.getElementById("char" + action.payolad);
@@ -201,6 +201,8 @@ export const StartMenu = () => {
               {start.contApps.map((app, i) => {
                 return (
                   <div
+                    key={i}
+                    value={i}
                     className={
                       app.length === 0 ? "dullApp allApp" : "allApp prtclk"
                     }
@@ -233,17 +235,77 @@ export const StartMenu = () => {
 };
 
 export const SidePane = () => {
-  // const deskApps = useSelector(state => {
+  const paneApps = useSelector((state) => state.sidepane);
+  const dispatch = useDispatch();
 
-  // })
+  const clickDispatch = (event) => {
+    const action = {
+      type: event.target.dataset.action,
+      payload: event.target.dataset.payload,
+    };
 
-  return <div>SidePane</div>;
+    dispatch(action);
+  };
+  return (
+    <div
+      className="sidePane dpShad"
+      data-hide={paneApps.hide}
+      style={{ "--prefix": "PANE" }}
+    >
+      <div className="notifArea">
+        <div className="managentf btnText">Manage notifications</div>
+        <div className="nonewnotif">No new notifications</div>
+      </div>
+      <div className="quickSetting">
+        <div className="btnText">Collapse</div>
+        <div className="quickCont">
+          {paneApps.quicks.map((qk, i) => {
+            return (
+              <div
+                key={i}
+                className="qkbtn handcr prtclk"
+                onClick={clickDispatch}
+                data-action="PANEQBTN"
+                data-payload={i}
+                data-state={qk.state}
+              >
+                <Icon
+                  className="quickIcon"
+                  ui={qk.ui}
+                  src={qk.src}
+                  width={14}
+                  invert={qk.state ? true : null}
+                />
+                <div className="qktext">{qk.name}</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export const WidPane = () => {
-  // const deskApps = useSelector(state => {
+  const paneApps = useSelector((state) => state.sidepane);
+  const dispatch = useDispatch();
 
-  // })
+  const clickDispatch = (event) => {
+    var action = {
+      type: event.target.dataset.action,
+      payload: event.target.dataset.payload,
+    };
 
-  return <div>WidPane</div>;
+    dispatch(action);
+  };
+
+  return (
+    <div
+      className="widPaneCont"
+      data-hide={!paneApps.hide}
+      style={{ "--prefix": "WIDG" }}
+    >
+      <div className="WidPane">No new notifications</div>
+    </div>
+  );
 };
