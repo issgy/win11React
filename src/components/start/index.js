@@ -70,7 +70,6 @@ export const StartMenu = () => {
     arr.contApps = allApps;
     return arr;
   });
-  console.log(start);
 
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
@@ -96,7 +95,6 @@ export const StartMenu = () => {
   };
 
   useEffect(() => {
-    console.log(query);
     if (query.length) {
       for (let i = 0; i < start.allApps.length; i++) {
         if (start.allApps[i].name.toLowerCase().includes(query.toLowerCase())) {
@@ -474,7 +472,7 @@ export const WidPane = () => {
               <div className="weekWthCont">
                 {widget.data.weather.days.map((item, i) => {
                   return (
-                    <div className="weekDay">
+                    <div className="weekDay" key={i}>
                       <div>{i == 0 ? "Today" : item.day}</div>
                       <Icon
                         src={`https://www.metaweather.com/static/img/weather/png/64/${item.icon}.png`}

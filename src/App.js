@@ -37,9 +37,9 @@ function App() {
       <Background />
       <div className="desktop">
         <DesktopApp />
-        {/* {Object.keys(Applications).map((key, i) => {
+        {Object.keys(Applications).map((key, i) => {
           return <div key={i}>{Applications[key]()}</div>;
-        })} */}
+        })}
         <StartMenu />
         <SidePane />
         <WidPane />
