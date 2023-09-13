@@ -3,14 +3,16 @@ import wallReducer from "./wallpaper";
 import taskReducer from "./taskbar";
 import desktopReducer from "./desktop";
 import menuReducer from "./startmenu";
-import sidePane from "./sidepane";
+import paneReducer from "./sidepane";
+import widReducer from "./widpane";
 
 const allReducers = combineReducers({
   wallpaper: wallReducer,
   taskbar: taskReducer,
   desktop: desktopReducer,
   startmenu: menuReducer,
-  sidepane: sidePane,
+  sidepane: paneReducer,
+  widpane: widReducer,
 });
 
 export default allReducers;
