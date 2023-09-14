@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
 
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
+
+import "./general.scss";
 
 // Icon图标
 export const Icon = (props) => {
@@ -14,30 +16,41 @@ export const Icon = (props) => {
     src = props.src;
   }
 
-  // 暂时只taskbar任务栏的startmenu图标触发
+  var prtclk = "";
+  if (props.src) {
+    if (props.onClick != null || props.pr != null) {
+      prtclk = "prtclk";
+    }
+  }
+
   const clickDispatch = (event) => {
-    dispatch({
+    const action = {
       type: event.target.dataset.action,
       payload: event.target.dataset.payload,
-    });
+    };
+
+    if (action.type) {
+      dispatch(action);
+    }
   };
   return (
     <>
       {props.fafa == null ? (
         <div
-          className={`uicon ${props.className || ""} ${
-            props.onClick == null ? "" : "prtclk"
-          }`}
-          onClick={props.onClick}
-          data-para={props.para}
+          className={`uicon ${props.className || ""} ${prtclk}`}
+          data-open={props.open != null}
+          data-action={props.click}
+          data-active={props.active != null}
+          data-payload={props.payload}
+          onClick={props.onClick || (props.pr && clickDispatch) || null}
         >
           <img
             width={props.width}
             data-action={props.click}
             data-payload={props.payload}
             data-click={props.click != null}
-            data-flip={props.flip != null}
             onClick={props.click != null ? clickDispatch : null}
+            data-flip={props.flip != null}
             height={props.height || props.width}
             data-invert={props.invert != null ? "true" : "false"}
             data-rounded={props.rounded != null ? "true" : "false"}
@@ -50,14 +63,12 @@ export const Icon = (props) => {
         </div>
       ) : (
         <div
-          className={`uicon ${props.className || ""} ${
-            props.onClick == null ? "" : "prtclk"
-          }`}
-          onClick={props.onClick}
-          data-para={props.para}
+          className={`uicon prtclk ${props.className || ""}`}
+          onClick={props.onClick || (props.click && clickDispatch) || null}
+          data-action={props.click}
+          data-payload={props.payload}
         >
           <FontAwesomeIcon
-            data-click={props.click != null}
             data-flip={props.flip != null}
             data-invert={props.invert != null ? "true" : "false"}
             data-rounded={props.rounded != null ? "true" : "false"}
@@ -80,11 +91,14 @@ export const Icon = (props) => {
 export const ToolBar = (props) => {
   const dispatch = useDispatch();
 
-  const clickDispatch = (event) => {
-    dispatch({
-      type: event.target.dataset.action,
-      payload: event.target.dataset.payload,
-    });
+  const [snap, setSnap] = useState(false);
+
+  const openSnap = () => {
+    setSnap(true);
+  };
+
+  const closeSnap = () => {
+    setSnap(false);
   };
 
   return (
@@ -98,15 +112,34 @@ export const ToolBar = (props) => {
         className="topInfo flex items-center"
         data-float={props.float != null}
       >
-        <Icon src={props.icon} width={14} />
-        <div className="appFullName text-xs" data-white={false}>
+        <Icon src={props.icon} width={12} />
+        <div className="appFullName text-xss" data-white={false}>
           {props.name}
         </div>
       </div>
       <div className="actbtns flex items-center">
-        <Icon src="minimize" ui width={8} />
-        <Icon src="restore" ui width={8} />
-        <Icon src="close" ui width={8} />
+        {/* 缩小图标 */}
+        <Icon click={props.app} payload="mnmz" pr src="minimize" ui width={8} />
+        {/* 切换图标 */}
+        <div
+          className="snapbox h-full"
+          data-hv={snap}
+          onMouseOver={openSnap}
+          onMouseLeave={closeSnap}
+        >
+          <Icon
+            click={props.app}
+            payload="mxmz"
+            pr
+            src="maximize"
+            ui
+            width={8}
+          />
+          {/* <SnapScreen app={props.app} snap={snap} closeSnap={closeSnap} /> */}
+          {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}
+        </div>
+        {/* 关闭图标 */}
+        <Icon click={props.app} payload="close" pr src="close" ui width={8} />
       </div>
     </div>
   );

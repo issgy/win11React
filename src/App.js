@@ -38,7 +38,10 @@ function App() {
       <div className="desktop">
         <DesktopApp />
         {Object.keys(Applications).map((key, i) => {
-          return <div key={i}>{Applications[key]()}</div>;
+          const WinApp = Applications[key];
+          return <WinApp key={i} />;
+          // or:
+          // return <div>{Applications[key]()}</div>;
         })}
         <StartMenu />
         <SidePane />

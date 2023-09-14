@@ -1,9 +1,13 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Icon, ToolBar } from "../../utils/general";
 import "./tabs.scss";
+import "./wnapp.css";
 
+// 浏览器界面
 export const EdgeMenu = () => {
+  const apps = useSelector((state) => state.apps);
+  const wnapp = useSelector((state) => state.apps.edge);
   const [url, setUrl] = useState("http://bing.com");
   const [hist, setHist] = useState(["https://bing.com", "https://bing.com"]);
   const dispatch = useDispatch();
@@ -13,7 +17,7 @@ export const EdgeMenu = () => {
       type: event.target.dataset.action,
       payload: event.target.dataset.payload,
     };
-    dispatch(action);
+    if (action.type) dispatch(action);
   };
 
   const isValidURL = (string) => {
@@ -25,7 +29,7 @@ export const EdgeMenu = () => {
 
   const action = (e) => {
     var iframe = document.getElementById("isite");
-    var x = e.target && e.target.dataset.para;
+    var x = e.target && e.target.dataset.payload;
     console.log(x);
     if (iframe && x == 0) {
       iframe.src = iframe.src;
@@ -44,7 +48,7 @@ export const EdgeMenu = () => {
             qry = "https://" + qry;
           }
         } else {
-          qry = "https://www.google.com/search?igu=1&q=" + qry;
+          qry = "https://www.bing.com/search?q=" + qry;
         }
 
         e.target.value = qry;
@@ -59,25 +63,51 @@ export const EdgeMenu = () => {
     }
   };
 
+  useEffect(() => {
+    if (wnapp.url) {
+      setUrl(wnapp.url);
+      dispatch({ type: "EDGELINK" });
+    }
+  });
+
   return (
-    <div className="edgeBrowser floatTab dpShad" data-hide={false}>
+    <div
+      className="edgeBrowser floatTab dpShad"
+      data-size={wnapp.size}
+      data-max={wnapp.max}
+      style={{
+        ...(wnapp.size == "cstm" ? wnapp.dim : null),
+        zIndex: wnapp.z,
+      }}
+      data-hide={wnapp.hide}
+    >
       {/* tab栏 */}
-      <ToolBar bg="#dfdfdf" icon="edge" name="Microsoft Edge" float />
-      <div className="windowScreen flex flex-col" data-full="true">
+      <ToolBar
+        app={wnapp.action}
+        icon={wnapp.icon}
+        name="Microsoft Edge"
+        float
+      />
+      <div className="windowScreen flex flex-col">
         <div className="overTool flex">
-          <Icon src="edge" width={14} margin="0 6px" />
+          <Icon src={wnapp.icon} width={14} margin="0 6px" />
           <div className="btab bg-gray-100">
             <div>New Tab</div>
-            <Icon fafa="faTimes" width={10} />
+            <Icon
+              fafa="faTimes"
+              click={wnapp.action}
+              payload="close"
+              width={10}
+            />
           </div>
         </div>
-        <div className="restWindow flex-grow flex flex-col" data-full="true">
+        <div className="restWindow flex-grow flex flex-col">
           {/* 地址栏 */}
           <div className="addressBar w-full bg-gray-100 h-10 flex items-center">
             <Icon
               src="left"
               onClick={action}
-              para={4}
+              payload={4}
               width={14}
               ui
               margin="0 8px"
@@ -85,7 +115,7 @@ export const EdgeMenu = () => {
             <Icon
               src="right"
               onClick={action}
-              para={5}
+              payload={5}
               width={14}
               ui
               margin="0 8px"
@@ -93,7 +123,7 @@ export const EdgeMenu = () => {
             <Icon
               fafa="faRedo"
               onClick={action}
-              para={0}
+              payload={0}
               width={14}
               color="#343434"
               margin="0 8px"
@@ -101,28 +131,30 @@ export const EdgeMenu = () => {
             <Icon
               fafa="faHome"
               onClick={action}
-              para={1}
+              payload={1}
               width={18}
               color="#343434"
               margin="0 16px"
             />
-            <div className="addCont">
+            <div className="addCont relative">
               <input
                 className="ltShad w-full bg-gray-0 h-6 px-4 text-gray-900"
                 onKeyDown={action}
-                data-para={3}
+                data-payload={3}
                 defaultValue={url}
+                placeholder="Type url or a query to search"
                 type="text"
               />
+              <Icon
+                className="absolute top-0 right-0 z-1 handcr"
+                src="google"
+                ui
+                onClick={action}
+                payload={2}
+                width={16}
+                margin="7px 10px"
+              />
             </div>
-            <Icon
-              src="google"
-              ui
-              onClick={action}
-              para={2}
-              width={16}
-              margin="2px 0 0 -32px"
-            />
           </div>
           <div className="siteFrame flex-grow overflow-hidden">
             <iframe

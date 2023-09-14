@@ -16,7 +16,13 @@ export const DesktopApp = () => {
       {deskApps.apps.map((desk, i) => {
         return (
           <div key={i} value={i} className="dskApp">
-            <Icon className="dskIcon" src={desk.icon} width={36} />
+            <Icon
+              className="dskIcon"
+              src={desk.icon}
+              width={36}
+              click={desk.action}
+              payload="full"
+            />
             <div className="appName">{desk.name}</div>
           </div>
         );
@@ -78,19 +84,24 @@ export const StartMenu = () => {
   const clickDispatch = (event) => {
     var action = {
       type: event.target.dataset.action,
-      payolad: event.target.dataset.payload,
+      payload: event.target.dataset.payload,
     };
 
-    dispatch(action);
+    if (action.type) {
+      dispatch(action);
+      if (action.payload === "full" || action.type === "EDGELINK") {
+        dispatch({ type: "STARTHID" });
+      }
+    }
 
     if (action.type === "STARTALPHA") {
-      var target = document.getElementById("char" + action.payolad);
+      var target = document.getElementById("char" + action.payload);
       if (target) {
         target.parentNode.parentNode.scrollTop = target.offsetTop;
+      } else {
+        var target = document.getElementById("charA");
+        target.parentNode.parentNode.scrollTop = 0;
       }
-    } else {
-      var target = document.getElementById("charA");
-      target.parentNode.parentNode.scrollTop = 0;
     }
   };
 
@@ -135,7 +146,14 @@ export const StartMenu = () => {
                       <div key={i} className="pnApp pnEmpty"></div>
                     ) : (
                       <div key={i} className="pnApp">
-                        <Icon className="pnIcon" src={app.icon} width={24} />
+                        <Icon
+                          className="pnIcon"
+                          src={app.icon}
+                          width={24}
+                          payload="full"
+                          onClick={clickDispatch}
+                          click={app.action}
+                        />
                         <div className="appName">{app.name}</div>
                       </div>
                     );
@@ -182,6 +200,7 @@ export const StartMenu = () => {
                   <div>Back</div>
                 </div>
               </div>
+              {/* 按字母排序的所有app */}
               <div className="allApps" data-alpha={start.alpha}>
                 {start.contApps.map((contapp, i) => {
                   if (contapp.length === 0) return null;
@@ -202,7 +221,14 @@ export const StartMenu = () => {
                       </div>
                       {contapp.map((item, j) => {
                         return (
-                          <div key={j} value={j} className="allApp">
+                          <div
+                            key={j}
+                            value={j}
+                            className="allApp prtclk"
+                            onClick={clickDispatch}
+                            data-action={item.action}
+                            data-payload="full"
+                          >
                             <Icon
                               className="pnIcon"
                               src={item.icon}
@@ -216,6 +242,7 @@ export const StartMenu = () => {
                   );
                 })}
               </div>
+              {/* 选择字母的方框 */}
               <div className="alphaBox" data-alpha={start.alpha}>
                 <div className="alphaCont">
                   <div className="dullApp allApp">
@@ -293,7 +320,12 @@ export const StartMenu = () => {
                       <div className="text-xss">App</div>
                     </div>
                   </div>
-                  <div className="smatch flex my-2 bg-gray-100 p-3 rounded">
+                  <div
+                    className="smatch flex my-2 bg-gray-100 p-3 rounded prtclk"
+                    onClick={clickDispatch}
+                    data-action="EDGELINK"
+                    data-payload={query}
+                  >
                     <Icon src="search" ui width={20} />
                     <div className="matchInfo flex-col px-2">
                       <div className="font-semibold text-xs">Search online</div>
@@ -306,7 +338,10 @@ export const StartMenu = () => {
                   <div className="topApps flex w-full justify-between">
                     {start.rcApps.slice(0, 5).map((app, i) => {
                       return (
-                        <div className="topApp pt-4 py-2 bg-gray-100 ltShad">
+                        <div
+                          key={i}
+                          className="topApp pt-4 py-2 bg-gray-100 ltShad"
+                        >
                           <Icon src={app.icon} width={24} />
                           <div className="text-xs mt-2">{app.name}</div>
                         </div>
@@ -316,10 +351,15 @@ export const StartMenu = () => {
                   <div className="text-xss font-semibold mt-8">
                     Quick Searches
                   </div>
-                  <div className="quickSearches pl-4">
-                    {start.qksrch.map((srch) => {
+                  <div className="quickSearches pl-4 mt-2">
+                    {start.qksrch.map((srch, i) => {
                       return (
-                        <div className="qksrch flex align-center my-6">
+                        <div
+                          className="qksrch flex align-center py-3 handcr prtclk"
+                          key={i}
+                          onClick={clickDispatch}
+                          data-payload={srch[2]}
+                        >
                           <Icon fafa={srch[0]} reg={srch[1]} />
                           <div className="ml-4 text-xs">{srch[2]}</div>
                         </div>
