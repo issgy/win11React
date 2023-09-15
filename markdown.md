@@ -8,3 +8,8 @@
 4、完成 taskbar 栏的点击 menu 里的 app 能打开对应界面功能（暂时只能打开 edge）
 
 reducers 文件夹新增 apps.js 用于记录界面状态
+
+## 9.14:
+
+1、新增 store 界面（大致框架）
+2、完善 taskbar 栏的搜索框功能：搜索框输入内容后的 Open 功能
