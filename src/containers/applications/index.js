@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Icon, ToolBar } from "../../utils/general";
+import { Icon, ToolBar, Image } from "../../utils/general";
 import "./tabs.scss";
 import "./wnapp.css";
 
-// 浏览器界面
+// edge界面
 export const EdgeMenu = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.edge);
@@ -156,6 +156,7 @@ export const EdgeMenu = () => {
               />
             </div>
           </div>
+          {/* 内容框 */}
           <div className="siteFrame flex-grow overflow-hidden">
             <iframe
               src={url}
@@ -164,6 +165,40 @@ export const EdgeMenu = () => {
               frameBorder="0"
             ></iframe>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// store界面
+export const MicroStore = () => {
+  const apps = useSelector((state) => state.apps);
+  const wnapp = useSelector((state) => state.apps.store);
+  const dispatch = useDispatch();
+
+  return (
+    <div
+      className="wnstore floatTab dpShad"
+      data-size={wnapp.size}
+      data-max={wnapp.max}
+      style={{
+        ...(wnapp.size == "cstm" ? wnapp.dim : null),
+        zIndex: wnapp.z,
+      }}
+      data-hide={wnapp.hide}
+    >
+      <ToolBar app={wnapp.action} icon={wnapp.icon} name="Microsoft Store" />
+      <div className="windowScreen flex">
+        <div className="storeNav h-full w-16 flex flex-col">
+          <Icon fafa="faHome" width={20} payload="true" />
+          <Icon fafa="faThLarge" width={18} />
+          <Icon fafa="faGamepad" width={20} />
+          <Icon fafa="faFilm" width={20} />
+        </div>
+        <div className="restWindow flex-grow h-full flex flex-col rounded overflow-hidden">
+          <Image className="frontPage w-full" back src="store/lucacover" />
+          <div className="panelName absolute m-6 text-xl">Home</div>
         </div>
       </div>
     </div>

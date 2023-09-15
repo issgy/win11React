@@ -86,6 +86,7 @@ export const StartMenu = () => {
       type: event.target.dataset.action,
       payload: event.target.dataset.payload,
     };
+    console.log(action);
 
     if (action.type) {
       dispatch(action);
@@ -357,6 +358,7 @@ export const StartMenu = () => {
                         <div
                           className="qksrch flex align-center py-3 handcr prtclk"
                           key={i}
+                          data-action="EDGELINK"
                           onClick={clickDispatch}
                           data-payload={srch[2]}
                         >
@@ -375,7 +377,12 @@ export const StartMenu = () => {
                 <div className="">{match.name}</div>
                 <div className="text-xss mt-2">App</div>
                 <div className="hline mt-8 mb-3"></div>
-                <div className="openlink w-4/5 flex">
+                <div
+                  className="openlink w-4/5 flex prtclk handcr pt-3"
+                  onClick={clickDispatch}
+                  data-action={match.action}
+                  data-payload="full"
+                >
                   <Icon src="link" ui width={16} />
                   <div className="text-xss ml-3">Open</div>
                 </div>

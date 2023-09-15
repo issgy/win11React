@@ -5,10 +5,11 @@ const defState = {
   rcApps: recentApps,
   allApps: allApps,
   hide: true,
+  // 点击allApps变为true
   showAll: false,
   alpha: false, //是否为字母表页面
   curAlpha: "A", //应用所在的字母，默认为'A'
-  menu: "false",
+  menu: false,
   //点击taskbar栏的搜索图标后出现的卡片的Quick Searches
   qksrch: [
     ["faClock", 1, "Today in history"],
@@ -29,6 +30,8 @@ const menuReducer = (state = defState, action) => {
       return {
         ...state,
         hide: true,
+        menu: true,
+        showAll: false,
       };
     case "STARTOGG":
       return {

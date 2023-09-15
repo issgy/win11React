@@ -88,6 +88,7 @@ export const Icon = (props) => {
   );
 };
 
+// 界面最上部的栏
 export const ToolBar = (props) => {
   const dispatch = useDispatch();
 
@@ -141,6 +142,22 @@ export const ToolBar = (props) => {
         {/* 关闭图标 */}
         <Icon click={props.app} payload="close" pr src="close" ui width={8} />
       </div>
+    </div>
+  );
+};
+
+export const Image = (props) => {
+  const src = `/img/${props.src}.png`;
+
+  return (
+    <div
+      className={`imageCont ${props.className || ""}`}
+      style={{
+        backgroundImage: `url(${src})`,
+      }}
+      data-back={props.back != null}
+    >
+      {!props.back ? <img src={src} alt="" /> : null}
     </div>
   );
 };

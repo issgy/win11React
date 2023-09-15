@@ -1,4 +1,3 @@
-import { faBookJournalWhills } from "@fortawesome/free-solid-svg-icons";
 import { allApps } from "../utils";
 
 const defState = {};
@@ -80,6 +79,7 @@ const appReducer = (state = defState, action) => {
     if (action.payload && action.payload.startsWith("http")) {
       obj.url = action.payload;
     } else if (action.payload && action.payload.length !== 0) {
+      console.log(222222);
       obj.url = "https://www/bing.com/search?q=" + action.payload;
     } else {
       obj.url = null;
