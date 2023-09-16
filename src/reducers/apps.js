@@ -11,16 +11,18 @@ for (let i = 0; i < allApps.length; i++) {
   defState[allApps[i].icon].hide = true;
   //null/true/false  null为未点击过该图标，即hide为true，true为界面是最大化或者中屏，false为界面最小化
   defState[allApps[i].icon].max = null;
-  // 有不同值，-1时为未点击过图标或界面最小化
+  // 有不同值，-1时为 app未打开 或 打开了但界面被最小化
   defState[allApps[i].icon].z = 0;
 
-  if (allApps[i] === "store") {
+  // 刷新页面自动出现的app界面
+  if (allApps[i].icon === "store") {
     defState[allApps[i].icon].hide = false;
     defState[allApps[i].icon].max = true;
     defState[allApps[i].icon].z = 1;
   }
 }
 
+// 代表屏幕上能看到的app界面数量（最大屏/中屏），被最小化的界面不算
 defState.hz = 1;
 
 const isOverlaped = (tmpState, key) => {
@@ -93,6 +95,27 @@ const appReducer = (state = defState, action) => {
 
     tmpState.edge = obj;
     return tmpState;
+  } else if (action.type == "SHOWDSK") {
+    const tmpState = { ...state };
+    const keys = Object.keys(tmpState);
+
+    for (let i = 0; i < keys.length; i++) {
+      const obj = tmpState[keys[i]];
+      if (obj.hide == false) {
+        //hide为false有两种情况，1、界面被最小化（不是关闭） 2、界面全屏/中屏
+        obj.max = false; //将界面最小化（不是关闭）
+        if (obj.max == tmpState.hz) {
+          //tmpState.hz为0时
+          tmpState.hz -= 1;
+        }
+        obj.z = -1;
+        tmpState[keys[i]] = obj;
+      }
+    }
+    return tmpState;
+  } else if (action.type == "EXTERNAL") {
+    window.open(action.payload, "_blank");
+    return state;
   } else {
     const keys = Object.keys(state); //state的每个key遍历装在一个叫keys的数组里
 
@@ -115,10 +138,10 @@ const appReducer = (state = defState, action) => {
         // payload为togg的action：taskbar栏的应用图标的点击
         else if (action.payload === "togg") {
           console.log("togg");
-          // 首次打开或者由缩小变为中屏或者全屏
+          // 首次打开或者界面由最小化变为中屏或者全屏
           if (obj.z != tmpState.hz) {
             obj.hide = false;
-            // 界面缩小恢复切换的逻辑
+            // 界面最小化与恢复之间切换的逻辑
             if (!obj.max || isOverlaped(tmpState, obj.icon)) {
               tmpState.hz += 1;
               obj.z = tmpState.hz;
@@ -128,7 +151,7 @@ const appReducer = (state = defState, action) => {
               obj.max = false;
             }
           }
-          // 相等时代表界面被缩小（被缩小不是被关闭）
+          // 界面由中屏/全屏被最小化（被最小化不是被关闭）
           else {
             obj.max = !obj.max;
             obj.hide = false;
@@ -147,7 +170,7 @@ const appReducer = (state = defState, action) => {
           obj.max = false;
           obj.hide = false;
           if (obj.max == tmpState.hz) {
-            tmpState.hz1 -= 1;
+            tmpState.hz -= 1;
           }
           obj.z = -1;
         } else if (action.payload === "mxmz") {

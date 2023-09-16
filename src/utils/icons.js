@@ -1,4 +1,3 @@
-// 图标
 export default [
   {
     idx: 0,
@@ -26,14 +25,12 @@ export default [
     name: "Settings",
     icon: "settings",
     type: "app",
-    action: "SETTINGS",
   },
   {
     idx: 4,
     name: "File Explorer",
     icon: "explorer",
     type: "app",
-    action: "FILEXP",
   },
   {
     idx: 5,
@@ -90,21 +87,18 @@ export default [
     name: "Camera",
     icon: "camera",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 13,
     name: "VS Code",
     icon: "code",
     type: "app",
-    action: "VSCODE",
   },
   {
     idx: 14,
     name: "Excel",
     icon: "excel",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 15,
@@ -118,35 +112,30 @@ export default [
     name: "Feedback",
     icon: "feedback",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 17,
     name: "Get Started",
     icon: "getstarted",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 18,
     name: "Groove Music",
     icon: "groove",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 19,
     name: "Help",
     icon: "help",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 20,
     name: "Yammer",
     icon: "yammer",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 21,
@@ -160,14 +149,12 @@ export default [
     name: "Maps",
     icon: "maps",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 23,
     name: "Movies",
     icon: "movies",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 24,
@@ -181,21 +168,18 @@ export default [
     name: "MsOffice",
     icon: "msoffice",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 26,
     name: "Narrator",
     icon: "narrator",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 27,
     name: "News",
     icon: "news",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 28,
@@ -209,14 +193,12 @@ export default [
     name: "Sticky Notes",
     icon: "notes",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 30,
     name: "OneDrive",
     icon: "oneDrive",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 31,
@@ -230,7 +212,6 @@ export default [
     name: "Outlook",
     icon: "outlook",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 33,
@@ -244,7 +225,6 @@ export default [
     name: "People",
     icon: "people",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 35,
@@ -258,7 +238,6 @@ export default [
     name: "Pinterest",
     icon: "pinterest",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 37,
@@ -272,28 +251,26 @@ export default [
     name: "Security",
     icon: "security",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 39,
     name: "Spotify",
     icon: "spotify",
     type: "app",
-    action: "LNKSPOTIFY",
+    action: "EXTERNAL",
+    payload: "https://open.spotify.com",
   },
   {
     idx: 40,
     name: "Share",
     icon: "share",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 41,
     name: "Skype",
     icon: "skype",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 42,
@@ -306,21 +283,20 @@ export default [
     name: "Soltaire",
     icon: "soltaire",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 44,
     name: "Twitter",
     icon: "twitter",
     type: "app",
-    action: "LNKTWITTER",
+    action: "EXTERNAL",
+    payload: "https://twitter.com",
   },
   {
     idx: 45,
     name: "Teams",
     icon: "teams",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 46,
@@ -334,7 +310,6 @@ export default [
     name: "Tips",
     icon: "tips",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 48,
@@ -348,14 +323,12 @@ export default [
     name: "Voice Recorder",
     icon: "voice",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 50,
     name: "Weather",
     icon: "weather",
     type: "app",
-    action: "ACTION",
   },
   {
     idx: 51,
@@ -383,6 +356,7 @@ export default [
     name: "Github",
     icon: "github",
     type: "app",
-    action: "LNKTWITTER",
+    action: "EXTERNAL",
+    payload: "https://github.com/issgy",
   },
 ];

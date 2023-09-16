@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
@@ -51,7 +51,7 @@ export const Icon = (props) => {
             data-click={props.click != null}
             onClick={props.click != null ? clickDispatch : null}
             data-flip={props.flip != null}
-            height={props.height || props.width}
+            height={props.height}
             data-invert={props.invert != null ? "true" : "false"}
             data-rounded={props.rounded != null ? "true" : "false"}
             src={src}
@@ -90,17 +90,15 @@ export const Icon = (props) => {
 
 // 界面最上部的栏
 export const ToolBar = (props) => {
-  const dispatch = useDispatch();
+  // const [snap, setSnap] = useState(false);
 
-  const [snap, setSnap] = useState(false);
+  // const openSnap = () => {
+  //   setSnap(true);
+  // };
 
-  const openSnap = () => {
-    setSnap(true);
-  };
-
-  const closeSnap = () => {
-    setSnap(false);
-  };
+  // const closeSnap = () => {
+  //   setSnap(false);
+  // };
 
   return (
     <div
@@ -108,27 +106,32 @@ export const ToolBar = (props) => {
       style={{
         background: props.bg,
       }}
+      data-float={props.float != null}
     >
       <div
         className="topInfo flex items-center"
         data-float={props.float != null}
       >
-        <Icon src={props.icon} width={12} />
-        <div className="appFullName text-xss" data-white={false}>
+        <Icon src={props.icon} width={14} />
+        <div className="appFullName text-xss" data-white={props.invert != null}>
           {props.name}
         </div>
       </div>
       <div className="actbtns flex items-center">
         {/* 缩小图标 */}
-        <Icon click={props.app} payload="mnmz" pr src="minimize" ui width={8} />
+        <Icon
+          invert={props.invert}
+          click={props.app}
+          payload="mnmz"
+          pr
+          src="minimize"
+          ui
+          width={8}
+        />
         {/* 切换图标 */}
-        <div
-          className="snapbox h-full"
-          data-hv={snap}
-          onMouseOver={openSnap}
-          onMouseLeave={closeSnap}
-        >
+        <div className="snapbox h-full" data-hv={false}>
           <Icon
+            invert={props.invert}
             click={props.app}
             payload="mxmz"
             pr
@@ -147,17 +150,27 @@ export const ToolBar = (props) => {
 };
 
 export const Image = (props) => {
-  const src = `/img/${props.src}.png`;
+  const src = `/img/${(props.dir ? props.dir + "/" : "") + props.src}.png`;
 
   return (
     <div
       className={`imageCont ${props.className || ""}`}
+      id={props.id}
       style={{
-        backgroundImage: `url(${src})`,
+        backgroundImage: props.back && `url(${src})`,
       }}
       data-back={props.back != null}
+      data-var={props.var}
     >
-      {!props.back ? <img src={src} alt="" /> : null}
+      {!props.back ? (
+        <img
+          width={props.w}
+          height={props.h}
+          data-var={props.var}
+          src={src}
+          alt=""
+        />
+      ) : null}
     </div>
   );
 };

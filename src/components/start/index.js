@@ -9,7 +9,6 @@ import axios from "axios";
 
 export const DesktopApp = () => {
   const deskApps = useSelector((state) => state.desktop);
-  const dispatch = useDispatch();
 
   return (
     <div className="desktopCont">
@@ -60,11 +59,11 @@ export const StartMenu = () => {
     // 按字母从A-Z排序
     tmpApps.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
     // 一个包含27个空数组的数组
-    for (var i = 0; i < 27; i++) {
+    for (let i = 0; i < 27; i++) {
       allApps[i] = [];
     }
 
-    for (var i = 0; i < tmpApps.length; i++) {
+    for (let i = 0; i < tmpApps.length; i++) {
       // t1为不同app名字的首字母对应的ASCII码
       const t1 = tmpApps[i].name.trim().toUpperCase().charCodeAt(0);
       if (t1 > 64 && t1 < 91) {
@@ -86,7 +85,6 @@ export const StartMenu = () => {
       type: event.target.dataset.action,
       payload: event.target.dataset.payload,
     };
-    console.log(action);
 
     if (action.type) {
       dispatch(action);
@@ -96,11 +94,11 @@ export const StartMenu = () => {
     }
 
     if (action.type === "STARTALPHA") {
-      var target = document.getElementById("char" + action.payload);
+      let target = document.getElementById("char" + action.payload);
       if (target) {
         target.parentNode.parentNode.scrollTop = target.offsetTop;
       } else {
-        var target = document.getElementById("charA");
+        target = document.getElementById("charA");
         target.parentNode.parentNode.scrollTop = 0;
       }
     }
@@ -151,7 +149,7 @@ export const StartMenu = () => {
                           className="pnIcon"
                           src={app.icon}
                           width={24}
-                          payload="full"
+                          payload={app.payload ? app.payload : "full"}
                           onClick={clickDispatch}
                           click={app.action}
                         />
@@ -228,7 +226,7 @@ export const StartMenu = () => {
                             className="allApp prtclk"
                             onClick={clickDispatch}
                             data-action={item.action}
-                            data-payload="full"
+                            data-payload={item.payload ? item.payload : "full"}
                           >
                             <Icon
                               className="pnIcon"
@@ -275,7 +273,14 @@ export const StartMenu = () => {
           </div>
           <div className="menuBar">
             <div className="profile">
-              <Icon src="issgy" ui rounded width={26} />
+              <Icon
+                src="issgy"
+                ui
+                rounded
+                width={26}
+                click="EXTERNAL"
+                payload="https://github.com/issgy"
+              />
               <div className="usName">issgy</div>
             </div>
             <div className="powerCrtl">
@@ -343,7 +348,13 @@ export const StartMenu = () => {
                           key={i}
                           className="topApp pt-4 py-2 bg-gray-100 ltShad"
                         >
-                          <Icon src={app.icon} width={24} />
+                          <Icon
+                            src={app.icon}
+                            width={24}
+                            click={app.action}
+                            onClick={clickDispatch}
+                            payload={app.payload ? app.payload : "full"}
+                          />
                           <div className="text-xs mt-2">{app.name}</div>
                         </div>
                       );
@@ -455,17 +466,22 @@ export const WidPane = () => {
     return `hsl(${Math.floor(Math.random() * 360)}deg 36% 84%)`;
   };
 
-  useEffect(async () => {
-    if (!widget.updated) {
-      var tmpWdgt = await fetchApi(widget);
-      console.log("Fetching Api's");
-      if (tmpWdgt.updated) {
-        dispatch({
-          type: "WIDGREST",
-          payload: tmpWdgt,
-        });
+  useEffect(() => {
+    // 防止竞态状态
+    async function fetchData() {
+      if (!widget.updated) {
+        var tmpWdgt = await fetchApi(widget);
+        console.log("Fetching Api's");
+        if (tmpWdgt.updated) {
+          dispatch({
+            type: "WIDGREST",
+            payload: tmpWdgt,
+          });
+        }
       }
     }
+
+    fetchData();
   });
 
   return (
@@ -596,6 +612,7 @@ export const WidPane = () => {
                     href={widget.data.event.pages[0].content_urls.desktop.page}
                     target="_blank"
                     className="wikiref"
+                    rel="noreferrer"
                   >
                     more on wiki
                   </a>

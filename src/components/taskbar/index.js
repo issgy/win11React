@@ -1,12 +1,20 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux/es/exports";
+import { useSelector } from "react-redux/es/exports";
 import { Icon } from "../../utils/general";
 
 import "./taskbar.scss";
 
 const Taskbar = () => {
   const tasks = useSelector((state) => state.taskbar);
-  const apps = useSelector((state) => state.apps);
+  const apps = useSelector((state) => {
+    const tmpApps = { ...state.apps };
+    for (var i = 0; i < state.taskbar.apps.length; i++) {
+      // 给taskbar栏的右四个app图标添加属性及属性值：task:true
+      // 为了区分后续点击除taskbar栏有的app外做准备
+      tmpApps[state.taskbar.apps[i].icon].task = true;
+    }
+    return tmpApps;
+  });
   return (
     <div className="taskbar">
       <div className="taskcont">
@@ -28,6 +36,20 @@ const Taskbar = () => {
                   payload="togg"
                 />
               );
+            })}
+            {Object.keys(apps).map((key, i) => {
+              return key != "hz" && !apps[key].task && !apps[key].hide ? (
+                <Icon
+                  key={i}
+                  className="tsIcon"
+                  width={22}
+                  active={apps[key].z == apps.hz}
+                  click={apps[key].action}
+                  payload="togg"
+                  open="true"
+                  src={apps[key].icon}
+                />
+              ) : null;
             })}
           </div>
         </div>
@@ -52,13 +74,14 @@ const Taskbar = () => {
             </div>
           </div>
           <Icon
-            className="taskIcon"
+            className="taskIcon mr-2"
             ui
             src="sidepane"
             width={16}
             invert
             click="PANETOGG"
           />
+          <Icon className="graybd" ui width={6} click="SHOWDSK" pr />
         </div>
       </div>
     </div>

@@ -16,10 +16,11 @@ function App() {
       ["WIDG", "WIDGHIDE"],
     ];
 
+    let actionType;
     try {
-      var actionType = event.target.dataset.action || "";
+      actionType = event.target.dataset.action || "";
     } catch (err) {
-      var actionType = "";
+      actionType = "";
     }
 
     var actionType0 = getComputedStyle(event.target).getPropertyValue(
