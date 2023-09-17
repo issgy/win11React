@@ -439,3 +439,91 @@ export const MicroStore = () => {
     </div>
   );
 };
+
+// terminal界面
+export const WnTerminal = () => {
+  const tmapp = useSelector((state) => state.apps.terminal);
+  const [tmtitle, setTmtitle] = useState("Windows Terminal");
+  const [stack, setStack] = useState([
+    "Microsoft Windows [版本 10.0.22000.51]",
+    "(c) Microsoft Corporation。 保留所有权利。",
+    "",
+  ]);
+  const [pwd, setPwd] = useState("C:\\User\\issgy>");
+
+  const action = (event) => {
+    const cmdline = document.getElementById("curcmd");
+    const action = event.target.dataset.action;
+
+    if (cmdline) {
+      if (action === "hover") {
+        const crline = cmdline.parentNode;
+        const cmdcont = document.getElementById("cmdcont");
+        if (crline && cmdcont) {
+          cmdcont.scrollTop = crline.offsetTop;
+        }
+        cmdline.focus();
+      } else if (action === "enter") {
+        console.log("enter");
+        if (event.key === "Enter") {
+          //输入完毕后按回车键
+          event.preventDefault();
+          // ......
+        }
+      }
+      cmdline.focus();
+    }
+  };
+
+  return (
+    <div
+      className="wnterm floatTab apShad"
+      data-size={tmapp.size}
+      data-max={tmapp.max}
+      style={{
+        ...(tmapp.size == "cstm" ? tmapp.dim : null),
+        zIndex: tmapp.z,
+      }}
+      data-hide={tmapp.hide}
+    >
+      <ToolBar
+        app={tmapp.action}
+        icon={tmapp.icon}
+        name={tmtitle}
+        invert
+        bg="#060606"
+      />
+      <div className="windowScreen flex" data-dock="true">
+        <div className="restWindow h-full flex-grow text-gray-100">
+          <div
+            className="cmdcont w-full box-border overflow-y-scroll thinScroll prtclk"
+            id="cmdcont"
+            onMouseOver={action}
+            onClick={action}
+            data-action="hover"
+          >
+            <div className="w-full h-max pb-12">
+              {stack.map((x, i) => {
+                return (
+                  <div key={i} className="cmdLine">
+                    {x}
+                  </div>
+                );
+              })}
+              <div className="cmdLine actmd">
+                {pwd}
+                <div
+                  className="ipcmd"
+                  id="curcmd"
+                  contentEditable
+                  data-action="enter"
+                  onKeyDown={action}
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

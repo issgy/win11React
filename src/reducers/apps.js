@@ -3,6 +3,7 @@ import { allApps } from "../utils";
 const defState = {};
 // 遍历allApps，(每个app的icon都不同）
 for (let i = 0; i < allApps.length; i++) {
+  // 原先allApps数组的icon属性为新defState对象的属性名字
   defState[allApps[i].icon] = allApps[i];
   // 右上角三个图标  最小化  切换  最大化
   //full/mini  full为界面最大（当界面最大时点击最小化值仍为full），mini为界面没那么大（即当界面由最大点击切换后的中屏）
@@ -15,7 +16,7 @@ for (let i = 0; i < allApps.length; i++) {
   defState[allApps[i].icon].z = 0;
 
   // 刷新页面自动出现的app界面
-  if (allApps[i].icon === "store") {
+  if (allApps[i].icon === "terminal") {
     defState[allApps[i].icon].hide = false;
     defState[allApps[i].icon].max = true;
     defState[allApps[i].icon].z = 1;

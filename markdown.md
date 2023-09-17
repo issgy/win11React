@@ -19,3 +19,7 @@ reducers 文件夹新增 apps.js 用于记录界面状态
 1、完成 store 界面
 2、修复了控制台的一些警告
 3、修复了 startmenu 的样式
+
+## 9.16:
+
+1、完成了 terminal 终端界面（逻辑未写）
