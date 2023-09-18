@@ -7,6 +7,7 @@ import "./wnapp.css";
 
 // edge界面
 export const EdgeMenu = () => {
+  const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.edge);
   const [url, setUrl] = useState("http://bing.com");
   const [hist, setHist] = useState(["https://bing.com", "https://bing.com"]);
@@ -174,6 +175,7 @@ export const EdgeMenu = () => {
 
 // store界面
 export const MicroStore = () => {
+  const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.store);
   const ribbon = useSelector((state) => state.globals.ribbon);
   const apprib = useSelector((state) => state.globals.apprib);
@@ -444,6 +446,7 @@ export const MicroStore = () => {
 // terminal界面
 export const WnTerminal = () => {
   const dispatch = useDispatch();
+  const apps = useSelector((state) => state.apps);
   const tmapp = useSelector((state) => state.apps.terminal);
   const [tmtitle, setTmtitle] = useState("Windows Terminal");
   const [stack, setStack] = useState([
