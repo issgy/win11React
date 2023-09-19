@@ -1052,3 +1052,115 @@ export const Calculator = () => {
     </div>
   );
 };
+
+// vscode 界面
+export const VsCode = () => {
+  const apps = useSelector((state) => state.apps);
+  const wnapp = useSelector((state) => state.apps.code);
+  const [url, setUrl] = useState(null);
+
+  useEffect(() => {
+    if (url === null) {
+      setUrl(process.env.REACT_APP_VSCODE || "https://github1s.com/");
+    }
+  });
+
+  return (
+    <div
+      className="vscodeWn floatTab dpShad"
+      data-size={wnapp.size}
+      data-max={wnapp.max}
+      style={{
+        ...(wnapp.size == "cstm" ? wnapp.dim : null),
+        zIndex: wnapp.z,
+      }}
+      data-hide={wnapp.hide}
+    >
+      <ToolBar
+        app={wnapp.action}
+        icon={wnapp.icon}
+        name="VS Code"
+        bg="#1c1c1c"
+        invert
+      />
+      <div className="windowScreen flex flex-col" data-dock="true">
+        <div className="restWindow flex-grow flex flex-col">
+          <div className="flex-grow overflow-hidden">
+            <iframe
+              src={url}
+              id="isite"
+              className="w-full h-full"
+              frameBorder="0"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// explorer 文件夹界面
+export const Explorer = () => {
+  const apps = useSelector((state) => state.apps);
+  const wnapp = useSelector((state) => state.apps.explorer);
+
+  return (
+    <div
+      className="msfiles floatTab dpShad"
+      data-size={wnapp.size}
+      data-max={wnapp.max}
+      style={{
+        ...(wnapp.size == "cstm" ? wnapp.dim : null),
+        zIndex: wnapp.z,
+      }}
+      data-hide={wnapp.hide}
+    >
+      <ToolBar
+        app={wnapp.action}
+        icon={wnapp.icon}
+        name="File Explorer"
+        bg="#f0f0f0"
+      />
+      <div className="windowScreen flex flex-col" data-dock="true">
+        <div className="restWindow flex-grow flex flex-col">
+          <div className="flex-grow grid place-items-center text-4xl font-semibold text-gray-600">
+            Coming soon
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// whiteboard 界面
+export const WhiteBoard = () => {
+  const apps = useSelector((state) => state.apps);
+  const wnapp = useSelector((state) => state.apps.board);
+
+  return (
+    <div
+      className="msfiles floatTab dpShad"
+      data-size={wnapp.size}
+      data-max={wnapp.max}
+      style={{
+        ...(wnapp.size == "cstm" ? wnapp.dim : null),
+        zIndex: wnapp.z,
+      }}
+      data-hide={wnapp.hide}
+    >
+      <ToolBar
+        app={wnapp.action}
+        icon={wnapp.icon}
+        name="Microsoft Whiteboard"
+        bg="#f0f0f0"
+      />
+      <div className="windowScreen flex flex-col" data-dock="true">
+        <div className="restWindow flex-grow flex flex-col">
+          <div className="flex-grow grid place-items-center text-4xl font-semibold text-gray-600">
+            Coming soon
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

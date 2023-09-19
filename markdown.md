@@ -34,5 +34,8 @@ reducers 文件夹新增 apps.js 用于记录界面状态
 
 ## 9.19:
 
-1、完成了 notepad 笔记本界面
+1、完成了 notepad 笔记本界面（功能未实现）
 2、完成了 calculator 计算器界面
+3、完成 vscode 界面
+4、完成 explorer 界面（功能未实现）
+5、完成 whiteboard 界面（功能未实现）

@@ -16,7 +16,7 @@ for (let i = 0; i < allApps.length; i++) {
   defState[allApps[i].icon].z = 0;
 
   // 刷新页面自动出现的app界面
-  if (allApps[i].icon === "") {
+  if (allApps[i].icon === "code") {
     defState[allApps[i].icon].hide = false;
     defState[allApps[i].icon].max = true;
     defState[allApps[i].icon].z = 1;
@@ -82,7 +82,6 @@ const appReducer = (state = defState, action) => {
     if (action.payload && action.payload.startsWith("http")) {
       obj.url = action.payload;
     } else if (action.payload && action.payload.length !== 0) {
-      console.log(222222);
       obj.url = "https://www/bing.com/search?q=" + action.payload;
     } else {
       obj.url = null;

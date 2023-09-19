@@ -468,20 +468,22 @@ export const WidPane = () => {
 
   useEffect(() => {
     // 防止竞态状态
-    async function fetchData() {
-      if (!widget.updated) {
-        var tmpWdgt = await fetchApi(widget);
-        console.log("Fetching Api's");
-        if (tmpWdgt.updated) {
-          dispatch({
-            type: "WIDGREST",
-            payload: tmpWdgt,
-          });
+    if (process.env.REACT_APP_DEVELOPEMENT != "development") {
+      async function fetchData() {
+        if (!widget.updated) {
+          var tmpWdgt = await fetchApi(widget);
+          console.log("Fetching Api's");
+          if (tmpWdgt.updated) {
+            dispatch({
+              type: "WIDGREST",
+              payload: tmpWdgt,
+            });
+          }
         }
       }
-    }
 
-    fetchData();
+      fetchData();
+    }
   });
 
   return (

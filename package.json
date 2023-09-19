@@ -1,5 +1,7 @@
 {
-  "name": "windows",
+  "name": "windows11",
+  "description": "Windows 11 made in React",
+  "repository": "https://github.com/issgy/win11React",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
