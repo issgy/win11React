@@ -16,7 +16,7 @@ for (let i = 0; i < allApps.length; i++) {
   defState[allApps[i].icon].z = 0;
 
   // 刷新页面自动出现的app界面
-  if (allApps[i].icon === "notepad") {
+  if (allApps[i].icon === "") {
     defState[allApps[i].icon].hide = false;
     defState[allApps[i].icon].max = true;
     defState[allApps[i].icon].z = 1;
@@ -105,7 +105,7 @@ const appReducer = (state = defState, action) => {
       if (obj.hide == false) {
         //hide为false有两种情况，1、界面被最小化（不是关闭） 2、界面全屏/中屏
         obj.max = false; //将界面最小化（不是关闭）
-        if (obj.z == tmpState.hz) {
+        if (obj.z === tmpState.hz) {
           //tmpState.hz为0时
           tmpState.hz -= 1;
         }

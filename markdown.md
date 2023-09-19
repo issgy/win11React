@@ -35,3 +35,4 @@ reducers 文件夹新增 apps.js 用于记录界面状态
 ## 9.19:
 
 1、完成了 notepad 笔记本界面
+2、完成了 calculator 计算器界面

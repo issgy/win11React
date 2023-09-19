@@ -40,7 +40,7 @@ export const Icon = (props) => {
           className={`uicon ${props.className || ""} ${prtclk}`}
           data-open={props.open != null}
           data-action={props.click}
-          data-active={props.active != null}
+          data-active={props.active}
           data-payload={props.payload}
           onClick={props.onClick || (props.pr && clickDispatch) || null}
         >
