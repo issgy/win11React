@@ -51,22 +51,18 @@ export default [
     name: "Recycle Bin",
     icon: "bin0",
     type: "app",
-    action: "RECYCLE",
   },
   {
     idx: 8,
     name: "Blue",
     icon: "win/userDir",
     type: "short",
-    action: "FOLDER",
-    payload: "/",
   },
   {
     idx: 9,
     name: "Alarms",
     icon: "alarm",
     type: "app",
-    action: "ALARMAPP",
   },
   {
     idx: 10,
@@ -80,7 +76,6 @@ export default [
     name: "Calender",
     icon: "calender",
     type: "app",
-    action: "CALENDER",
   },
   {
     idx: 12,
@@ -105,7 +100,6 @@ export default [
     name: "Your Phone",
     icon: "yphone",
     type: "app",
-    action: "YOURPHONE",
   },
   {
     idx: 16,
@@ -142,7 +136,6 @@ export default [
     name: "Mail",
     icon: "mail",
     type: "app",
-    action: "MSEMAIL",
   },
   {
     idx: 22,
@@ -161,7 +154,6 @@ export default [
     name: "Xbox",
     icon: "xbox",
     type: "app",
-    action: "XBOXAPP",
   },
   {
     idx: 25,
@@ -205,7 +197,6 @@ export default [
     name: "OneNote",
     icon: "onenote",
     type: "app",
-    action: "ONENOTE",
   },
   {
     idx: 32,
@@ -238,13 +229,14 @@ export default [
     name: "Pinterest",
     icon: "pinterest",
     type: "app",
+    action: "EXTERNAL",
+    payload: "https://pinterest.com/blue_edge",
   },
   {
     idx: 37,
     name: "PowerPoint",
     icon: "powerpoint",
     type: "app",
-    action: "POWERPNT",
   },
   {
     idx: 38,
@@ -258,7 +250,7 @@ export default [
     icon: "spotify",
     type: "app",
     action: "EXTERNAL",
-    payload: "https://open.spotify.com",
+    payload: "https://open.spotify.com/user/62axxw0etmycj09el078cock0",
   },
   {
     idx: 40,
@@ -290,7 +282,7 @@ export default [
     icon: "twitter",
     type: "app",
     action: "EXTERNAL",
-    payload: "https://twitter.com",
+    payload: "https://twitter.com/blueedgetechno",
   },
   {
     idx: 45,
@@ -316,7 +308,6 @@ export default [
     name: "To Do",
     icon: "todo",
     type: "app",
-    action: "MSTODO",
   },
   {
     idx: 49,
@@ -335,21 +326,18 @@ export default [
     name: "Word",
     icon: "winWord",
     type: "app",
-    action: "MSWORD",
   },
   {
     idx: 52,
     name: "White Board",
     icon: "board",
     type: "app",
-    action: "WHITEBOARD",
   },
   {
     idx: 53,
     name: "Cortana",
     icon: "cortana",
     type: "app",
-    action: "WHITEBOARD",
   },
   {
     idx: 54,
@@ -357,6 +345,6 @@ export default [
     icon: "github",
     type: "app",
     action: "EXTERNAL",
-    payload: "https://github.com/issgy",
+    payload: "https://github.com/blueedgetechno",
   },
 ];

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Icon, ToolBar, Image } from "../../utils/general";
 import dirs from "./dir.json";
 import "./tabs.scss";
+import "./tab2.scss";
 import "./wnapp.css";
 
 // edge界面
@@ -737,6 +738,41 @@ export const WnTerminal = () => {
                 ></div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// notepad界面
+export const Notepad = () => {
+  const apps = useSelector((state) => state.apps);
+  const wnapp = useSelector((state) => state.apps.notepad);
+
+  return (
+    <div
+      className="notepad floatTab dpShad"
+      data-size={wnapp.size}
+      data-max={wnapp.max}
+      style={{
+        ...(wnapp.size === "cstm" ? wnapp.dim : null),
+        zIndex: wnapp.z,
+      }}
+      data-hide={wnapp.hide}
+    >
+      <ToolBar app={wnapp.action} icon={wnapp.icon} name="Untitled - Notepad" />
+      <div className="windowScreen flex flex-col" data-dock="true">
+        <div className="flex text-xss pb-1 border-gray-200 border-0 border-b-2 border-solid">
+          <div className="mx-2">File</div>
+          <div className="mx-2">Edit</div>
+          <div className="mx-2">Format</div>
+          <div className="mx-2">View</div>
+          <div className="mx-2">Help</div>
+        </div>
+        <div className="restWindow h-full flex-grow text-gray-100">
+          <div className="w-full h-full overflow-hidden">
+            <textarea className="noteText thinScroll" id="textpad" />
           </div>
         </div>
       </div>

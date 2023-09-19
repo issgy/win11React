@@ -16,7 +16,7 @@ for (let i = 0; i < allApps.length; i++) {
   defState[allApps[i].icon].z = 0;
 
   // 刷新页面自动出现的app界面
-  if (allApps[i].icon === "") {
+  if (allApps[i].icon === "notepad") {
     defState[allApps[i].icon].hide = false;
     defState[allApps[i].icon].max = true;
     defState[allApps[i].icon].z = 1;
@@ -105,7 +105,7 @@ const appReducer = (state = defState, action) => {
       if (obj.hide == false) {
         //hide为false有两种情况，1、界面被最小化（不是关闭） 2、界面全屏/中屏
         obj.max = false; //将界面最小化（不是关闭）
-        if (obj.max == tmpState.hz) {
+        if (obj.z == tmpState.hz) {
           //tmpState.hz为0时
           tmpState.hz -= 1;
         }
@@ -122,7 +122,7 @@ const appReducer = (state = defState, action) => {
 
     for (let i = 0; i < keys.length; i++) {
       const obj = state[keys[i]];
-      //如果 action.type 不为 'EDGELINK'，且是遍历到的对象的action属性
+      //如果 action.type 不为 'EDGELINK'或'SHOWDSK'或'EXTERNAL'，且是遍历到的对象的action属性
       if (action.type == obj.action) {
         const tmpState = { ...state };
 
@@ -170,7 +170,7 @@ const appReducer = (state = defState, action) => {
           console.log("mnmz");
           obj.max = false;
           obj.hide = false;
-          if (obj.max == tmpState.hz) {
+          if (obj.z == tmpState.hz) {
             tmpState.hz -= 1;
           }
           obj.z = -1;
@@ -189,6 +189,13 @@ const appReducer = (state = defState, action) => {
           obj.max = null;
           obj.z = -1;
           tmpState.hz -= 1;
+        } else if (action.payload === "front") {
+          obj.hide = false;
+          obj.max = true;
+          if (obj.z != tmpState.hz) {
+            tmpState.hz += 1;
+            obj.z = tmpState.hz;
+          }
         }
 
         tmpState[keys[i]] = obj;

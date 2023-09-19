@@ -90,6 +90,7 @@ export const Icon = (props) => {
 
 // 界面最上部的栏
 export const ToolBar = (props) => {
+  const dispatch = useDispatch();
   // const [snap, setSnap] = useState(false);
 
   // const openSnap = () => {
@@ -99,6 +100,12 @@ export const ToolBar = (props) => {
   // const closeSnap = () => {
   //   setSnap(false);
   // };
+  const toolClick = () => {
+    dispatch({
+      type: props.app,
+      payload: "front",
+    });
+  };
 
   return (
     <div
@@ -111,6 +118,7 @@ export const ToolBar = (props) => {
       <div
         className="topInfo flex items-center"
         data-float={props.float != null}
+        onClick={toolClick}
       >
         <Icon src={props.icon} width={14} />
         <div className="appFullName text-xss" data-white={props.invert != null}>
