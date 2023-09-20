@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Icon, ToolBar, Image } from "../../utils/general";
 import dirs from "./dir.json";
@@ -82,6 +82,7 @@ export const EdgeMenu = () => {
         zIndex: wnapp.z,
       }}
       data-hide={wnapp.hide}
+      id={wnapp.icon + "App"}
     >
       {/* tab栏 */}
       <ToolBar
@@ -160,13 +161,15 @@ export const EdgeMenu = () => {
           </div>
           {/* 内容框 */}
           <div className="siteFrame flex-grow overflow-hidden">
-            <iframe
-              title="edge"
-              src={url}
-              id="isite"
-              className="w-full h-full"
-              frameBorder="0"
-            ></iframe>
+            {wnapp.hide ? null : (
+              <iframe
+                title="edge"
+                src={url}
+                id="isite"
+                className="w-full h-full"
+                frameBorder="0"
+              ></iframe>
+            )}
           </div>
         </div>
       </div>
@@ -205,6 +208,7 @@ export const MicroStore = () => {
         zIndex: wnapp.z,
       }}
       data-hide={wnapp.hide}
+      id={wnapp.icon + "App"}
     >
       <ToolBar app={wnapp.action} icon={wnapp.icon} name="Microsoft Store" />
       <div className="windowScreen flex">
@@ -702,6 +706,7 @@ export const WnTerminal = () => {
         zIndex: tmapp.z,
       }}
       data-hide={tmapp.hide}
+      id={tmapp.icon + "App"}
     >
       <ToolBar
         app={tmapp.action}
@@ -760,6 +765,7 @@ export const Notepad = () => {
         zIndex: wnapp.z,
       }}
       data-hide={wnapp.hide}
+      id={wnapp.icon + "App"}
     >
       <ToolBar app={wnapp.action} icon={wnapp.icon} name="Untitled - Notepad" />
       <div className="windowScreen flex flex-col" data-dock="true">
@@ -791,11 +797,9 @@ export const Calculator = () => {
 
   const getIdx = (node) => {
     let i = 0;
-    console.log(node, node.previousSibling);
     while ((node = node.previousSibling) != null) {
       i++;
     }
-    console.log(i);
     return i;
   };
 
@@ -926,6 +930,7 @@ export const Calculator = () => {
         ...(wnapp.size == "cstm" ? wnapp.dim : null),
         zIndex: wnapp.z,
       }}
+      id={wnapp.icon + "App"}
     >
       <ToolBar app={wnapp.action} icon={wnapp.icon} name="Calculator" />
       <div className="windowScreen flex flex-col" data-dock="true">
@@ -1075,6 +1080,7 @@ export const VsCode = () => {
         zIndex: wnapp.z,
       }}
       data-hide={wnapp.hide}
+      id={wnapp.icon + "App"}
     >
       <ToolBar
         app={wnapp.action}
@@ -1086,12 +1092,14 @@ export const VsCode = () => {
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">
           <div className="flex-grow overflow-hidden">
-            <iframe
-              src={url}
-              id="isite"
-              className="w-full h-full"
-              frameBorder="0"
-            ></iframe>
+            {wnapp.hide ? null : (
+              <iframe
+                src={url}
+                id="isite"
+                className="w-full h-full"
+                frameBorder="0"
+              ></iframe>
+            )}
           </div>
         </div>
       </div>
@@ -1114,6 +1122,7 @@ export const Explorer = () => {
         zIndex: wnapp.z,
       }}
       data-hide={wnapp.hide}
+      id={wnapp.icon + "App"}
     >
       <ToolBar
         app={wnapp.action}
@@ -1139,7 +1148,7 @@ export const WhiteBoard = () => {
 
   return (
     <div
-      className="msfiles floatTab dpShad"
+      className="whiteBoard floatTab dpShad"
       data-size={wnapp.size}
       data-max={wnapp.max}
       style={{
@@ -1147,6 +1156,7 @@ export const WhiteBoard = () => {
         zIndex: wnapp.z,
       }}
       data-hide={wnapp.hide}
+      id={wnapp.icon + "App"}
     >
       <ToolBar
         app={wnapp.action}
@@ -1160,6 +1170,34 @@ export const WhiteBoard = () => {
             Coming soon
           </div>
         </div>
+      </div>
+    </div>
+  );
+};
+
+export const ScreenPreview = () => {
+  const tasks = useSelector((state) => state.taskbar);
+
+  useEffect(() => {
+    if (tasks.prevApp != "" && tasks.prev) {
+      var wnapp = document.getElementById(tasks.prevApp + "App");
+      var clone = wnapp.cloneNode(true);
+      clone.id = "prevsc";
+      clone.dataset.hide = "false";
+      clone.dataset.max = "true";
+      clone.dataset.size = "full";
+      clone.style.zIndex = "1";
+      var parentDiv = document.getElementById("prevApp");
+      var prevsc = document.getElementById("prevsc");
+
+      parentDiv.replaceChild(clone, prevsc);
+    }
+  });
+
+  return (
+    <div className="prevCont" style={{ left: tasks.prevPos + "%" }}>
+      <div className="prevScreen" id="prevApp" data-show={tasks.prev}>
+        <div id="prevsc"></div>
       </div>
     </div>
   );

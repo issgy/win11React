@@ -39,3 +39,7 @@ reducers 文件夹新增 apps.js 用于记录界面状态
 3、完成 vscode 界面
 4、完成 explorer 界面（功能未实现）
 5、完成 whiteboard 界面（功能未实现）
+
+## 9.20:
+
+1、增加鼠标放置 taskbar 栏图标显示对应 app 小界面功能
