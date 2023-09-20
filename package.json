@@ -16,6 +16,7 @@
     "fortawesome": "^0.0.1-security",
     "node-sass": "^9.0.0",
     "react": "^17.0.2",
+    "react-canvas-draw": "^1.2.1",
     "react-dom": "^17.0.2",
     "react-redux": "^8.1.2",
     "react-scripts": "4.0.3",
