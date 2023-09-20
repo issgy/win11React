@@ -1,7 +1,13 @@
 import React from "react";
 import Background from "./containers/background";
 import Taskbar from "./components/taskbar";
-import { StartMenu, DesktopApp, SidePane, WidPane } from "./components/start";
+import {
+  StartMenu,
+  DesktopApp,
+  SidePane,
+  WidPane,
+  CalnWid,
+} from "./components/start";
 import * as Applications from "./containers/applications";
 import "./index.css";
 import "./short.css";
@@ -14,6 +20,7 @@ function App() {
       ["START", "STARTHID"],
       ["PANE", "PANEHIDE"],
       ["WIDG", "WIDGHIDE"],
+      ["CALN", "CALNHIDE"],
     ];
 
     let actionType;
@@ -49,6 +56,7 @@ function App() {
         <WidPane />
       </div>
       <Taskbar />
+      <CalnWid />
     </div>
   );
 }

@@ -17,6 +17,17 @@ const Taskbar = () => {
     return tmpApps;
   });
 
+  const clickDispatch = (event) => {
+    const action = {
+      payload: event.target.dataset.payload,
+      type: event.target.dataset.action,
+    };
+
+    if (action.type) {
+      dispatch(action);
+    }
+  };
+
   const showPrev = (event) => {
     let ele = event.target;
     while (ele && ele.getAttribute("value") === null) {
@@ -41,6 +52,7 @@ const Taskbar = () => {
   return (
     <div className="taskbar">
       <div className="taskcont">
+        {/* taskbar中间图标 */}
         <div className="tasksCont" data-side={tasks.align}>
           <div className="tsbar" onMouseOut={hidePrev}>
             <Icon className="tsIcon" src="home" width={22} click="STARTOGG" />
@@ -94,12 +106,17 @@ const Taskbar = () => {
             })}
           </div>
         </div>
+        {/* taskbar右侧图标 */}
         <div className="taskright">
           <Icon className="taskIcon" fafa="faChevronUp" width={10} />
           <Icon className="taskIcon" src="wifi" ui width={14} />
           <Icon className="taskIcon" src="battery" ui width={16} />
           <Icon className="taskIcon" src="audio" ui width={22} />
-          <div className="taskDate">
+          <div
+            className="taskDate handcr prtclk hvdark"
+            onClick={clickDispatch}
+            data-action="CALNTOGG"
+          >
             <div>
               {new Date().toLocaleDateString("en-US", {
                 year: "2-digit",
@@ -115,7 +132,7 @@ const Taskbar = () => {
             </div>
           </div>
           <Icon
-            className="taskIcon mr-2"
+            className="taskIcon mr-2 hvdark"
             ui
             src="sidepane"
             width={16}

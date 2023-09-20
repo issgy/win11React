@@ -11,21 +11,32 @@ export const DesktopApp = () => {
   const deskApps = useSelector((state) => state.desktop);
 
   return (
-    <div className="desktopCont">
-      {deskApps.apps.map((desk, i) => {
-        return (
-          <div key={i} value={i} className="dskApp">
-            <Icon
-              className="dskIcon"
-              src={desk.icon}
-              width={36}
-              click={desk.action}
-              payload="full"
-            />
-            <div className="appName">{desk.name}</div>
-          </div>
-        );
-      })}
+    <div
+      className="desktopCont"
+      style={{
+        gridTemplateColumns: `repeat(auto-fit, ${Math.round(
+          deskApps.size * 90
+        )}px)`,
+        gridTemplateRows: `repeat(auto-fit, ${Math.round(
+          deskApps.size * 98
+        )}px)`,
+      }}
+    >
+      {!deskApps.hide &&
+        deskApps.apps.map((desk, i) => {
+          return (
+            <div key={i} value={i} className="dskApp">
+              <Icon
+                className="dskIcon"
+                src={desk.icon}
+                width={Math.round(deskApps.size * 36)}
+                click={desk.action}
+                payload={desk.payload || "full"}
+              />
+              <div className="appName">{desk.name}</div>
+            </div>
+          );
+        })}
     </div>
   );
 };
@@ -327,7 +338,7 @@ export const StartMenu = () => {
                     </div>
                   </div>
                   <div
-                    className="smatch flex my-2 bg-gray-100 p-3 rounded prtclk"
+                    className="smatch flex my-2 bg-gray-100 p-3 rounded handcr prtclk"
                     onClick={clickDispatch}
                     data-action="EDGELINK"
                     data-payload={query}
@@ -392,7 +403,7 @@ export const StartMenu = () => {
                   className="openlink w-4/5 flex prtclk handcr pt-3"
                   onClick={clickDispatch}
                   data-action={match.action}
-                  data-payload="full"
+                  data-payload={match.payload || "full"}
                 >
                   <Icon src="link" ui width={16} />
                   <div className="text-xss ml-3">Open</div>
@@ -667,6 +678,33 @@ export const WidPane = () => {
   );
 };
 
+export const CalnWid = () => {
+  const sidepane = useSelector((state) => state.sidepane);
+  const [loaded, setLoad] = useState(false);
+
+  useEffect(() => {
+    if (!loaded) {
+      setLoad(true);
+      window.dycalendar.draw({
+        target: "#dycalendar",
+        type: "month",
+        dayformat: "ddd",
+        monthformat: "full",
+        prevnextbutton: "show",
+        highlighttoday: true,
+      });
+    }
+  });
+  return (
+    <div
+      className="calnpane dpShad"
+      data-hide={sidepane.calhide}
+      style={{ "--prefix": "CALN" }}
+    >
+      <div id="dycalendar"></div>
+    </div>
+  );
+};
 const fetchApi = async (widget) => {
   var tmpWdgt = { ...widget };
   var date = new Date();

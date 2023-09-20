@@ -74,6 +74,7 @@ const defState = {
     },
   ],
   hide: true,
+  calhide: true,
 };
 
 const paneReducer = (state = defState, action) => {
@@ -93,6 +94,16 @@ const paneReducer = (state = defState, action) => {
       return {
         ...state,
         hide: true,
+      };
+    case "CALNTOGG":
+      return {
+        ...state,
+        calhide: !state.calhide,
+      };
+    case "CALNHIDE":
+      return {
+        ...state,
+        calhide: true,
       };
     default:
       return state;
