@@ -346,6 +346,6 @@ export default [
     icon: "github",
     type: "app",
     action: "EXTERNAL",
-    payload: "https://github.com/blueedgetechno",
+    payload: "https://github.com/issgy",
   },
 ];
