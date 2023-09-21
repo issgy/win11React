@@ -8,6 +8,7 @@ import {
   WidPane,
   CalnWid,
 } from "./components/start";
+import ActMenu from "./components/menu";
 import * as Applications from "./containers/applications";
 import "./index.css";
 import "./short.css";
@@ -21,6 +22,7 @@ function App() {
       ["PANE", "PANEHIDE"],
       ["WIDG", "WIDGHIDE"],
       ["CALN", "CALNHIDE"],
+      ["MENU", "MENUHIDE"],
     ];
 
     let actionType;
@@ -40,10 +42,27 @@ function App() {
       }
     });
   });
+
+  window.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+  });
+
+  const rightClick = (event) => {
+    if (event.target.getAttribute("class") === "desktop") {
+      dispatch({
+        type: "MENUSHOW",
+        payload: {
+          top: event.clientY,
+          left: event.clientX,
+        },
+      });
+    }
+  };
+
   return (
     <div className="App">
       <Background />
-      <div className="desktop">
+      <div className="desktop" onContextMenu={rightClick}>
         <DesktopApp />
         {Object.keys(Applications).map((key, i) => {
           const WinApp = Applications[key];
@@ -54,9 +73,10 @@ function App() {
         <StartMenu />
         <SidePane />
         <WidPane />
+        <CalnWid />
       </div>
       <Taskbar />
-      <CalnWid />
+      <ActMenu />
     </div>
   );
 }

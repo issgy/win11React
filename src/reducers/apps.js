@@ -76,7 +76,7 @@ const isOverlaped = (tmpState, key) => {
 
 const appReducer = (state = defState, action) => {
   // searchmenu的搜索框内
-  if (action.type == "EDGELINK") {
+  if (action.type === "EDGELINK") {
     var tmpState = { ...state };
     var obj = { ...tmpState.edge };
     if (action.payload && action.payload.startsWith("http")) {
@@ -95,7 +95,7 @@ const appReducer = (state = defState, action) => {
 
     tmpState.edge = obj;
     return tmpState;
-  } else if (action.type == "SHOWDSK") {
+  } else if (action.type === "SHOWDSK") {
     const tmpState = { ...state };
     const keys = Object.keys(tmpState);
 
@@ -113,9 +113,26 @@ const appReducer = (state = defState, action) => {
       }
     }
     return tmpState;
-  } else if (action.type == "EXTERNAL") {
+  } else if (action.type === "EXTERNAL") {
     window.open(action.payload, "_blank");
     return state;
+  } else if (action.type === "OPENTERM") {
+    const tmpState = { ...state };
+    let obj = {
+      ...tmpState["terminal"],
+    };
+
+    obj.dir = action.payload;
+
+    obj.size = "full";
+    obj.hide = false;
+    obj.max = true;
+    tmpState.hz += 1;
+    obj.z = tmpState.hz;
+
+    tmpState["terminal"] = obj;
+
+    return tmpState;
   } else {
     const keys = Object.keys(state); //state的每个key遍历装在一个叫keys的数组里
 

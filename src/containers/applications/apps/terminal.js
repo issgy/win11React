@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ToolBar } from "../../../utils/general";
 
@@ -251,6 +251,12 @@ export const WnTerminal = () => {
       cmdline.focus();
     }
   };
+
+  useEffect(() => {
+    if (tmapp.dir && tmapp.dir != pwd) {
+      setPwd(tmapp.dir);
+    }
+  });
 
   return (
     <div

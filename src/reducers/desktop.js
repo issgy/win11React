@@ -23,6 +23,11 @@ const desktopReducer = (state = defState, action) => {
         ...state,
         hide: !state.hide,
       };
+    case "DESKSIZE":
+      return {
+        ...state,
+        size: action.payload,
+      };
     default:
       return state;
   }
