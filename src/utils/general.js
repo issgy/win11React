@@ -174,6 +174,7 @@ export const Image = (props) => {
         <img
           width={props.w}
           height={props.h}
+          data-free={props.free != null}
           data-var={props.var}
           src={src}
           alt=""

@@ -138,6 +138,8 @@ export default [
     name: "Mail",
     icon: "mail",
     type: "app",
+    action: "EXTERNAL",
+    payload: "mailto:xjmgsqg@163.com",
   },
   {
     idx: 22,
