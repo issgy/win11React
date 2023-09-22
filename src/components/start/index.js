@@ -8,7 +8,38 @@ import "./searchpane.scss";
 import axios from "axios";
 
 export const DesktopApp = () => {
-  const deskApps = useSelector((state) => state.desktop);
+  const deskApps = useSelector((state) => {
+    const desktop = { ...state.desktop };
+
+    if (desktop.sort === "name") {
+      desktop.apps.sort((a, b) =>
+        a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+      );
+    } else if (desktop.sort === "size") {
+      desktop.apps.sort((a, b) => {
+        const anm = a.name,
+          bnm = b.name;
+
+        return anm[bnm.charCodeAt(0) % anm.length] >
+          bnm[anm.charCodeAt(0) % bnm.length]
+          ? 1
+          : -1;
+      });
+    } else if (desktop.sort === "date") {
+      desktop.apps.sort((a, b) => {
+        const anm = a.name,
+          bnm = b.name;
+        const anml = anm.length,
+          bnml = bnm.length;
+
+        return anm[(bnml * 13) % anm.length] > bnm[(anml * 17) % bnm.length]
+          ? 1
+          : -1;
+      });
+    }
+
+    return desktop;
+  });
 
   return (
     <div
@@ -309,6 +340,7 @@ export const StartMenu = () => {
                 setQuery(event.target.value.trim());
               }}
               defaultValue={query}
+              placeholder="Type here to search"
             />
           </div>
           <div className="flex py-4 px-1 text-xs">
@@ -481,7 +513,7 @@ export const WidPane = () => {
     // 防止竞态状态
     if (process.env.REACT_APP_DEVELOPEMENT != "development") {
       async function fetchData() {
-        if (!widget.updated) {
+        if (!widget.updated && !widget.hide) {
           var tmpWdgt = await fetchApi(widget);
           console.log("Fetching Api's");
           if (tmpWdgt.updated) {
@@ -503,7 +535,7 @@ export const WidPane = () => {
       data-hide={widget.hide}
       style={{ "--prefix": "WIDG" }}
     >
-      <div className="WidPane">
+      <div className="WidPane" loading="lazy">
         <div className="widtop">
           <Icon fafa="faEllipsisH" width={12} />
         </div>

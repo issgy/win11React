@@ -4,6 +4,8 @@ const defState = {
   apps: desktopApps,
   hide: false,
   size: 1,
+  sort: "none",
+  abOpen: false,
 };
 
 const desktopReducer = (state = defState, action) => {
@@ -27,6 +29,16 @@ const desktopReducer = (state = defState, action) => {
       return {
         ...state,
         size: action.payload,
+      };
+    case "DESKSORT":
+      return {
+        ...state,
+        sort: action.payload,
+      };
+    case "DESKABOUT":
+      return {
+        ...state,
+        abOpen: action.payload,
       };
     default:
       return state;

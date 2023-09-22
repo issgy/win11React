@@ -54,3 +54,5 @@ reducers 文件夹新增 apps.js 用于记录界面状态
 
 1、完成了 whitboard 界面及功能
 2、修复了 calendar 界面点击切换月份隐藏问题
+3、更新了鼠标右键的菜单
+4、新增了 about 界面

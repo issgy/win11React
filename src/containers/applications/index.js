@@ -21,6 +21,8 @@ export * from "./apps/explorer";
 
 export * from "./apps/whiteboard";
 
+export * from "./apps/about";
+
 export const ScreenPreview = () => {
   const tasks = useSelector((state) => state.taskbar);
 

@@ -1,80 +1,103 @@
-const menuStates = {
-  desk: [
-    {
-      name: "查看",
-      opts: [
-        {
-          name: "大图标",
-          action: "DESKSIZE",
-          payload: 1.5,
-        },
-        {
-          name: "中等图标",
-          action: "DESKSIZE",
-          payload: 1.2,
-        },
-        {
-          name: "小图标",
-          action: "DESKSIZE",
-          payload: 1,
-        },
-        {
-          type: "hr",
-        },
-        {
-          name: "显示桌面图标",
-          action: "DESKTOGG",
-        },
-      ],
-    },
-    {
-      name: "排序方式",
-      dsb: true,
-    },
-    {
-      name: "刷新",
-      action: "refresh",
-    },
-    {
-      type: "hr",
-    },
-    {
-      name: "粘贴",
-      dsb: true,
-    },
-    {
-      name: "粘贴快捷方式",
-      dsb: true,
-    },
-    {
-      name: "打开 Windows 终端",
-      icon: "terminal",
-      action: "OPENTERM",
-      payload: "C:\\Users\\issgy\\Desktop",
-    },
-    {
-      type: "hr",
-    },
-    {
-      name: "新建",
-      dsb: true,
-    },
-    {
-      type: "hr",
-    },
-    {
-      name: "个性化",
-      icon: "win/themes",
-      dsb: true,
-    },
-  ],
-};
-
 const defState = {
   hide: true,
   top: 300,
   left: 500,
-  opts: menuStates.desk,
+  opts: "desk",
+  menus: {
+    desk: [
+      {
+        name: "查看",
+        opts: [
+          {
+            name: "大图标",
+            action: "changeIconSize",
+            payload: "large",
+          },
+          {
+            name: "中等图标",
+            action: "changeIconSize",
+            payload: "medium",
+          },
+          {
+            name: "小图标",
+            action: "changeIconSize",
+            payload: "small",
+            dot: true,
+          },
+          {
+            type: "hr",
+          },
+          {
+            name: "显示桌面图标",
+            action: "deskHide",
+            check: true,
+          },
+        ],
+      },
+      {
+        name: "排序方式",
+        opts: [
+          {
+            name: "名称",
+            action: "changeSort",
+            payload: "name",
+          },
+          {
+            name: "大小",
+            action: "changeSort",
+            payload: "size",
+          },
+          {
+            name: "修改日期",
+            action: "changeSort",
+            payload: "date",
+          },
+        ],
+      },
+      {
+        name: "刷新",
+        action: "refresh",
+      },
+      {
+        type: "hr",
+      },
+      {
+        name: "粘贴",
+        dsb: true,
+      },
+      {
+        name: "粘贴快捷方式",
+        dsb: true,
+      },
+      {
+        name: "打开 Windows 终端",
+        icon: "terminal",
+        action: "OPENTERM",
+        payload: "C:\\Users\\issgy\\Desktop",
+      },
+      {
+        type: "hr",
+      },
+      {
+        name: "新建",
+        dsb: true,
+      },
+      {
+        type: "hr",
+      },
+      {
+        name: "个性化",
+        icon: "win/themes",
+        dsb: true,
+      },
+      {
+        name: "关于",
+        action: "DESKABOUT",
+        icon: "win/info",
+        payload: true,
+      },
+    ],
+  },
 };
 
 const menusReducer = (state = defState, action) => {
@@ -90,6 +113,10 @@ const menusReducer = (state = defState, action) => {
         hide: false,
         top: (action.payload && action.payload.top) || 272,
         left: (action.payload && action.payload.left) || 430,
+      };
+    case "MENUCHNG":
+      return {
+        ...action.payload,
       };
     default:
       return state;
