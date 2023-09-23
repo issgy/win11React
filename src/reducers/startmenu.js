@@ -30,7 +30,6 @@ const menuReducer = (state = defState, action) => {
       return {
         ...state,
         hide: true,
-        menu: true,
         showAll: false,
       };
     case "STARTOGG":

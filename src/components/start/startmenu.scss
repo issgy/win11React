@@ -15,7 +15,7 @@
   font-size: 0.8em;
   transition: all ease-in-out 200ms;
 
-  &:hover{
+  &:hover {
     background: rgba(255, 255, 255, 0.25);
   }
 
@@ -32,18 +32,18 @@
   position: absolute;
   bottom: 10px;
   width: 520px;
+  left: 0;
+  // left: calc(50% - 260px);
   // height: 200px;
-  left:0;
-
   &[data-align="center"]{
     margin-left: auto;
     margin-right: auto;
-    right:0;
+    right: 0;
     text-align: center;
   }
 
   &[data-align="left"]{
-    left:8px
+    left: 8px;
   }
 
   background: rgba(255, 255, 255, 0.88);
@@ -67,11 +67,11 @@
   width: 520px;
   height: 480px;
 
-  &[data-allapps='false']{
+  &[data-allapps='false'] {
     transition: ease-in-out 200ms;
   }
 
-  &[data-allapps='true']{
+  &[data-allapps='true'] {
     margin-left: -520px;
     transition: ease-in-out 200ms;
   }
@@ -162,8 +162,21 @@
     flex-direction: column;
     align-items: center;
     margin: 10px 0;
+    position: relative;
 
-    .pnIcon::after{
+    &[value="true"] .pnIcon::before{
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 3px;
+      height: 3px;
+      border: solid 1px #88b7ee;
+      border-radius: 6px;
+      background: #1372e3;
+    }
+
+    .pnIcon::after {
       content: "";
       position: absolute;
       width: 0;
@@ -176,9 +189,6 @@
       border-radius: 4px;
     }
 
-    .pnIcon:hover::after{
-      background: rgba(255, 255, 255, 0.5);
-    }
 
     .appName {
       width: 24px;
@@ -190,6 +200,7 @@
       text-align: center;
       white-space: nowrap;
       justify-content: center;
+      cursor: default;
     }
 
     &:nth-child(6n+1) {
@@ -202,13 +213,17 @@
       align-items: flex-end;
     }
   }
+
+  .pnApp:hover .pnIcon::after {
+    background: rgba(255, 255, 255, 0.5);
+  }
 }
 
 .pnEmpty {
   pointer-events: none;
 }
 
-.recApps{
+.recApps {
   margin-top: 12px;
 }
 
@@ -245,11 +260,11 @@
   }
 }
 
-.appCont{
+.appCont {
   position: relative;
   padding: 36px 4px 36px 36px;
 
-  .stAcbar{
+  .stAcbar {
     padding-left: 12px;
     padding-right: 44px;
   }
@@ -259,14 +274,13 @@
   margin-top: 10px;
   display: flex;
   flex-direction: column;
-
   height: 400px;
   overflow-x: visible;
   overflow-y: scroll;
   transition: all ease-in-out 200ms;
   transform-origin: center;
 
-  &[data-alpha='true']{
+  &[data-alpha='true'] {
     transform: scale(0);
     opacity: 0;
     pointer-events: none;
@@ -278,7 +292,7 @@
     background-color: transparent;
   }
 
-  &:hover::-webkit-scrollbar{
+  &:hover::-webkit-scrollbar {
     display: block;
   }
 
@@ -296,7 +310,7 @@
     z-index: 1;
     cursor: pointer;
 
-    &:hover::after{
+    &:hover::after {
       content: "";
       position: absolute;
       width: 94%;
@@ -308,7 +322,7 @@
       background: rgba(255, 255, 255, 0.4);
     }
 
-    .ltName{
+    .ltName {
       width: 18px;
       text-align: center;
       font-size: 0.76em;
@@ -326,7 +340,7 @@
   }
 }
 
-.alphaBox{
+.alphaBox {
   position: absolute;
   top: 14%;
   width: 94%;
@@ -337,14 +351,14 @@
   transform-origin: center;
   transition: all ease-in-out 200ms;
 
-  &[data-alpha='false']{
+  &[data-alpha='false'] {
     opacity: 0;
     transform: scale(2);
     pointer-events: none;
   }
 }
 
-.alphaCont{
+.alphaCont {
   margin-left: -48px;
   width: 160px;
   height: 280px;
@@ -354,12 +368,12 @@
   color: #010101;
   cursor: pointer;
 
-  .allApp{
+  .allApp {
     display: grid;
     place-items: center;
   }
 
-  .dullApp{
+  .dullApp {
     cursor: default;
     color: rgba(0, 0, 0, 0.36);
   }

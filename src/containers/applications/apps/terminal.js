@@ -38,7 +38,7 @@ export const WnTerminal = () => {
     tmpStack.push(pwd + ">" + cmd);
 
     const cmdArr = cmd.split(" ");
-    const type = cmdArr[0].trim();
+    const type = cmdArr[0].trim().toLowerCase();
     // 截取命令后面的内容
     const arg = (cmdArr.splice(1, cmdArr.length).join(" ") || "").trim();
 

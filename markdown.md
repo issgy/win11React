@@ -60,3 +60,4 @@ reducers 文件夹新增 apps.js 用于记录界面状态
 ## 9.23:
 
 1、完成了鼠标右键 taskbar 栏展示菜单功能
+2、fix bugs
