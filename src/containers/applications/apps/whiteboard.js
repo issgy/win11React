@@ -72,13 +72,19 @@ export const WhiteBoard = () => {
                       value="erz"
                       data-active={eraze}
                       onClick={action}
+                      key={i}
                     >
                       <Image src="icon/ui/marker" />
                     </div>
                   );
                 } else if (tool === "reset") {
                   return (
-                    <div className="ptool prtclk" onClick={action} value="rst">
+                    <div
+                      className="ptool prtclk"
+                      onClick={action}
+                      value="rst"
+                      key={i}
+                    >
                       <Image src="icon/ui/dustbin" />
                     </div>
                   );
@@ -89,6 +95,7 @@ export const WhiteBoard = () => {
                       onClick={action}
                       data-active={color == tool && !eraze}
                       value={tool}
+                      key={i}
                     >
                       <Mark color={tool} />
                     </div>

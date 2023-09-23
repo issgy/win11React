@@ -53,11 +53,25 @@ const Taskbar = () => {
     <div className="taskbar">
       <div className="taskcont">
         {/* taskbar中间图标 */}
-        <div className="tasksCont" data-side={tasks.align}>
+        <div className="tasksCont" data-side={tasks.align} data-menu="task">
           <div className="tsbar" onMouseOut={hidePrev}>
             <Icon className="tsIcon" src="home" width={22} click="STARTOGG" />
-            <Icon className="tsIcon" src="search" width={22} click="STARTSRC" />
-            <Icon className="tsIcon" src="widget" width={22} click="WIDGTOGG" />
+            {tasks.search ? (
+              <Icon
+                className="tsIcon"
+                src="search"
+                width={22}
+                click="STARTSRC"
+              />
+            ) : null}
+            {tasks.widgets ? (
+              <Icon
+                className="tsIcon"
+                src="widget"
+                width={22}
+                click="WIDGTOGG"
+              />
+            ) : null}
             {tasks.apps.map((task, i) => {
               const isHidden = task.hide;
               const isActive = task.z === apps.hz;

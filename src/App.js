@@ -16,7 +16,8 @@ import { useDispatch } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
-  window.addEventListener("click", (event) => {
+
+  const hideAll = (event) => {
     const ess = [
       ["START", "STARTHID"],
       ["PANE", "PANEHIDE"],
@@ -41,28 +42,32 @@ function App() {
         dispatch({ type: item[1] });
       }
     });
+  };
+
+  window.addEventListener("click", (e) => {
+    hideAll(e);
   });
 
   window.addEventListener("contextmenu", (e) => {
+    hideAll(e);
     e.preventDefault();
-  });
 
-  const rightClick = (event) => {
-    if (event.target.getAttribute("class") === "desktop") {
+    if (e.target.dataset.menu != null) {
       dispatch({
         type: "MENUSHOW",
         payload: {
-          top: event.clientY,
-          left: event.clientX,
+          top: e.clientY,
+          left: e.clientX,
+          menu: e.target.dataset.menu,
         },
       });
     }
-  };
+  });
 
   return (
     <div className="App">
       <Background />
-      <div className="desktop" onContextMenu={rightClick}>
+      <div className="desktop" data-menu="desk">
         <DesktopApp />
         {Object.keys(Applications).map((key, i) => {
           const WinApp = Applications[key];

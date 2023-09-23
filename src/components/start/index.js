@@ -73,6 +73,7 @@ export const DesktopApp = () => {
 };
 
 export const StartMenu = () => {
+  const align = useSelector((state) => state.taskbar.align);
   const start = useSelector((state) => {
     var arr = state.startmenu;
     /* 确保 pnApps 数组的长度是6的倍数，如果不是，就补充添加足够的空元素使其长度达到6的倍数。
@@ -163,6 +164,7 @@ export const StartMenu = () => {
       className="startMenu dpShad"
       data-hide={start.hide}
       style={{ "--prefix": "START" }}
+      data-align={align}
     >
       {start.menu ? (
         <>

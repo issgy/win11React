@@ -6,25 +6,17 @@ const defState = {
   prev: false,
   prevApp: "",
   prevPos: 0,
+  search: true,
+  widgets: true,
 };
 
 const taskReducer = (state = defState, action) => {
   switch (action.type) {
-    // case "TASKCEN":
-    //   return {
-    //     apps: state.apps,
-    //     align: "center",
-    //   };
-    // case "TASKLEF":
-    //   return {
-    //     apps: state.apps,
-    //     align: "left",
-    //   };
-    // case "TASKTOG":
-    //   return {
-    //     apps: state.apps,
-    //     align: state.align === "left" ? "center" : "left",
-    //   };
+    case "TASKTOG":
+      return {
+        ...state,
+        align: state.align === "left" ? "center" : "left",
+      };
     case "TASKPSHOW":
       return {
         ...state,
@@ -36,6 +28,16 @@ const taskReducer = (state = defState, action) => {
       return {
         ...state,
         prev: false,
+      };
+    case "TASKSRCH":
+      return {
+        ...state,
+        search: action.payload === "true",
+      };
+    case "TASKWIDG":
+      return {
+        ...state,
+        widgets: action.payload === "true",
       };
     default:
       return state;
