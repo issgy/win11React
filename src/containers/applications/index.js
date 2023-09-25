@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import "./tabs.scss";
 import "./tab2.scss";
 import "./wnapp.css";
+import "./apps/assets/spotify.scss";
 
 export * from "./apps/edge";
 
@@ -22,6 +23,8 @@ export * from "./apps/explorer";
 export * from "./apps/whiteboard";
 
 export * from "./apps/about";
+
+export * from "./apps/spotify";
 
 export const ScreenPreview = () => {
   const tasks = useSelector((state) => state.taskbar);

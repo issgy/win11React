@@ -1,3 +1,5 @@
+@import url('https://db.onlinewebfonts.com/c/1ccdd11fd9d1d81756c40d7acb17d0aa?family=Spotify');
+
 .edgeBrowser{
   background: rgb(231, 234, 236);
 }
@@ -24,4 +26,8 @@
 
 .msfiles, .whiteBoard{
   background: #fefefe;
+}
+
+.spotify {
+  background: rgb(24, 24, 24);
 }

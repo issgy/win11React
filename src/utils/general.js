@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
+import * as AllIcons from "./icons";
 
 import "./general.scss";
 
@@ -33,59 +34,82 @@ export const Icon = (props) => {
       dispatch(action);
     }
   };
-  return (
-    <>
-      {props.fafa == null ? (
-        <div
-          className={`uicon ${props.className || ""} ${prtclk}`}
-          data-open={props.open != null}
+
+  if (props.fafa != null) {
+    return (
+      <div
+        className={`uicon prtclk ${props.className || ""}`}
+        onClick={props.onClick || (props.click && clickDispatch) || null}
+        data-action={props.click}
+        data-payload={props.payload}
+      >
+        <FontAwesomeIcon
+          data-flip={props.flip != null}
+          data-invert={props.invert != null ? "true" : "false"}
+          data-rounded={props.rounded != null ? "true" : "false"}
+          style={{
+            width: props.width,
+            height: props.height || props.width,
+            color: props.color || null,
+            margin: props.margin || null,
+          }}
+          icon={
+            props.reg == null ? FaIcons[props.fafa] : FaRegIcons[props.fafa]
+          }
+        />
+      </div>
+    );
+  } else if (props.icon != null) {
+    var CustomIcon = AllIcons[props.icon];
+    return (
+      <div
+        className={`uicon prtclk ${props.className || ""}`}
+        onClick={props.onClick || (props.click && clickDispatch) || null}
+        data-action={props.click}
+        data-payload={props.payload}
+      >
+        <CustomIcon
+          data-flip={props.flip != null}
+          data-invert={props.invert != null ? "true" : "false"}
+          data-rounded={props.rounded != null ? "true" : "false"}
+          style={{
+            width: props.width,
+            height: props.height || props.width,
+            fill: props.color || null,
+            margin: props.margin || null,
+          }}
+        />
+      </div>
+    );
+  } else {
+    return (
+      <div
+        className={`uicon ${props.className || ""} ${prtclk}`}
+        data-open={props.open != null}
+        data-action={props.click}
+        data-active={props.active}
+        data-payload={props.payload}
+        onClick={props.onClick || (props.pr && clickDispatch) || null}
+      >
+        <img
+          width={props.width}
           data-action={props.click}
-          data-active={props.active}
           data-payload={props.payload}
-          onClick={props.onClick || (props.pr && clickDispatch) || null}
-        >
-          <img
-            width={props.width}
-            data-action={props.click}
-            data-payload={props.payload}
-            data-click={props.click != null}
-            onClick={props.click != null ? clickDispatch : null}
-            data-flip={props.flip != null}
-            height={props.height}
-            data-invert={props.invert != null ? "true" : "false"}
-            data-rounded={props.rounded != null ? "true" : "false"}
-            src={src}
-            style={{
-              margin: props.margin || null,
-            }}
-            alt=""
-          />
-        </div>
-      ) : (
-        <div
-          className={`uicon prtclk ${props.className || ""}`}
-          onClick={props.onClick || (props.click && clickDispatch) || null}
-          data-action={props.click}
-          data-payload={props.payload}
-        >
-          <FontAwesomeIcon
-            data-flip={props.flip != null}
-            data-invert={props.invert != null ? "true" : "false"}
-            data-rounded={props.rounded != null ? "true" : "false"}
-            style={{
-              width: props.width,
-              height: props.height || props.width,
-              color: props.color || null,
-              margin: props.margin || null,
-            }}
-            icon={
-              props.reg == null ? FaIcons[props.fafa] : FaRegIcons[props.fafa]
-            }
-          />
-        </div>
-      )}
-    </>
-  );
+          data-click={props.click != null}
+          onClick={props.click != null ? clickDispatch : null}
+          data-flip={props.flip != null}
+          height={props.height}
+          data-invert={props.invert != null ? "true" : "false"}
+          data-rounded={props.rounded != null ? "true" : "false"}
+          src={src}
+          style={{
+            margin: props.margin || null,
+          }}
+          alt=""
+        />
+      </div>
+    );
+  }
 };
 
 // 界面最上部的栏
@@ -158,17 +182,40 @@ export const ToolBar = (props) => {
 };
 
 export const Image = (props) => {
-  const src = `/img/${(props.dir ? props.dir + "/" : "") + props.src}.png`;
+  const dispatch = useDispatch();
+  let src = `/img/${(props.dir ? props.dir + "/" : "") + props.src}.png`;
+
+  if (props.ext != null) {
+    src = props.src;
+  }
+
+  const errorHandler = (e) => {
+    e.target.src = props.err;
+  };
+
+  const clickDispatch = (e) => {
+    const action = {
+      type: e.target.dataset.action,
+      payload: e.target.dataset.payload,
+    };
+
+    if (action.type) {
+      dispatch(action);
+    }
+  };
 
   return (
     <div
-      className={`imageCont ${props.className || ""}`}
+      className={`imageCont prtclk ${props.className || ""}`}
       id={props.id}
       style={{
         backgroundImage: props.back && `url(${src})`,
       }}
       data-back={props.back != null}
       data-var={props.var}
+      onClick={props.onClick || (props.click && clickDispatch)}
+      data-action={props.click}
+      data-payload={props.payload}
     >
       {!props.back ? (
         <img
@@ -178,6 +225,7 @@ export const Image = (props) => {
           data-var={props.var}
           src={src}
           alt=""
+          onError={errorHandler}
         />
       ) : null}
     </div>

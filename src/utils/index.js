@@ -1,4 +1,4 @@
-import icons from "./icons";
+import icons from "./apps";
 
 let iconIdx = {
   taskbar: [3, 4, 5, 6], //任务栏的倒数四个图标
