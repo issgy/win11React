@@ -66,3 +66,13 @@ reducers 文件夹新增 apps.js 用于记录界面状态
 
 1、完成 spotify 界面
 播放列表界面未完成、播放条的功能未实现
+
+## 9.26:
+
+1、完善 spotify 界面部分功能：
+歌曲切换、暂停、随机播放、顺序播放、播放进度条拖动、音量进度条拖动、喇叭关闭开启、歌曲列表查看、Favorite Albums 的点击功能
+2、未完成：
+Favorite Songs 点击对应歌曲发请求获取资源已实现但未能自动播放
+Made for you
+Favorite Artists
+PLAYLISTS

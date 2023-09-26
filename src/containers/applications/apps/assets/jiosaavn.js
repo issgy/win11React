@@ -2,7 +2,7 @@
 import axios from "axios";
 
 const search_url = "/search?query=";
-const song_url = "/song?id=";
+const song_url = "/song?pids=";
 const album_url = "/album?id=";
 const playlist_url =
   "/api.php?__call=playlist.getDetails&_format=json&cc=in&_marker=0%3F_marker%3D0&listid=";
@@ -31,6 +31,7 @@ class JioSaavn {
 
     this.dfdata = [
       {
+        id: "Szz0RZFb",
         album: "Raincoat",
         albumArt:
           "https://c.saavncdn.com/432/Raincoat-Hindi-2004-20210125130707-150x150.jpg",
@@ -39,10 +40,20 @@ class JioSaavn {
         duration: 297,
         src: "http://aac.saavncdn.com/432/545714e974b6138352be162e6f13c4f5_160.mp4",
       },
+      {
+        id: "cgM-pRO9",
+        album: "Ek Nazar",
+        albumArt:
+          "https://c.saavncdn.com/228/Ek-Nazar-Hindi-2020-20200518060806-150x150.jpg",
+        name: "Ek Nazar",
+        artist: "Kavita Seth",
+        duration: 297,
+        src: "http://aac.saavncdn.com/432/545714e974b6138352be162e6f13c4f5_160.mp4",
+      },
     ];
 
     this.instance = axios.create({
-      baseURL: "https://saavn.me",
+      baseURL: "https://dev.saavn.me",
     });
   }
 
@@ -61,7 +72,7 @@ class JioSaavn {
     });
   }
 
-  fetchSongs(pids) {
+  fetchSong(pids) {
     if (typeof pids != "object") pids = [pids];
     return new Promise((resolve, reject) => {
       this.fetch(song_url + pids.join(","))
@@ -72,7 +83,12 @@ class JioSaavn {
     });
   }
 
-  mapToSong(obj) {
+  fetchSongs(pids) {
+    if (typeof pids != "object") pids = [pids];
+    return Promise.all(pids.map((id) => this.fetchSong(id).then((r) => r)));
+  }
+
+  mapToSong({ ...obj }) {
     return {
       album: obj.album_name,
       albumArt: obj.song_image,
@@ -135,6 +151,7 @@ class JioSaavn {
     return res;
   }
 
+  // 返回打乱后的数组
   shuffle(arr) {
     var currentIndex = arr.length,
       temporaryValue,
@@ -158,6 +175,7 @@ class JioSaavn {
     return arr;
   }
 
+  // 将数组中第i个截取掉，返回新数组
   sliceArr(arr, i) {
     return arr.slice(i + 1, arr.length).concat(arr.slice(0, i));
   }

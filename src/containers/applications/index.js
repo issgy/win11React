@@ -32,12 +32,14 @@ export const ScreenPreview = () => {
   useEffect(() => {
     if (tasks.prevApp != "" && tasks.prev) {
       var wnapp = document.getElementById(tasks.prevApp + "App");
-      var clone = wnapp.cloneNode(true);
-      clone.id = "prevsc";
-      clone.dataset.hide = "false";
-      clone.dataset.max = "true";
-      clone.dataset.size = "full";
-      clone.style.zIndex = "1";
+      if (wnapp) {
+        var clone = wnapp.cloneNode(true);
+        clone.id = "prevsc";
+        clone.dataset.hide = "false";
+        clone.dataset.max = "true";
+        clone.dataset.size = "full";
+        clone.style.zIndex = "1";
+      }
       var parentDiv = document.getElementById("prevApp");
       var prevsc = document.getElementById("prevsc");
 

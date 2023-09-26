@@ -12,7 +12,6 @@ const { round, max, floor, ceil } = Math;
 export const Spotify = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.spotify);
-  const [tab, setTab] = useState(5); //0-9代表左侧菜单从Home到English的切换
 
   const libr = [
     "Made For You",
@@ -23,16 +22,17 @@ export const Spotify = () => {
   ];
   const plays = ["Hip Hop", "Hindi", "English"];
 
+  const [tab, setTab] = useState(0); //0-9代表左侧菜单从Home到English的切换
   const [playd, setPlay] = useState({}); // {type: "album",tdata: "23601363"}
-  const [queue, setQueue] = useState([{}]); //播放的歌曲队列，默认为空
-  const [curr, setCurr] = useState(0); //当前播放的歌曲序列
-  const [shfle, setShfle] = useState(0); //当前播放模式（随机）
-  const [mxqueque, setMxq] = useState([]);
+  const [queue, setQueue] = useState([{}]); //播放的所有歌曲列表，默认为空对象数组
+  const [curr, setCurr] = useState(0); //当前播放的歌曲序列号
+  const [shfle, setShfle] = useState(0); //当前播放模式（0:正常的顺序播放，1：随机播放)
+  const [mxqueque, setMxq] = useState([]); //随机播放的歌曲队列
   const [paused, setPause] = useState(true); //是否暂停
-  const [repeat, setRepeat] = useState(0); //是否重复
-  const [prog, setProg] = useState(0);
+  const [repeat, setRepeat] = useState(0); //是否重复(0：不重复，1：重复)
+  const [prog, setProg] = useState(0); //播放条秒数
   const [perProg, setPerProg] = useState(0);
-  const [volume, setVolume] = useState(50);
+  const [volume, setVolume] = useState(50); //音量大小，默认为50
 
   const action = (e) => {
     const act = e.target.dataset.action,
@@ -41,6 +41,7 @@ export const Spotify = () => {
     if (act === "discv") {
       setTab(payload);
     } else if (act === "shuffle") {
+      //随机播放
       const n = queue.length;
       if (shfle) setShfle(0);
       else {
@@ -48,14 +49,78 @@ export const Spotify = () => {
         setMxq(jiosaavn.mixQueue(n));
       }
     } else if (act === "prev") {
+      // 上一首
       setPause(false);
+      setProg(0);
+      setPerProg(0);
+      let ip = (curr - 1 + queue.length) % queue.length;
+      if (shfle) ip = mxqueque[curr];
+      setCurr(ip);
+    } else if (act === "play") {
+      // 播放
+      setPause(false);
+    } else if (act === "pause") {
+      // 暂停
+      setPause(true);
+    } else if (act === "next") {
+      // 下一首
+      setPause(false);
+      setProg(0);
+      setPerProg(0);
+      let ip = (curr + 1) % queue.length;
+      if (shfle) ip = mxqueque[curr];
+      setCurr(ip);
+    } else if (act === "repeat") {
+      setRepeat(repeat + 1);
+    } else if (act === "mute") {
+      // 是否静音
+      setVolume(volume === 0 ? 100 : 0);
+    } else if (act === "volume") {
+      // 调整声音的条
+      setVolume(e.target.value);
+    } else if (act === "album") {
+      //Favorite Albums
+      if (payload.includes(",")) {
+        var pos = JSON.parse(payload),
+          aldata = data.home[pos[0]].cards[pos[1]].data;
+      } else var aldata = JSON.parse(payload);
+      setTab(39);
+      setPlay({
+        type: act,
+        tdata: aldata,
+      });
+    } else if (act === "song") {
+      //Favorite Songs
+      if (payload.includes(",")) {
+        const pos = JSON.parse(payload);
+        var songid = data.home[pos[0]].cards[pos[1]].data;
+      } else var songid = JSON.parse(payload);
+
+      if (songid != queue[curr].id) {
+        jiosaavn
+          .fetchSong(songid)
+          .then((res) => {
+            setQueue([jiosaavn.mapToSong(...res)]);
+            setPause(false);
+            setProg(0);
+            setPerProg(0);
+            setCurr(0);
+            setMxq([0]);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        setPause(!paused);
+      }
+    } else if (act === "mix") {
+      //Made for you
+      console.log("mix");
     }
   };
 
+  // 点击播放按钮后播放条前进，此函数一直执行
   const handleProg = (e) => {
     setProg(floor(e.playedSeconds));
     setPerProg(e.played);
-    console.log(prog);
   };
 
   const handleFinish = () => {
@@ -66,8 +131,30 @@ export const Spotify = () => {
     }
   };
 
+  const action2 = (type, data) => {
+    if (type === "playall") {
+      setQueue(data.map((item) => jiosaavn.mapToSong(item)));
+      setPause(false);
+      setProg(0);
+      setPerProg(0);
+      setCurr(0);
+      setMxq(jiosaavn.mixQueue(data.length));
+    } else if (type === "clickq") {
+      setProg(0);
+      setPerProg(0);
+      setPause(false);
+      setCurr(data);
+    }
+  };
+
+  // 播放条拉动执行此函数
   const handleChange = (e) => {
     console.log("change");
+    const audiosrc = document.getElementById("audiosrc");
+    const ip = e.target.value;
+    audiosrc.currentTime = ip;
+    setProg(floor(ip));
+    setPerProg(ip / queue[curr].duration);
   };
 
   useEffect(() => {
@@ -79,7 +166,7 @@ export const Spotify = () => {
           console.log(err);
         });
     }
-  });
+  }, [queue]);
 
   return (
     <div
@@ -163,17 +250,44 @@ export const Spotify = () => {
           <div className="spscreen thinScroll lightScroll" id="sphome">
             <div className="h-max relative">
               <div className="absolute w-full pb-8">
-                {tab == 0 ? <Home tab={tab} action={action} /> : null}
-                {tab > 1 && tab < 2 + libr.length ? (
-                  <Home tab={tab} action={action} />
+                {tab == 0 ? (
+                  <Home
+                    tab={tab}
+                    action={action}
+                    paused={paused}
+                    sid={queue[curr] && queue[curr].id}
+                  />
                 ) : null}
-                {tab > 6 && tab < 10 ? <Playlist /> : null}
-                {tab == 39 ? <Playlist {...playd} /> : null}
+                {tab > 1 && tab < 2 + libr.length ? (
+                  <Home
+                    tab={tab}
+                    action={action}
+                    paused={paused}
+                    sid={queue[curr] && queue[curr].id}
+                  />
+                ) : null}
+                {tab > 6 && tab < 10 ? (
+                  <Playlist
+                    {...{ action, paused, action2 }}
+                    sid={queue[curr] && queue[curr].id}
+                  />
+                ) : null}
+                {tab == 39 ? (
+                  <Playlist
+                    {...playd}
+                    {...{ action, paused, action2 }}
+                    sid={queue[curr] && queue[curr].id}
+                  />
+                ) : null}
+                {tab == 10 ? (
+                  <Queue {...{ queue, curr, paused, action, action2 }} />
+                ) : null}
               </div>
             </div>
           </div>
           {/* 下方的播放栏 */}
           <div className="splayer">
+            {/* 左侧 */}
             <div className="snfo flex items-center">
               {queue[curr].albumArt ? (
                 <Image src={queue[curr].albumArt} w={56} ext />
@@ -189,6 +303,7 @@ export const Spotify = () => {
                 </div>
               </div>
             </div>
+            {/* 中间 */}
             <div className="songAct" data-prtclk={!queue[curr].name}>
               <div className="flex items-center">
                 <Icon
@@ -277,6 +392,7 @@ export const Spotify = () => {
                 </div>
               </div>
             </div>
+            {/* 右侧 */}
             <div className="sctrl flex items-center justify-between">
               <div
                 className="prtclk handcr mr-6"
@@ -302,7 +418,7 @@ export const Spotify = () => {
                   }
                   onClick={action}
                   click="mute"
-                ></Icon>
+                />
                 <div className="relative flex items-center">
                   <input
                     className="cleanInput volInp"
@@ -327,7 +443,8 @@ export const Spotify = () => {
   );
 };
 
-const Home = ({ tab, action }) => {
+const Home = ({ tab, action, sid, paused }) => {
+  const [tabval, setTabval] = useState(0);
   const randomHue = (j) => {
     const date = new Date();
     let val = date.getHours();
@@ -355,6 +472,10 @@ const Home = ({ tab, action }) => {
     if (prt) {
       prt.scrollTop = (80 + max(0, tab - 2) * 360) * (tab != 0);
     }
+  }, [tabval]);
+
+  useEffect(() => {
+    setTabval(tab);
   });
 
   return (
@@ -372,7 +493,7 @@ const Home = ({ tab, action }) => {
           <div className="text-gray-100 font-bold">{bar.name}</div>
           <div className="text-xs font-semibold tracking-wider">{bar.desc}</div>
           <div className="w-full h-px mt-2"></div>
-          <div className="w-full pt-1 overflow-x-scroll thinScroll lightScroll -ml-3">
+          <div className="w-full pt-1 overflow-x-scroll smoothsc noscroll -ml-3">
             <div className="w-max flex">
               {bar.cards.map((card, j) => (
                 <div
@@ -396,14 +517,19 @@ const Home = ({ tab, action }) => {
                     err="/img/asset/mixdef.jpg"
                     onClick={action}
                     click={card.type}
-                    payload={JSON.stringify(card.data)}
+                    payload={"[" + i + "," + j + "]"}
                   />
                   <div className="sover p-4 nopt">
                     {card.type == "mix" ? card.name : null}
                   </div>
-                  {card.type == "song" ? (
+                  {card.type == "song" && sid != card.data ? (
                     <div className="fplay">
                       <div className="tria"></div>
+                    </div>
+                  ) : null}
+                  {card.type == "song" && sid == card.data ? (
+                    <div className="fpause">
+                      <div className={paused ? "tria" : "fbars"}></div>
                     </div>
                   ) : null}
                   <div className="mt-4 mb-1 text-gray-100 text-sm font-semibold">
@@ -422,15 +548,11 @@ const Home = ({ tab, action }) => {
   );
 };
 
-const Playlist = ({ type, tdata }) => {
+const Playlist = ({ type, tdata, action, action2, sid, paused }) => {
   const [data, setData] = useState({ fake: true });
   const [loaded, setLoaded] = useState(false);
   const [ptype, setPtype] = useState(true);
   const [totTime, setTotime] = useState(0);
-  const src =
-    "https://i.scdn.co/image/ab67706c0000bebb5b59fe8de92d65b0becde7ef";
-  const abart =
-    "https://c.saavncdn.com/432/Raincoat-Hindi-2004-20210125130707-150x150.jpg";
 
   useEffect(() => {
     if (data.fake) {
@@ -455,6 +577,14 @@ const Playlist = ({ type, tdata }) => {
           .catch((err) => {
             console.log(err);
           });
+      } else if (type === "mix") {
+        setPtype(true);
+        setData(tdata);
+        let tmptot = 0;
+        for (var i = 0; i < tdata.songs.length; i++) {
+          tmptot += parseInt(tdata.songs[i].song_duration);
+        }
+        setTotime(tmptot);
       }
     }
   }, [data]);
@@ -471,17 +601,26 @@ const Playlist = ({ type, tdata }) => {
         />
         <div className="playdet ml-6 text-gray-100 flex flex-col justify-end">
           <div className="text-xs font-bold uppercase">{type}</div>
-          <div className="playtitle">{data.album_name}</div>
+          <div
+            className="playtitle"
+            dangerouslySetInnerHTML={{ __html: data.album_name }}
+          ></div>
           <div className="text-sm font-semibold">
             {(data.album_artist && data.album_artist.split(", ").join(" • ")) ||
               ""}{" "}
             <span className="text-gray-400 text-xs">
               • {data.year || "2020"} •{" "}
-              {(data.songs && data.songs.length) || "0"} songs,{" "}
+              {(data.songs && data.songs.length) || "0"} song
+              {data.songs && data.songs.length > 1 ? "s" : null},{" "}
               {jiosaavn.formatPeriod(totTime)}
             </span>
           </div>
-          <div className="playbtn">PLAY</div>
+          <div
+            className="playbtn"
+            onClick={() => action2("playall", data.songs)}
+          >
+            PLAY
+          </div>
         </div>
       </div>
       <div className="infph"></div>
@@ -498,8 +637,23 @@ const Playlist = ({ type, tdata }) => {
         <div className="hr"></div>
         {data.songs &&
           data.songs.map((song, i) => (
-            <div className="srow handcr">
-              <div className="sidx">{i + 1}</div>
+            <div
+              className="srow handcr prtclk"
+              data-action="song"
+              data-payload={`"` + song.song_id + `"`}
+              onClick={action}
+              key={i}
+            >
+              {sid != song.song_id ? (
+                <div className="sidx font-semibold">{i + 1}</div>
+              ) : null}
+              {sid == song.song_id && paused ? (
+                <div className="sidx font-semibold gcol">{i + 1}</div>
+              ) : null}
+              {sid == song.song_id && !paused ? (
+                <Icon src="./img/asset/equaliser.gif" ext width={14} />
+              ) : null}
+
               <div className="scol1">
                 {ptype ? (
                   <Image
@@ -511,16 +665,21 @@ const Playlist = ({ type, tdata }) => {
                   />
                 ) : null}
                 <div className="scolsong flex flex-col" data-play={ptype}>
-                  <div className="font-semibold capitalize text-gray-100">
-                    {song.song_name}
-                  </div>
-                  <div className="font-semibold capitalize text-xs mt-1">
-                    {song.song_artist}
-                  </div>
+                  <div
+                    className={
+                      "font-semibold capitalize text-gray-100" +
+                      (sid == song.song_id ? " gcol" : "")
+                    }
+                    dangerouslySetInnerHTML={{ __html: song.song_name }}
+                  ></div>
+                  <div
+                    className="font-semibold capitalize text-xs mt-1"
+                    dangerouslySetInnerHTML={{ __html: song.song_artist }}
+                  ></div>
                 </div>
               </div>
               <div className="scol2 font-semibold">
-                {ptype ? "Raincoat" : null}
+                {ptype ? song.album_name : null}
               </div>
               <div className="scol3 font-semibold">
                 {ptype ? "Apr 14, 2021" : null}
@@ -533,9 +692,64 @@ const Playlist = ({ type, tdata }) => {
       </div>
       {type != "play" ? (
         <div className="text-xss font-semibold acol mt-6">
-          {data.songs && data.songs[0] && data.songs[0].copyright}
+          {type == "album" &&
+            data.songs &&
+            data.songs[0] &&
+            data.songs[0].copyright}
         </div>
       ) : null}
+    </div>
+  );
+};
+
+const Queue = ({ queue, curr, action, action2, paused }) => {
+  return (
+    <div className="mt-12">
+      <div className="text-5xl text-gray-100 font-bold">Play Queue</div>
+      <div className="text-gray-400 font-semibold my-4">Now playing</div>
+      <div className="songCont acol prtclk acol py-2 pr-12">
+        <div className="w-10 text-center gcol">
+          {paused ? (
+            "1"
+          ) : (
+            <Icon src="./img/asset/equaliser.gif" ext width={16} />
+          )}
+        </div>
+        <Image src={queue[curr].albumArt} ext w={40} />
+        <div className="flex flex-col ml-4">
+          <div className="capitalize font-semibold gcol">
+            {queue[curr].name}
+          </div>
+          <div className="capitalize font-medium text-sm">
+            {queue[curr].artist}
+          </div>
+        </div>
+        <div className="mx-auto font-medium w-36">{queue[curr].album}</div>
+        <div className="ml-auto font-medium">
+          {jiosaavn.formatTime(queue[curr].duration)}
+        </div>
+      </div>
+      <div className="text-gray-400 font-semibold mt-12 mb-6">Next up</div>
+      {jiosaavn.sliceArr(queue, curr).map((qs, i) => {
+        return (
+          <div
+            className="songCont handcr prtclk acol pr-12 py-2"
+            key={i}
+            onClick={() => action2("clickq", (curr + i + 1) % queue.length)}
+          >
+            <div className="w-10 text-center font-semibold">{i + 2}</div>
+            <Image src={qs.albumArt} w={40} ext />
+            <div className="flex flex-col">
+              <div className="capitalize font-semibold gcol">{qs.name}</div>
+              <div className="capitalize font-medium text-sm">{qs.artist}</div>
+            </div>
+            <div className="mx-auto font-medium w-36">{qs.album}</div>
+            <div className="ml-auto font-medium">
+              {jiosaavn.formatTime(qs.duration)}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
