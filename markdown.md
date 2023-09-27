@@ -76,3 +76,8 @@ Favorite Songs 点击对应歌曲发请求获取资源已实现但未能自动�
 Made for you
 Favorite Artists
 PLAYLISTS
+
+## 9.27:
+
+1、完成 Made for you 点击功能
+2、PLAYLISTS

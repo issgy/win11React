@@ -85,7 +85,13 @@ class JioSaavn {
 
   fetchSongs(pids) {
     if (typeof pids != "object") pids = [pids];
-    return Promise.all(pids.map((id) => this.fetchSong(id).then((r) => r)));
+    return Promise.all(
+      pids.map((id) =>
+        this.fetchSong(id)
+          .then((r) => r)
+          .catch((err) => null)
+      )
+    ).then((songs) => songs.filter((song) => song != null));
   }
 
   mapToSong({ ...obj }) {

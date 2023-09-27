@@ -20,10 +20,9 @@ export const Spotify = () => {
     "Albums",
     "Artist",
   ];
-  const plays = ["Hip Hop", "Hindi", "English"];
 
   const [tab, setTab] = useState(0); //0-9代表左侧菜单从Home到English的切换
-  const [playd, setPlay] = useState({}); // {type: "album",tdata: "23601363"}
+  const [playd, setPlay] = useState({}); // {type: "album/mix/playlist",tdata: 'xxxxxx'/{.....}}
   const [queue, setQueue] = useState([{}]); //播放的所有歌曲列表，默认为空对象数组
   const [curr, setCurr] = useState(0); //当前播放的歌曲序列号
   const [shfle, setShfle] = useState(0); //当前播放模式（0:正常的顺序播放，1：随机播放)
@@ -33,6 +32,7 @@ export const Spotify = () => {
   const [prog, setProg] = useState(0); //播放条秒数
   const [perProg, setPerProg] = useState(0);
   const [volume, setVolume] = useState(50); //音量大小，默认为50
+  const [saved, setSaved] = useState({});
 
   const action = (e) => {
     const act = e.target.dataset.action,
@@ -114,6 +114,83 @@ export const Spotify = () => {
     } else if (act === "mix") {
       //Made for you
       console.log("mix");
+      const pos = JSON.parse(payload),
+        aldata = data.home[pos[0]].cards[pos[1]];
+
+      let songArr = [],
+        key = aldata.name,
+        tdata = {
+          album_name: aldata.name,
+          album_image: aldata.img,
+          year: 2021,
+          album_artist: aldata.desc,
+        };
+
+      if (saved[key] != null) {
+        songArr = saved[key];
+        setPlay({
+          type: act,
+          tdata: {
+            ...tdata,
+            songs: songArr,
+          },
+        });
+
+        setTab(39);
+      } else {
+        const arr = aldata.data;
+        jiosaavn.fetchSongs(arr).then((res) => {
+          songArr = res;
+          saved[key] = songArr;
+          setSaved(saved);
+          setPlay({
+            type: act,
+            tdata: {
+              ...tdata,
+              songs: songArr,
+            },
+          });
+        });
+        console.log(playd);
+        setTab(39);
+      }
+    } else if (act === "playlist") {
+      //PLAYLIST
+      const aldata = data.playlist[payload];
+      let songArr = [];
+      const key = "play_" + aldata.name,
+        tdata = {
+          album_name: aldata.name,
+          album_image: aldata.img,
+          year: 2020 + aldata.name == "Community",
+          album_artist: aldata.desc,
+        };
+      if (saved[key] != null) {
+        songArr = saved[key];
+        setPlay({
+          type: act,
+          tdata: {
+            ...tdata,
+            songs: songArr,
+          },
+        });
+        setTab(39);
+      } else {
+        setTab(39);
+        var arr = aldata.data;
+        jiosaavn.fetchSongs(arr).then((res) => {
+          songArr = res;
+          saved[key] = songArr;
+          setSaved(saved);
+          setPlay({
+            type: act,
+            tdata: {
+              ...tdata,
+              songs: songArr,
+            },
+          });
+        });
+      }
     }
   };
 
@@ -131,19 +208,19 @@ export const Spotify = () => {
     }
   };
 
-  const action2 = (type, data) => {
+  const action2 = (type, payload) => {
     if (type === "playall") {
-      setQueue(data.map((item) => jiosaavn.mapToSong(item)));
+      setQueue(payload.map((item) => jiosaavn.mapToSong(item)));
       setPause(false);
       setProg(0);
       setPerProg(0);
       setCurr(0);
-      setMxq(jiosaavn.mixQueue(data.length));
+      setMxq(jiosaavn.mixQueue(payload.length));
     } else if (type === "clickq") {
       setProg(0);
       setPerProg(0);
       setPause(false);
-      setCurr(data);
+      setCurr(payload);
     }
   };
 
@@ -231,16 +308,16 @@ export const Spotify = () => {
                 <div className="text-gray-500 font-semibold text-xs tracking-widest mt-12 mb-4">
                   PLAYLISTS
                 </div>
-                {plays.map((play, i) => (
+                {data.playlist.map((play, i) => (
                   <div
                     className="snav mb-4 handcr text-sm font-semibold"
                     key={i}
-                    data-act={tab == i + 2 + libr.length}
+                    data-act={i + 2 + libr.length}
                     onClick={action}
-                    data-action="discv"
-                    data-payload={i + 2 + libr.length}
+                    data-action="playlist"
+                    data-payload={i}
                   >
-                    {play}
+                    {play.name}
                   </div>
                 ))}
               </div>
@@ -294,11 +371,11 @@ export const Spotify = () => {
               ) : (
                 <Icon src="./img/asset/album.png" ext width={56} />
               )}
-              <div className="ml-3">
+              <div className="sname ml-3">
                 <div className="text-sm mb-2 text-gray-100 font-semibold">
                   {queue[curr].name || "Album"}
                 </div>
-                <div className="text-xss tracking-wider text-gray-400">
+                <div className="text-xs tracking-wider text-gray-400">
                   {queue[curr].artist || "Artist"}
                 </div>
               </div>
@@ -398,13 +475,13 @@ export const Spotify = () => {
                 className="prtclk handcr mr-6"
                 onClick={action}
                 data-action="discv"
-                data-payload="10"
+                data-payload="41"
               >
                 <Icon
                   className="sficon"
                   fafa="faListUl"
                   width={14}
-                  payload={tab == 10 ? 1 : 0}
+                  payload={tab == 41 ? 1 : 0}
                 />
               </div>
               <div className="rctrl flex items-center">
@@ -555,39 +632,38 @@ const Playlist = ({ type, tdata, action, action2, sid, paused }) => {
   const [totTime, setTotime] = useState(0);
 
   useEffect(() => {
-    if (data.fake) {
-      var prt = document.getElementById("sphome");
-      if (prt) {
-        prt.scrollTop = 0;
-      }
-
-      if (type == "album") {
-        setPtype(false);
-        jiosaavn
-          .getAlbum(typeof tdata == "string" ? tdata : "")
-          .then((res) => {
-            setData(res);
-            var tmptot = 0;
-            for (var i = 0; i < res.songs.length; i++) {
-              tmptot += parseInt(res.songs[i].song_duration);
-            }
-
-            setTotime(tmptot);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else if (type === "mix") {
-        setPtype(true);
-        setData(tdata);
-        let tmptot = 0;
-        for (var i = 0; i < tdata.songs.length; i++) {
-          tmptot += parseInt(tdata.songs[i].song_duration);
-        }
-        setTotime(tmptot);
-      }
+    var prt = document.getElementById("sphome");
+    if (prt) {
+      prt.scrollTop = 0;
     }
-  }, [data]);
+
+    if (type == "album") {
+      setPtype(false);
+      jiosaavn
+        .getAlbum(typeof tdata == "string" ? tdata : "")
+        .then((res) => {
+          console.log(res);
+          setData(res);
+          var tmptot = 0;
+          for (var i = 0; i < res.songs.length; i++) {
+            tmptot += parseInt(res.songs[i].song_duration);
+          }
+
+          setTotime(tmptot);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else if (type === "mix" || type === "playlist") {
+      setPtype(true);
+      setData(tdata);
+      let tmptot = 0;
+      for (var i = 0; i < tdata.songs.length; i++) {
+        tmptot += parseInt(tdata.songs[i].song_duration);
+      }
+      setTotime(tmptot);
+    }
+  }, [tdata]);
 
   return (
     <div className="relative">
@@ -629,66 +705,79 @@ const Playlist = ({ type, tdata, action, action2, sid, paused }) => {
           <div className="font-bold text-right">#</div>
           <div className="scol1 text-xs">TITLE</div>
           <div className="text-xs">{ptype ? "ALBUM" : null}</div>
-          <div className="text-xs">{ptype ? "DATE ADDED" : null}</div>
+          <div className="text-xs">{ptype ? "YEAR" : null}</div>
           <div className="flex justify-end">
             <Icon fafa="faClock" width={16} reg />
           </div>
         </div>
         <div className="hr"></div>
         {data.songs &&
-          data.songs.map((song, i) => (
-            <div
-              className="srow handcr prtclk"
-              data-action="song"
-              data-payload={`"` + song.song_id + `"`}
-              onClick={action}
-              key={i}
-            >
-              {sid != song.song_id ? (
-                <div className="sidx font-semibold">{i + 1}</div>
-              ) : null}
-              {sid == song.song_id && paused ? (
-                <div className="sidx font-semibold gcol">{i + 1}</div>
-              ) : null}
-              {sid == song.song_id && !paused ? (
-                <Icon src="./img/asset/equaliser.gif" ext width={14} />
-              ) : null}
+          data.songs.map((item, i) => {
+            //   点击album时item为对象，点击made for you时item为数组
+            let song;
+            if (Array.isArray(item)) {
+              song = item[0];
+            } else {
+              song = item;
+            }
+            if (song) {
+              return (
+                <div
+                  className="srow handcr prtclk"
+                  data-action="song"
+                  data-payload={`"` + song.song_id + `"`}
+                  onClick={action}
+                  key={i}
+                >
+                  {sid != song.song_id ? (
+                    <div className="sidx font-semibold">{i + 1}</div>
+                  ) : null}
+                  {sid == song.song_id && paused ? (
+                    <div className="sidx font-semibold gcol">{i + 1}</div>
+                  ) : null}
+                  {sid == song.song_id && !paused ? (
+                    <Icon src="./img/asset/equaliser.gif" ext width={14} />
+                  ) : null}
 
-              <div className="scol1">
-                {ptype ? (
-                  <Image
-                    src={song.song_image}
-                    w={40}
-                    h={40}
-                    ext
-                    err="/img/asset/mixdef.jpg"
-                  />
-                ) : null}
-                <div className="scolsong flex flex-col" data-play={ptype}>
-                  <div
-                    className={
-                      "font-semibold capitalize text-gray-100" +
-                      (sid == song.song_id ? " gcol" : "")
-                    }
-                    dangerouslySetInnerHTML={{ __html: song.song_name }}
-                  ></div>
-                  <div
-                    className="font-semibold capitalize text-xs mt-1"
-                    dangerouslySetInnerHTML={{ __html: song.song_artist }}
-                  ></div>
+                  <div className="scol1">
+                    {ptype ? (
+                      <Image
+                        src={song.song_image}
+                        w={40}
+                        h={40}
+                        ext
+                        err="/img/asset/mixdef.jpg"
+                      />
+                    ) : null}
+                    <div className="scolsong flex flex-col" data-play={ptype}>
+                      <div
+                        className={
+                          "font-semibold capitalize text-gray-100" +
+                          (sid == song.song_id ? " gcol" : "")
+                        }
+                        dangerouslySetInnerHTML={{ __html: song.song_name }}
+                      ></div>
+                      <div
+                        className="font-semibold capitalize text-xs mt-1"
+                        dangerouslySetInnerHTML={{ __html: song.song_artist }}
+                      ></div>
+                    </div>
+                  </div>
+                  <div className="scol2 font-semibold">
+                    {ptype ? song.album_name : null}
+                  </div>
+                  <div className="scol3 font-semibold">
+                    {ptype ? song.year : null}
+                  </div>
+                  <div className="font-semibold flex justify-end">
+                    {jiosaavn.formatTime(song.song_duration)}
+                  </div>
                 </div>
-              </div>
-              <div className="scol2 font-semibold">
-                {ptype ? song.album_name : null}
-              </div>
-              <div className="scol3 font-semibold">
-                {ptype ? "Apr 14, 2021" : null}
-              </div>
-              <div className="font-semibold flex justify-end">
-                {jiosaavn.formatTime(song.song_duration)}
-              </div>
-            </div>
-          ))}
+              );
+            } else {
+              return null;
+            }
+          })}
       </div>
       {type != "play" ? (
         <div className="text-xss font-semibold acol mt-6">
