@@ -1,7 +1,8 @@
 "use babel";
 import axios from "axios";
 
-const search_url = "/search?query=";
+const search_song_url = "/search?query=";
+const search_album_url = "/album?id=";
 const song_url = "/song?pids=";
 const album_url = "/album?id=";
 const playlist_url =
@@ -184,6 +185,22 @@ class JioSaavn {
   // 将数组中第i个截取掉，返回新数组
   sliceArr(arr, i) {
     return arr.slice(i + 1, arr.length).concat(arr.slice(0, i));
+  }
+
+  searchQuery(query) {
+    return new Promise((resolve, reject) => {
+      this.fetch(search_song_url + query)
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
+    });
+  }
+
+  albumQuery(query) {
+    return new Promise((resolve, reject) => {
+      this.fetch(search_album_url + query)
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
+    });
   }
 }
 

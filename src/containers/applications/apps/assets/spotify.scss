@@ -1,5 +1,6 @@
 .spotify .windowScreen {
   font-family: 'Spotify', sans-serif;
+  cursor: default;
 }
 
 .spnav {
@@ -61,10 +62,7 @@
   height: 88px;
   padding: 0 16px;
   display: flex;
-  // display: grid;
   align-items: center;
-  // grid-template-columns: [snfo] 0.6fr [songAct] minmax(720px, 1.5fr) [sctrl] 142px;
-  // grid-template-columns: [snfo] 280px [songAct] 720px [sctrl] 142px;
 }
 
 .snfo {
@@ -294,13 +292,48 @@
   }
 }
 
-.scard {
+.scard{
   width: 200px;
   position: relative;
   transition: all 50ms ease-in-out;
   border-radius: 6px;
   cursor: pointer;
 
+  .sover {
+    position: absolute;
+    width: auto;
+    top: 164px;
+    z-index: 1;
+    color: #111;
+    font-weight: 900;
+    -webkit-text-stroke-width: 0.4px;
+  }
+
+  .imageCont {
+    position: relative;
+    height: 200px;
+    border-radius: 6px;
+    overflow: hidden;
+    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.4));
+  }
+
+  .leading-5 {
+    height: 42px;
+    overflow: hidden;
+    // white-space: nowrap;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  .artImg {
+    border-radius: 9999px;
+  }
+}
+
+
+.scard , .topcard{
   .fplay, .fpause {
     width: 40px;
     height: 40px;
@@ -355,38 +388,6 @@
       opacity: 1;
       transform: translateY(0);
     }
-  }
-
-  .sover {
-    position: absolute;
-    width: auto;
-    top: 164px;
-    z-index: 1;
-    color: #111;
-    font-weight: 900;
-    -webkit-text-stroke-width: 0.4px;
-  }
-
-  .imageCont {
-    position: relative;
-    height: 200px;
-    border-radius: 6px;
-    overflow: hidden;
-    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.4));
-  }
-
-  .leading-5 {
-    height: 42px;
-    overflow: hidden;
-    // white-space: nowrap;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-  }
-
-  .artImg {
-    border-radius: 9999px;
   }
 }
 
@@ -508,7 +509,7 @@
   align-items: center;
   justify-content: space-between;
   display: grid;
-  grid-template-columns: [index] 16px [first] 6fr [var1] 4fr [var2] 3fr [last] minmax(20px,1fr);
+  grid-template-columns: [index] 16px [first] 6fr [var1] 4fr [var2] 1.6fr [last] minmax(20px,1fr);
   padding: 8px;
   letter-spacing: 1px;
   border-radius: 4px;
@@ -576,4 +577,44 @@
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+}
+
+.thiker{
+  -webkit-text-stroke-width: 2px;
+  letter-spacing: 2px;
+  max-height: 48px;
+}
+
+.topcard{
+  position: relative;
+  background: #222;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  *{
+    pointer-events: none;
+  }
+
+  .fplay, .fpause {
+    top: unset;
+    bottom: 16px;
+    right: 16px;
+    transform: translateY(6px);
+    transition: all 200ms ease-in-out;
+  }
+
+  .imageCont{
+    box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.srCont {
+  border-radius: 6px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
 }
