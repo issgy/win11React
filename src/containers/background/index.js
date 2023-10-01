@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import "./index.css";
-const Background = () => {
+export const Background = () => {
   const wallpaper = useSelector((state) => state.wallpaper);
 
   return (
@@ -15,4 +15,4 @@ const Background = () => {
   );
 };
 
-export default Background;
+export const LockScreen = () => {};

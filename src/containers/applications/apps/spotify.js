@@ -244,6 +244,12 @@ export const Spotify = () => {
     }
   }, [queue]);
 
+  useEffect(() => {
+    if (wnapp.hide && !paused) {
+      setPause(true);
+    }
+  });
+
   return (
     <div
       className="spotify floatTab dpShad"
@@ -334,12 +340,6 @@ export const Spotify = () => {
                     sid={queue[curr] && queue[curr].id}
                   />
                 ) : null}
-                {tab == 1 ? (
-                  <Search
-                    {...{ action, paused, action2 }}
-                    sid={queue[curr] && queue[curr].id}
-                  />
-                ) : null}
                 {tab > 1 && tab < 2 + libr.length ? (
                   <Home
                     tab={tab}
@@ -361,9 +361,15 @@ export const Spotify = () => {
                     sid={queue[curr] && queue[curr].id}
                   />
                 ) : null}
-                {tab == 10 ? (
+                {tab == 41 ? (
                   <Queue {...{ queue, curr, paused, action, action2 }} />
                 ) : null}
+                <div className={tab == 1 ? null : "hidden prtclk"}>
+                  <Search
+                    {...{ action, paused, action2 }}
+                    sid={queue[curr] && queue[curr].id}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -882,7 +888,6 @@ const Search = ({ sid, paused, action, action2 }) => {
         .catch((err) => console.log(err));
     }
   };
-  console.log(songResults);
 
   const scaction = (e) => {
     const txt = e.target.innerText;

@@ -1,5 +1,5 @@
 import React from "react";
-import Background from "./containers/background";
+import { Background, LockScreen } from "./containers/background";
 import Taskbar from "./components/taskbar";
 import {
   StartMenu,
@@ -12,10 +12,12 @@ import ActMenu from "./components/menu";
 import * as Applications from "./containers/applications";
 import "./index.css";
 import "./short.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();
+  const apps = useSelector((state) => state.apps);
+  const wall = useSelector((state) => state.wallpaper);
 
   const hideAll = (event) => {
     const ess = [
@@ -66,22 +68,25 @@ function App() {
 
   return (
     <div className="App">
-      <Background />
-      <div className="desktop" data-menu="desk">
-        <DesktopApp />
-        {Object.keys(Applications).map((key, i) => {
-          const WinApp = Applications[key];
-          return <WinApp key={i} />;
-          // or:
-          // return <div>{Applications[key]()}</div>;
-        })}
-        <StartMenu />
-        <SidePane />
-        <WidPane />
-        <CalnWid />
+      {wall.locked ? <LockScreen /> : null}
+      <div className="appwrap">
+        <Background />
+        <div className="desktop" data-menu="desk">
+          <DesktopApp />
+          {Object.keys(Applications).map((key, i) => {
+            const WinApp = Applications[key];
+            return <WinApp key={i} />;
+            // or:
+            // return <div>{Applications[key]()}</div>;
+          })}
+          <StartMenu />
+          <SidePane />
+          <WidPane />
+          <CalnWid />
+        </div>
+        <Taskbar />
+        <ActMenu />
       </div>
-      <Taskbar />
-      <ActMenu />
     </div>
   );
 }
