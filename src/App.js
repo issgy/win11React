@@ -1,5 +1,5 @@
-import React from "react";
-import { Background, LockScreen } from "./containers/background";
+import React, { useState } from "react";
+import { Background, LockScreen, BootScreen } from "./containers/background";
 import Taskbar from "./components/taskbar";
 import {
   StartMenu,
@@ -18,6 +18,7 @@ function App() {
   const dispatch = useDispatch();
   const apps = useSelector((state) => state.apps);
   const wall = useSelector((state) => state.wallpaper);
+  const [booted, setBooted] = useState(false);
 
   const hideAll = (event) => {
     const ess = [
@@ -66,8 +67,13 @@ function App() {
     }
   });
 
+  window.addEventListener("load", (e) => {
+    setBooted(true);
+  });
+
   return (
     <div className="App">
+      {!booted ? <BootScreen /> : null}
       {wall.locked ? <LockScreen /> : null}
       <div className="appwrap">
         <Background />

@@ -16,7 +16,7 @@ for (let i = 0; i < allApps.length; i++) {
   defState[allApps[i].icon].z = 0;
 
   // 刷新页面自动出现的app界面
-  if (allApps[i].icon === "spotify") {
+  if (allApps[i].icon === "") {
     defState[allApps[i].icon].hide = false;
     defState[allApps[i].icon].max = true;
     defState[allApps[i].icon].z = 1;

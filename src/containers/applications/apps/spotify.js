@@ -924,8 +924,10 @@ const Search = ({ sid, paused, action, action2 }) => {
           </span>
           {songResults.length == 0 ? (
             <div className="mt-2">
-              {recentSearches.map((srch) => (
-                <div className="acol p-2">{srch}</div>
+              {recentSearches.map((srch, i) => (
+                <div className="acol p-2" key={i}>
+                  {srch}
+                </div>
               ))}
             </div>
           ) : null}
