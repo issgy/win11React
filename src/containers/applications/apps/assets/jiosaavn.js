@@ -5,10 +5,6 @@ const search_song_url = "/search?query=";
 const search_album_url = "/album?id=";
 const song_url = "/song?pids=";
 const album_url = "/album?id=";
-const playlist_url =
-  "/api.php?__call=playlist.getDetails&_format=json&cc=in&_marker=0%3F_marker%3D0&listid=";
-const lyrics_url =
-  "/api.php?__call=lyrics.getLyrics&ctx=web6dot0&api_version=4&_format=json&_marker=0%3F_marker%3D0&lyrics_id=";
 
 const { floor, random } = Math;
 
@@ -122,16 +118,16 @@ class JioSaavn {
     return new Promise((resolve) => {
       resolve(this.dfdata);
       return;
-      this.fetchSongs(
-        this.defaultSongs[floor(random() * this.defaultSongs.length)]
-      )
-        .then((res) => {
-          resolve([this.mapToSong(res.data)]);
-        })
-        .catch((err) => {
-          console.log(err);
-          resolve(this.dfdata);
-        });
+      // this.fetchSongs(
+      //   this.defaultSongs[floor(random() * this.defaultSongs.length)]
+      // )
+      //   .then((res) => {
+      //     resolve([this.mapToSong(res.data)]);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     resolve(this.dfdata);
+      //   });
     });
   }
 
@@ -175,9 +171,9 @@ class JioSaavn {
 
   mixQueue(n) {
     var arr = [];
-    for (var i = 0; i < n; i++) arr.push(i);
+    for (let i = 0; i < n; i++) arr.push(i);
     var brr = this.shuffle([...arr]);
-    for (var i = 0; i < n; i++) arr[brr[i]] = brr[(i + 1) % n];
+    for (let i = 0; i < n; i++) arr[brr[i]] = brr[(i + 1) % n];
 
     return arr;
   }

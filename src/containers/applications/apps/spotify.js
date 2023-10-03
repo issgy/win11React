@@ -638,7 +638,7 @@ const Home = ({ tab, action, sid, paused }) => {
 
 const Playlist = ({ type, tdata, action, action2, sid, paused }) => {
   const [data, setData] = useState({ fake: true });
-  const [loaded, setLoaded] = useState(false);
+  // const [loaded, setLoaded] = useState(false);
   const [ptype, setPtype] = useState(true);
   const [totTime, setTotime] = useState(0);
 

@@ -44,6 +44,7 @@ export const AboutWin = () => {
               This product is licensed with{" "}
               <a
                 target="_blank"
+                rel="noreferrer"
                 href="https://github.com/issgy/win11React/blob/main/LICENSE"
               >
                 Creative Commons
@@ -52,7 +53,7 @@ export const AboutWin = () => {
             </div>
             <div className="mt-1">
               &nbsp;&nbsp; &nbsp;&nbsp; contact:{" "}
-              <a target="_blank" href="mailto:xjmgsq@163.com">
+              <a target="_blank" rel="noreferrer" href="mailto:xjmgsq@163.com">
                 xjmgsq@163.com
               </a>
             </div>

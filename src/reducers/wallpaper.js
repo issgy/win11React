@@ -1,4 +1,5 @@
 let wps = localStorage.getItem("wps") || 0;
+let locked = localStorage.getItem("locked");
 
 const walls = [
   "default/img0.jpg",
@@ -25,7 +26,7 @@ const walls = [
 const defState = {
   wps: wps,
   src: walls[wps],
-  locked: true,
+  locked: !(locked == false),
   booted: false,
   dir: 0, //-1为转圈圈效果
   act: "",
@@ -34,6 +35,7 @@ const defState = {
 const wallReducer = (state = defState, action) => {
   switch (action.type) {
     case "WALLUNLOCK":
+      localStorage.setItem("locked", false);
       return { ...state, locked: false, dir: 0 };
     case "WALLNEXT":
       let twps = (state.wps + 1) % walls.length;
