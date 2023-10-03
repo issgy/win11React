@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { Icon } from "../../utils/general";
+import { Battery } from "./battery";
 
 import "./taskbar.scss";
 
@@ -16,6 +17,7 @@ const Taskbar = () => {
     }
     return tmpApps;
   });
+  const [batteryStatus, setBatteryStatus] = useState(null);
 
   const clickDispatch = (event) => {
     const action = {
@@ -48,6 +50,50 @@ const Taskbar = () => {
   const hidePrev = () => {
     dispatch({ type: "TASKPHIDE" });
   };
+
+  const showBatteryStatus = (battery) => {
+    let level = battery.level * 100;
+    if (battery.charging) {
+      setBatteryStatus("*");
+      return;
+    } else {
+      if (level <= 10) {
+        level += 10;
+      } else if (level >= 80) {
+        level -= 10;
+      }
+      setBatteryStatus(level);
+    }
+  };
+
+  useEffect(() => {
+    const updateBattery = (e) => {
+      showBatteryStatus(e.target);
+    };
+
+    const getBatteryStatus = async () => {
+      try {
+        const battery = await navigator.getBattery();
+        battery.addEventListener("chargingchange", updateBattery); //订阅电池状态变化
+        battery.removeEventListener("levelchange", updateBattery); //订阅电池状态变化
+        showBatteryStatus(battery);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (window.BatteryManager) {
+      getBatteryStatus();
+    }
+
+    return () => {
+      // 取消订阅电池状态变化
+      if (batteryStatus) {
+        batteryStatus.removeEventListener("chargingchange", updateBattery);
+        batteryStatus.removeEventListener("levelchange", updateBattery);
+      }
+    };
+  }, []);
 
   return (
     <div className="taskbar">
@@ -124,7 +170,10 @@ const Taskbar = () => {
         <div className="taskright">
           <Icon className="taskIcon" fafa="faChevronUp" width={10} />
           <Icon className="taskIcon" src="wifi" ui width={14} />
-          <Icon className="taskIcon" src="battery" ui width={16} />
+          <Battery
+            level={batteryStatus}
+            charging={batteryStatus === "*" ? true : false}
+          />
           <Icon className="taskIcon" src="audio" ui width={22} />
           <div
             className="taskDate handcr prtclk hvdark"
