@@ -70,6 +70,10 @@ const defState = {
         dsb: true,
       },
       {
+        name: "切换桌面壁纸",
+        action: "WALLNEXT",
+      },
+      {
         name: "打开 Windows 终端",
         icon: "terminal",
         action: "OPENTERM",

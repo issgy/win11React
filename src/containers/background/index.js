@@ -12,7 +12,7 @@ export const Background = () => {
     <div
       className="background"
       style={{
-        backgroundImage: `url(${`/img/wallpaper/${wallpaper.theme}/${wallpaper.src}`})`,
+        backgroundImage: `url(/img/wallpaper/${wallpaper.src})`,
       }}
     ></div>
   );
