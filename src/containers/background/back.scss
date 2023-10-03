@@ -235,4 +235,9 @@
       }
     }
   }
+
+  .slowfadein{
+    opacity: 1;
+    animation: slowfadein 1s ease-in-out;
+  }
   

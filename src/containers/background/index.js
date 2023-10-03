@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./back.scss";
 import { Image, Icon } from "../../utils/general";
-import Password from "antd/es/input/Password";
 
 // 桌面背景图片
 export const Background = () => {
@@ -20,18 +19,51 @@ export const Background = () => {
 };
 
 // 加载界面
-export const BootScreen = () => {
+export const BootScreen = (props) => {
+  const wall = useSelector((state) => state.wallpaper);
+  const dispatch = useDispatch();
+  const [blackout, setBlackout] = useState(false); //是否黑屏
+
+  useEffect(() => {
+    if (props.dir < 0) {
+      console.log("转圈3s");
+      setTimeout(() => {
+        setBlackout(true);
+      }, 3000);
+    }
+  }, [props.dir]);
+
+  useEffect(() => {
+    if (props.dir < 0) {
+      if (blackout) {
+        //blackout值变为true时转圈动画及图像被隐藏，因此呈现黑屏
+        console.log("黑屏2s，如果是shutdown则一直黑屏");
+        if (wall.act == "restart") {
+          setTimeout(() => {
+            //2秒后取消黑屏，并且转圈4s后去掉BootScreen组件
+            setBlackout(false);
+            console.log("转圈4s");
+            setTimeout(() => {
+              //4s后去掉组件，在此期间组件内有转圈动画
+              dispatch({ type: "WALLBOOTED" });
+            }, 4000);
+          }, 2000);
+        }
+      }
+    }
+  }, [blackout]);
+
   return (
     <div className="bootscreen">
-      <div>
+      <div className={blackout ? "hidden" : ""}>
         <Image src="asset/bootlogo" w={180} />
         <div className="mt-48" id="loader">
-          <div class="circledots">
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
+          <div className="circledots">
+            <div className="circle"></div>
+            <div className="circle"></div>
+            <div className="circle"></div>
+            <div className="circle"></div>
+            <div className="circle"></div>
           </div>
         </div>
       </div>
@@ -40,7 +72,7 @@ export const BootScreen = () => {
 };
 
 // 锁屏界面
-export const LockScreen = () => {
+export const LockScreen = (props) => {
   const dispatch = useDispatch();
   const [lock, setLock] = useState(false);
   const [unlocked, setUnlock] = useState(false);
@@ -81,7 +113,7 @@ export const LockScreen = () => {
 
   return (
     <div
-      className="lockscreen"
+      className={"lockscreen " + (props.dir == -1 ? "slowfadein" : "")}
       data-unlock={unlocked}
       style={{
         backgroundImage: `url(${`/img/wallpaper/lock.jpg`})`,

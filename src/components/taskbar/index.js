@@ -142,6 +142,7 @@ const Taskbar = () => {
               {new Date().toLocaleTimeString("en-US", {
                 hour: "numeric",
                 minute: "numeric",
+                hour12: true,
               })}
             </div>
           </div>

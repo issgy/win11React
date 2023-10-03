@@ -322,7 +322,7 @@ export const StartMenu = () => {
             </div>
           </div>
           <div className="menuBar">
-            <div className="profile">
+            <div className="profile handcr">
               <Icon
                 src="issgy"
                 ui
@@ -333,8 +333,34 @@ export const StartMenu = () => {
               />
               <div className="usName">issgy</div>
             </div>
-            <div className="powerCrtl">
-              <Icon src="power" ui width={14} invert />
+            <div className="relative">
+              <div data-vis={start.pwcrtl} className="powerCont">
+                <div
+                  className="flex prtclk"
+                  onClick={clickDispatch}
+                  data-action="WALLSHUTDN"
+                >
+                  <Icon msi="PowerButton" width={12} />
+                  <span>Shut down</span>
+                </div>
+                <div
+                  className="flex prtclk"
+                  onClick={clickDispatch}
+                  data-action="WALLRESTART"
+                >
+                  <Icon msi="Refresh" width={12} flip />
+                  <span>Restart</span>
+                </div>
+                <div
+                  className="flex prtclk"
+                  onClick={clickDispatch}
+                  data-action="WALLALOCK"
+                >
+                  <Icon msi="Lock" width={12} />
+                  <span>Lock</span>
+                </div>
+              </div>
+              <Icon msi="PowerButton" click="STARTPWC" width={14} />
             </div>
           </div>
         </>
