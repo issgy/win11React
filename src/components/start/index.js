@@ -495,40 +495,55 @@ export const SidePane = () => {
 
     dispatch(action);
   };
+
+  useEffect(() => {
+    //夜间模式
+    if (paneApps.quicks[6].state) {
+      document.body.dataset.sepia = true;
+    } else {
+      document.body.dataset.sepia = false;
+    }
+  });
+
   return (
     <div
       className="sidePane dpShad"
       data-hide={paneApps.hide}
       style={{ "--prefix": "PANE" }}
     >
-      <div className="notifArea">
-        <div className="managentf btnText">Manage notifications</div>
-        <div className="nonewnotif">No new notifications</div>
-      </div>
-      <div className="quickSetting">
-        <div className="btnText">Collapse</div>
+      <div className="quickSettings">
         <div className="quickCont">
           {paneApps.quicks.map((qk, i) => {
             return (
-              <div
-                key={i}
-                className="qkbtn handcr prtclk"
-                onClick={clickDispatch}
-                data-action="PANEQBTN"
-                data-payload={i}
-                data-state={qk.state}
-              >
-                <Icon
-                  className="quickIcon"
-                  ui={qk.ui}
-                  src={qk.src}
-                  width={14}
-                  invert={qk.state ? true : null}
-                />
+              <div className="actionCenter">
+                <div
+                  key={i}
+                  className="qkbtn handcr prtclk"
+                  onClick={clickDispatch}
+                  data-action="PANEQBTN"
+                  data-payload={i}
+                  data-state={qk.state}
+                >
+                  <Icon
+                    className="quickIcon"
+                    ui={qk.ui}
+                    src={qk.src}
+                    width={14}
+                    invert={qk.state ? true : null}
+                  />
+                </div>
                 <div className="qktext">{qk.name}</div>
               </div>
             );
           })}
+        </div>
+        <div className="sliderCont">
+          <Icon className="mx-2" src="brightness" ui width={20} />
+          <input className="sliders" type="range" />
+        </div>
+        <div className="sliderCont">
+          <Icon className="mx-2" src="audio" ui width={20} />
+          <input className="sliders" type="range" />
         </div>
       </div>
     </div>
