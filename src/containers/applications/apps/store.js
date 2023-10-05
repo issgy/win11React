@@ -512,13 +512,14 @@ const DetailPage = ({ app }) => {
           <div className="overflow-x-scroll medScroll mt-4">
             <div className="w-max flex">
               {app.data.gallery &&
-                app.data.gallery.map((x) => (
+                app.data.gallery.map((x, i) => (
                   <Image
                     className="mr-2 rounded"
                     h={250}
                     src={x}
                     ext
                     err="img/asset/mixdef.jpg"
+                    key={i}
                   />
                 ))}
             </div>
