@@ -42,17 +42,7 @@ export const DesktopApp = () => {
   });
 
   return (
-    <div
-      className="desktopCont"
-      style={{
-        gridTemplateColumns: `repeat(auto-fit, ${Math.round(
-          deskApps.size * 90
-        )}px)`,
-        gridTemplateRows: `repeat(auto-fit, ${Math.round(
-          deskApps.size * 98
-        )}px)`,
-      }}
-    >
+    <div className="desktopCont">
       {!deskApps.hide &&
         deskApps.apps.map((desk, i) => {
           return (
@@ -503,7 +493,6 @@ export const SidePane = () => {
   };
 
   const setVolume = (e) => {
-    console.log(e.target.value);
     let volume = 3;
     if (e.target.value == 0) {
       volume = 0;
@@ -564,7 +553,7 @@ export const SidePane = () => {
             onChange={setBrightness}
             min="25"
             max="100"
-            defaultValue="50"
+            defaultValue="100"
           />
         </div>
         <div className="sliderCont">
@@ -575,7 +564,7 @@ export const SidePane = () => {
             onChange={setVolume}
             min="0"
             max="100"
-            defaultValue="50"
+            defaultValue="100"
           />
         </div>
       </div>

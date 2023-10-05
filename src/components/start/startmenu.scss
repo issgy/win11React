@@ -1,13 +1,13 @@
 .desktopCont {
   width: fit-content;
   height: 100%;
-  display: grid;
-  grid-auto-flow: column;
-  align-content: space-evenly;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .dskApp {
-  margin: 4px;
+  margin: 3px;
   padding: 12px;
   display: flex;
   flex-direction: column;

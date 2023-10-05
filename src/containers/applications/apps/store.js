@@ -67,6 +67,13 @@ export const MicroStore = () => {
             width={20}
             payload={tab == "movrib"}
           />
+          <Icon
+            fafa="faDownload"
+            onClick={action}
+            click="movrib"
+            width={20}
+            payload={tab == "movrib"}
+          />
         </div>
         {/* 右侧对应的内容 */}
         <div className="restWindow msfull thinScroll">

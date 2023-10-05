@@ -8,7 +8,7 @@ const defState = {
   prevPos: 0,
   search: true,
   widgets: true,
-  audio: 2,
+  audio: 3,
 };
 
 const taskReducer = (state = defState, action) => {
