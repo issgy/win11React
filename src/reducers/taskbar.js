@@ -8,6 +8,7 @@ const defState = {
   prevPos: 0,
   search: true,
   widgets: true,
+  audio: 2,
 };
 
 const taskReducer = (state = defState, action) => {
@@ -38,6 +39,11 @@ const taskReducer = (state = defState, action) => {
       return {
         ...state,
         widgets: action.payload === "true",
+      };
+    case "TASKAUDIO":
+      return {
+        ...state,
+        audio: action.payload,
       };
     default:
       return state;

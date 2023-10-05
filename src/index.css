@@ -248,12 +248,15 @@ a {
   color: #aaa;
 }
 
-#probtn {
-  display: none;
-}
-
-#warningmsg {
-  display: none;
+#brightoverlay {
+  position: absolute;
+  opacity: 0;
+  background: #000;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
 }
 
 @media screen and (max-width: 650px) {
@@ -270,31 +273,5 @@ a {
 
   body[data-force="false"]::before {
     display: none;
-  }
-
-  body[data-force="false"] #warningmsg {
-    display: block;
-    font-size: 1.6rem;
-    color: #fefefe;
-    font-family: sans-serif;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-align: left;
-    word-spacing: 4px;
-    line-height: 48px;
-    inset: 50px;
-    position: absolute;
-    pointer-events: none;
-  }
-
-  body[data-force="false"] #probtn {
-    display: block;
-    color: #aaa;
-    font-weight: 600;
-    font-size: 1.2em;
-    padding: 16px;
-    background: #16161b;
-    border-radius: 8px;
-    border: none;
   }
 }

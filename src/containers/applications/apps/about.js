@@ -6,7 +6,7 @@ export const AboutWin = () => {
   const dispatch = useDispatch();
   const { abOpen } = useSelector((state) => state.desktop);
   const [open, setOpen] = useState(() => {
-    if (localStorage.getItem("closeAbout") === true) {
+    if (localStorage.getItem("closeAbout", true)) {
       return false;
     } else {
       return true;
@@ -61,11 +61,10 @@ export const AboutWin = () => {
             <br />
             <div>
               <span>
-                {" "}
                 The current working apps are
                 <mark> Calculator</mark>,<mark> Edge</mark>,
                 <mark> Notepad</mark>,<mark> Store</mark>,<mark> Terminal</mark>
-                ,<mark> Vscode</mark>,<mark> Whiteboard.</mark>
+                ,<mark> Vscode</mark>,<mark> Whiteboard....</mark>
               </span>
             </div>
             <br />

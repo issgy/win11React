@@ -485,6 +485,7 @@ export const StartMenu = () => {
 
 export const SidePane = () => {
   const paneApps = useSelector((state) => state.sidepane);
+  const tasks = useSelector((state) => state.taskbar);
   const dispatch = useDispatch();
 
   const clickDispatch = (event) => {
@@ -494,6 +495,25 @@ export const SidePane = () => {
     };
 
     dispatch(action);
+  };
+
+  const setBrightness = (e) => {
+    document.getElementById("brightoverlay").style.opacity =
+      (100 - e.target.value) / 100;
+  };
+
+  const setVolume = (e) => {
+    console.log(e.target.value);
+    let volume = 3;
+    if (e.target.value == 0) {
+      volume = 0;
+    } else if (e.target.value < 30 && e.target.value > 0) {
+      volume = 1;
+    } else if (e.target.value < 70 && e.target.value > 30) {
+      volume = 2;
+    }
+
+    dispatch({ type: "TASKAUDIO", payload: volume });
   };
 
   useEffect(() => {
@@ -515,9 +535,8 @@ export const SidePane = () => {
         <div className="quickCont">
           {paneApps.quicks.map((qk, i) => {
             return (
-              <div className="actionCenter">
+              <div className="actionCenter" key={i}>
                 <div
-                  key={i}
                   className="qkbtn handcr prtclk"
                   onClick={clickDispatch}
                   data-action="PANEQBTN"
@@ -539,11 +558,25 @@ export const SidePane = () => {
         </div>
         <div className="sliderCont">
           <Icon className="mx-2" src="brightness" ui width={20} />
-          <input className="sliders" type="range" />
+          <input
+            className="sliders"
+            type="range"
+            onChange={setBrightness}
+            min="25"
+            max="100"
+            defaultValue="50"
+          />
         </div>
         <div className="sliderCont">
-          <Icon className="mx-2" src="audio" ui width={20} />
-          <input className="sliders" type="range" />
+          <Icon className="mx-2" src={"audio" + tasks.audio} ui width={18} />
+          <input
+            className="sliders"
+            type="range"
+            onChange={setVolume}
+            min="0"
+            max="100"
+            defaultValue="50"
+          />
         </div>
       </div>
     </div>

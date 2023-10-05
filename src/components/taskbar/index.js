@@ -174,7 +174,12 @@ const Taskbar = () => {
             level={batteryStatus}
             charging={batteryStatus === "*" ? true : false}
           />
-          <Icon className="taskIcon" src="audio" ui width={22} />
+          <Icon
+            className="taskIcon"
+            src={"audio" + tasks.audio}
+            ui
+            width={16}
+          />
           <div
             className="taskDate handcr prtclk hvdark"
             onClick={clickDispatch}
