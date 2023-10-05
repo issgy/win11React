@@ -1,35 +1,85 @@
 import icons from "./apps";
 
-let iconIdx = {
-  taskbar: [3, 4, 5, 6], //任务栏的倒数四个图标
-  desktop: [8, 7, 4, 6, 5, 54, 39, 44], //桌面的图标
-  pinned: [
-    5, 51, 37, 31, 21, 48, 6, 35, 15, 28, 52, 10, 11, 44, 39, 13, 46, 54,
-  ], //Pinned内的图标
-  recent: [21, 44, 46, 54, 13, 39], //Recommended内的图标
+let { taskbar, desktop, pinned, recent } = {
+  taskbar: (localStorage.getItem("taskbar") &&
+    JSON.parse(localStorage.getItem("taskbar"))) || [
+    "Settings",
+    "File Explorer",
+    "Edge",
+    "Store",
+    "Spotify",
+  ],
+  desktop: (localStorage.getItem("desktop") &&
+    JSON.parse(localStorage.getItem("desktop"))) || [
+    "issgy",
+    "Recycle Bin",
+    "File Explorer",
+    "Store",
+    "Edge",
+    "Github",
+    "Spotify",
+  ],
+  pinned: (localStorage.getItem("pinned") &&
+    JSON.parse(localStorage.getItem("pinned"))) || [
+    "Edge",
+    "Word",
+    "PowerPoint",
+    "OneNote",
+    "Mail",
+    "To Do",
+    "Store",
+    "Photos",
+    "Your Phone",
+    "Notepad",
+    "White Board",
+    "Calculator",
+    "Spotify",
+    "Twitter",
+    "VS Code",
+    "Terminal",
+    "Github",
+    "Discord",
+  ],
+  recent: (localStorage.getItem("recent") &&
+    JSON.parse(localStorage.getItem("recent"))) || [
+    "Mail",
+    "Twitter",
+    "Terminal",
+    "Github",
+    "VS Code",
+    "Spotify",
+    "Edge",
+  ],
 };
-
 // 导出不同部分的icon对象数组。
-export const desktopApps = iconIdx.desktop.map((x) => {
-  return icons[x];
-});
+export const desktopApps = icons
+  .filter((x) => desktop.includes(x.name))
+  .sort((a, b) => {
+    return desktop.indexOf(a.name) > desktop.indexOf(b.name) ? 1 : -1;
+  });
 
-export const pinnedApps = iconIdx.pinned.map((x) => {
-  return icons[x];
-});
+export const pinnedApps = icons
+  .filter((x) => pinned.includes(x.name))
+  .sort((a, b) => {
+    return pinned.indexOf(a.name) > pinned.indexOf(b.name) ? 1 : -1;
+  });
 
-export const recentApps = iconIdx.recent.map((x) => {
-  let obj = icons[x];
-  // 得到一个范围在-40到359之间的随机整数。将这个随机整数赋值给obj的lastUsed属性
-  obj.lastUsed = Math.floor(Math.random() * 400) - 40;
-  return obj;
-});
+export const recentApps = icons
+  .filter((x) => recent.includes(x.name))
+  .sort((a, b) => {
+    return recent.indexOf(a.name) > recent.indexOf(b.name) ? 1 : -1;
+  });
 
 export const allApps = icons.filter((app) => {
   // taskbar栏的icon筛掉
   return app.type === "app";
 });
 
-export const taskApps = iconIdx.taskbar.map((x) => {
-  return icons[x];
-});
+export const taskApps = icons.filter((x) => taskbar.includes(x.name));
+
+export const dfApps = {
+  taskbar,
+  desktop,
+  pinned,
+  recent,
+};
