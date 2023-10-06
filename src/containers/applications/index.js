@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import "./tabs.scss";
 import "./tab2.scss";
 import "./wnapp.css";
-import "./apps/assets/spotify.scss";
 
 export * from "./apps/edge";
 
@@ -26,6 +25,9 @@ export * from "./apps/about";
 
 export * from "./apps/spotify";
 
+export * from "./apps/camera";
+
+//app被最小化后鼠标覆盖出现的小屏
 export const ScreenPreview = () => {
   const tasks = useSelector((state) => state.taskbar);
 

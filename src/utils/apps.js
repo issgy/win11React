@@ -78,6 +78,7 @@ const apps = [
     name: "Camera",
     icon: "camera",
     type: "app",
+    action: "CAMERA",
   },
   {
     name: "VS Code",

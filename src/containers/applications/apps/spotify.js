@@ -6,6 +6,7 @@ import ReactPlayer from "react-player";
 
 import data from "./assets/songs.json";
 import jiosaavn from "./assets/jiosaavn";
+import "./assets/spotify.scss";
 
 const { round, max, floor, ceil } = Math;
 
@@ -253,7 +254,6 @@ export const Spotify = () => {
   return (
     <div
       className="spotify floatTab dpShad"
-      id={wnapp.icon + "APP"}
       data-hide={wnapp.hide}
       data-size={wnapp.size}
       data-max={wnapp.max}
@@ -261,6 +261,7 @@ export const Spotify = () => {
         ...(wnapp.size === "cstm" ? wnapp.dim : null),
         zIndex: wnapp.z,
       }}
+      id={wnapp.icon + "App"}
     >
       <ToolBar
         app={wnapp.action}
