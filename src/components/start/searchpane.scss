@@ -86,6 +86,8 @@
   
     &[data-hide="true"] {
       bottom: -330px;
+      transform: translateX(120%);
+      animation: overflow-hider 0s ease-in-out 0.2s forwards;
     }
   }
 

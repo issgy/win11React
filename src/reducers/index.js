@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers, createStore } from "redux";
 import wallReducer from "./wallpaper";
 import taskReducer from "./taskbar";
 import desktopReducer from "./desktop";
@@ -23,4 +23,9 @@ const allReducers = combineReducers({
   stores: storeReducer,
 });
 
-export default allReducers;
+const store = createStore(
+  allReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+export default store;

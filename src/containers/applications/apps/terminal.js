@@ -255,6 +255,7 @@ export const WnTerminal = () => {
   useEffect(() => {
     if (tmapp.dir && tmapp.dir != pwd) {
       setPwd(tmapp.dir);
+      dispatch({ type: "OPENTERM", payload: null });
     }
   });
 

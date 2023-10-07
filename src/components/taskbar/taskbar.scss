@@ -1,7 +1,7 @@
 .taskbar{
   position: absolute;
   width: 100vw;
-  height: 39px;
+  height: 41px;
   background: rgba(254, 254, 254, 0.8);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
@@ -57,7 +57,6 @@
 }
 
 .taskDate{
-  width: 44px;
   height: 100%;
   display: flex;
   padding: 6px 8px 6px 6px;

@@ -107,41 +107,6 @@ export const ActMenu = () => {
     return menu;
   };
 
-  // const returnPos = () => {
-  //   const tmpos = {
-  //     top: menu.top,
-  //     left: menu.left,
-  //   },tmpLeft=false
-
-  //   const wnwidth = window.innerWidth;
-  //   const wnheight = window.innerHeight;
-
-  //   const ele = document.getElementById("actmenu");
-  //   if (ele) {
-  //     var ewidth = getComputedStyle(ele)
-  //       .getPropertyValue("width")
-  //       .replace("px", "");
-  //     var eheight = getComputedStyle(ele)
-  //       .getPropertyValue("height")
-  //       .replace("px", "");
-
-  //     eheight = eheight == "auto" ? 0 : eheight;
-  //     ewidth = parseInt(ewidth) + 2;
-  //     eheight = parseInt(eheight) + 10;
-  //   }
-
-  //   if (wnwidth - tmpos.left < ewidth) {
-  //     tmpos.right = wnwidth - tmpos.left;
-  //     tmpos.left = null;
-  //   }
-
-  //   if (wnheight - tmpos.top < eheight) {
-  //     tmpos.bottom = wnheight - tmpos.top;
-  //     tmpos.top = null;
-  //   }
-
-  //   return tmpos;
-  // };
   return (
     <div
       className="actmenu"

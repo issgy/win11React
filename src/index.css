@@ -228,6 +228,12 @@ input {
   }
 }
 
+@keyframes overflow-hider {
+  100% {
+    width: 0;
+  }
+}
+
 .hvdark:hover {
   background: rgba(0, 0, 0, 0.08);
   transition: all 200ms ease-in-out;
