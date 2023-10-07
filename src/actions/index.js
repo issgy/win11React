@@ -1,12 +1,14 @@
-export const refresh = (dispatch, payload, menu) => {
+import store from "../reducers";
+
+export const refresh = (payload, menu) => {
   // 刷新操作
   if (menu.menus.desk[0].opts[4].check) {
-    dispatch({ type: "DESKHIDE" });
-    setTimeout(() => dispatch({ type: "DESKSHOW" }), 100);
+    store.dispatch({ type: "DESKHIDE" });
+    setTimeout(() => store.dispatch({ type: "DESKSHOW" }), 100);
   }
 };
 
-export const changeIconSize = (dispatch, size, menu) => {
+export const changeIconSize = (size, menu) => {
   const tmpMenu = { ...menu };
   tmpMenu.menus.desk[0].opts[0].dot = false;
   tmpMenu.menus.desk[0].opts[1].dot = false;
@@ -23,20 +25,20 @@ export const changeIconSize = (dispatch, size, menu) => {
     tmpMenu.menus.desk[0].opts[2].dot = true;
   }
 
-  refresh(dispatch, "", tmpMenu);
-  dispatch({ type: "DESKSIZE", payload: isize });
-  dispatch({ type: "MENUCHNG", payload: tmpMenu });
+  refresh("", tmpMenu);
+  store.dispatch({ type: "DESKSIZE", payload: isize });
+  store.dispatch({ type: "MENUCHNG", payload: tmpMenu });
 };
 
-export const deskHide = (dispatch, payload, menu) => {
+export const deskHide = (payload, menu) => {
   const tmpMenu = { ...menu };
   tmpMenu.menus.desk[0].opts[4].check ^= 1;
 
-  dispatch({ type: "DESKTOGG" });
-  dispatch({ type: "MENUCHNG", payload: tmpMenu });
+  store.dispatch({ type: "DESKTOGG" });
+  store.dispatch({ type: "MENUCHNG", payload: tmpMenu });
 };
 
-export const changeSort = (dispatch, sort, menu) => {
+export const changeSort = (sort, menu) => {
   const tmpMenu = { ...menu };
   tmpMenu.menus.desk[1].opts[0].dot = false;
   tmpMenu.menus.desk[1].opts[1].dot = false;
@@ -49,12 +51,12 @@ export const changeSort = (dispatch, sort, menu) => {
     tmpMenu.menus.desk[1].opts[2].dot = true;
   }
 
-  refresh(dispatch, "", tmpMenu);
-  dispatch({ type: "DESKSORT", payload: sort });
-  dispatch({ type: "MENUCHNG", payload: tmpMenu });
+  refresh("", tmpMenu);
+  store.dispatch({ type: "DESKSORT", payload: sort });
+  store.dispatch({ type: "MENUCHNG", payload: tmpMenu });
 };
 
-export const changeTaskAlign = (dispatch, align, menu) => {
+export const changeTaskAlign = (align, menu) => {
   const tmpMenu = { ...menu };
 
   if (tmpMenu.menus.task[0].opts[align === "left" ? 0 : 1].dot) return;
@@ -66,6 +68,22 @@ export const changeTaskAlign = (dispatch, align, menu) => {
     tmpMenu.menus.task[0].opts[0].dot = true;
   } else tmpMenu.menus.task[0].opts[1].dot = true;
 
-  dispatch({ type: "TASKTOG" });
-  dispatch({ type: "MENUCHNG", payload: tmpMenu });
+  store.dispatch({ type: "TASKTOG" });
+  store.dispatch({ type: "MENUCHNG", payload: tmpMenu });
+};
+
+export const performApp = (act, menu) => {
+  const data = {
+    type: menu.dataset.action,
+    payload: menu.dataset.payload,
+  };
+  if (act == "open") {
+    store.dispatch(data);
+  } else if (act == "delshort") {
+    if (data.type)
+      store.dispatch({
+        type: "DESKREM",
+        payload: data,
+      });
+  }
 };

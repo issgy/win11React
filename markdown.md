@@ -94,6 +94,7 @@ PLAYLISTS
 
 1、完成锁屏、关机、重启功能
 2、电池图标（会根据是否充电及电量情况更新图标）
+使用 navigator.getBattery() API 来获取电池状况
 由于是做展示用（ui 组件），Battery 组件只接受电量水平和是否充电两个状态，因此用 memo 包裹 Battery 组件以此来优化性能
 
 memo 可以包裹一个函数组件，返回一个新的组件。这个新的组件在接收到新的 props 时，仅重新渲染原组件之前会进行浅层比较，只有当 props 发生变化时才会重新渲染，否则使用缓存的结果。
@@ -110,4 +111,11 @@ memo 可以包裹一个函数组件，返回一个新的组件。这个新的组
 
 ## 10.6:
 
-1、实现相机拍照功能：在组组件中引用 react-webcam 库或使用原生的 getUserMedia API 来获取摄像头流
+1、实现相机拍照功能：在组件中引用 react-webcam 库或使用原生的 getUserMedia API 来获取摄像头流
+
+## 10.7:
+
+1、修复自适应 bug 及右击鼠标打开 terminal 无法执行 cd..命令的 bug
+2、实现鼠标右击桌面 app 出现菜单栏功能：
+给桌面 app 的 dom 节点新增 data-menu='app'属性，用于和 data-menu='desk'、data-menu='taskbar 区别开，
+右击鼠标时派发 action 会带上此属性，用于在 menu reducer 中决定展示的内容

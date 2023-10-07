@@ -48,11 +48,13 @@ export const DesktopApp = () => {
           return (
             <div key={i} value={i} className="dskApp">
               <Icon
-                className="dskIcon"
+                className="dskIcon prtclk"
                 src={desk.icon}
                 width={Math.round(deskApps.size * 36)}
                 click={desk.action}
                 payload={desk.payload || "full"}
+                menu="app"
+                pr
               />
               <div className="appName">{desk.name}</div>
             </div>

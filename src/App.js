@@ -53,7 +53,6 @@ function App() {
   window.addEventListener("contextmenu", (e) => {
     hideAll(e);
     e.preventDefault();
-
     if (e.target.dataset.menu != null) {
       dispatch({
         type: "MENUSHOW",
@@ -61,6 +60,8 @@ function App() {
           top: e.clientY,
           left: e.clientX,
           menu: e.target.dataset.menu,
+          attr: e.target.dataset.attributes,
+          dataset: e.target.dataset,
         },
       });
     }

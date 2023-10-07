@@ -42,6 +42,7 @@ export const Icon = (props) => {
         onClick={props.onClick || (props.click && clickDispatch) || null}
         data-action={props.click}
         data-payload={props.payload}
+        data-menu={props.menu}
       >
         <FontAwesomeIcon
           data-flip={props.flip != null}
@@ -67,6 +68,7 @@ export const Icon = (props) => {
         onClick={props.onClick || (props.click && clickDispatch) || null}
         data-action={props.click}
         data-payload={props.payload}
+        data-menu={props.menu}
       >
         <CustomIcon
           data-flip={props.flip != null}
@@ -88,6 +90,7 @@ export const Icon = (props) => {
         onClick={props.onClick || (props.click && clickDispatch) || null}
         data-action={props.click}
         data-payload={props.payload}
+        data-menu={props.menu}
       >
         <i
           className={"ms-Icon ms-Icon--" + props.msi}
@@ -109,6 +112,8 @@ export const Icon = (props) => {
         data-action={props.click}
         data-active={props.active}
         data-payload={props.payload}
+        data-menu={props.menu}
+        data-pr={props.pr != null}
         onClick={props.onClick || (props.pr && clickDispatch) || null}
       >
         <img

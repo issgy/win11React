@@ -3,6 +3,8 @@ const defState = {
   top: 300,
   left: 500,
   opts: "desk",
+  attr: null,
+  dataset: null,
   menus: {
     desk: [
       {
@@ -159,6 +161,53 @@ const defState = {
         action: "SHOWDSK",
       },
     ],
+    app: [
+      {
+        name: "打开",
+        action: "performApp",
+        payload: "open",
+      },
+      {
+        type: "hr",
+      },
+      {
+        name: "打开文件位置",
+        dsb: true,
+      },
+      {
+        name: "以管理员身份运行",
+        action: "performApp",
+        payload: "open",
+        icon: "win/shield",
+      },
+      {
+        type: "hr",
+      },
+      {
+        name: "从开始取消固定",
+        dsb: true,
+      },
+      {
+        name: "固定至任务栏",
+        dsb: true,
+      },
+      {
+        name: "删除快捷方式",
+        action: "performApp",
+        payload: "delshort",
+      },
+      {
+        name: "删除",
+      },
+      {
+        name: "重命名",
+        dsb: true,
+      },
+      {
+        name: "属性",
+        dsb: true,
+      },
+    ],
   },
 };
 
@@ -176,6 +225,8 @@ const menusReducer = (state = defState, action) => {
         top: (action.payload && action.payload.top) || 272,
         left: (action.payload && action.payload.left) || 430,
         opts: (action.payload && action.payload.menu) || "desk",
+        attr: action.payload && action.payload.attr,
+        dataset: action.payload && action.payload.dataset,
       };
     case "MENUCHNG":
       return {

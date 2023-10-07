@@ -51,7 +51,7 @@ export const ActMenu = () => {
 
     if (action.type) {
       if (action.type !== action.type.toUpperCase()) {
-        Actions[action.type](dispatch, action.payload, menu);
+        Actions[action.type](action.payload, menu);
       } else {
         dispatch(action);
       }
@@ -60,6 +60,7 @@ export const ActMenu = () => {
   };
 
   const menuobj = (data) => {
+    //处理menu reducer中menus.opts,处理后是
     let menu = [];
     data.map((opt, i) => {
       if (opt.type === "hr") {
