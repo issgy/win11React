@@ -105,15 +105,15 @@ const defState = {
     ],
     task: [
       {
-        name: "Align icons",
+        name: "排列图标",
         opts: [
           {
-            name: "Left",
+            name: "居左",
             action: "changeTaskAlign",
             payload: "left",
           },
           {
-            name: "Center",
+            name: "居中",
             action: "changeTaskAlign",
             payload: "center",
             dot: true,
@@ -124,30 +124,30 @@ const defState = {
         type: "hr",
       },
       {
-        name: "Search",
+        name: "搜索",
         opts: [
           {
-            name: "Show",
+            name: "显示",
             action: "TASKSRCH",
             payload: true,
           },
           {
-            name: "Hide",
+            name: "隐藏",
             action: "TASKSRCH",
             payload: false,
           },
         ],
       },
       {
-        name: "Widgets",
+        name: "小部件",
         opts: [
           {
-            name: "Show",
+            name: "展示",
             action: "TASKWIDG",
             payload: true,
           },
           {
-            name: "Hide",
+            name: "隐藏",
             action: "TASKWIDG",
             payload: false,
           },
@@ -157,7 +157,7 @@ const defState = {
         type: "hr",
       },
       {
-        name: "Show Desktop",
+        name: "显示桌面",
         action: "SHOWDSK",
       },
     ],
