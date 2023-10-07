@@ -119,3 +119,30 @@ memo 可以包裹一个函数组件，返回一个新的组件。这个新的组
 2、实现鼠标右击桌面 app 出现菜单栏功能：
 给桌面 app 的 dom 节点新增 data-menu='app'属性，用于和 data-menu='desk'、data-menu='taskbar 区别开，
 右击鼠标时派发 action 会带上此属性，用于在 menu reducer 中决定展示的内容
+
+useEffect(async () => {
+// console.log(process.env.REACT_APP_DEVELOPEMENT);
+if (process.env.REACT_APP_DEVELOPEMENT != "development") {
+if (!widget.updated && !widget.hide) {
+var tmpWdgt = await fetchApi(widget);
+.......代码
+}
+}
+});
+会报错
+useEffect 的回调函数不能是 async 函数
+但可以在内部回调函数使用 async await
+useEffect(() => {
+// 防止竞态状态
+if (process.env.REACT_APP_DEVELOPEMENT != "development") {
+async function fetchData() {
+if (!widget.updated && !widget.hide) {
+var tmpWdgt = await fetchApi(widget);
+......代码
+}
+}
+
+      fetchData();
+    }
+
+});
