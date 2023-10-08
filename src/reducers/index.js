@@ -8,7 +8,6 @@ import widReducer from "./widpane";
 import appReducer from "./apps";
 import globalReducer from "./globals";
 import menusReducer from "./menu";
-import storeReducer from "./store";
 
 const allReducers = combineReducers({
   wallpaper: wallReducer,
@@ -20,7 +19,6 @@ const allReducers = combineReducers({
   apps: appReducer,
   globals: globalReducer,
   menus: menusReducer,
-  stores: storeReducer,
 });
 
 const store = createStore(

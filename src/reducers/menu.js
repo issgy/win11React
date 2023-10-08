@@ -198,6 +198,8 @@ const defState = {
       },
       {
         name: "删除",
+        action: "delApp",
+        payload: "delete",
       },
       {
         name: "重命名",

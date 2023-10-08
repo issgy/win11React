@@ -1,4 +1,5 @@
 import store from "../reducers";
+import { dfApps } from "../utils";
 
 export const refresh = (payload, menu) => {
   // 刷新操作
@@ -80,17 +81,41 @@ export const performApp = (act, menu) => {
   if (act == "open") {
     store.dispatch(data);
   } else if (act == "delshort") {
-    if (data.type)
-      store.dispatch({
-        type: "DESKDEL",
-        payload: data,
-      });
+    if (data.type) {
+      let apps = store.getState().apps;
+      let app = Object.keys(apps).filter(
+        (x) =>
+          apps[x].action == data.type ||
+          (apps[x].payload == data.payload && apps[x].payload != null)
+      );
+    }
+
+    app = apps[app];
+    if (app) {
+      store.dispatch({ type: "DESKREM", payload: app.name });
+    }
   }
 };
 
 export const installApp = (data) => {
   const app = { ...data, type: "app" };
-  store.dispatch({ type: "APPDOWNLOAD", payload: data });
+  // store.dispatch({ type: "APPDOWNLOAD", payload: data });
+  let installed = localStorage.getItem("installed");
+  if (!installed) installed = "[]";
+
+  installed = JSON.parse(installed);
+
+  let desktop = localStorage.getItem("desktop");
+  if (!desktop) desktop = dfApps.desktop;
+  else desktop = JSON.parse(desktop);
+  // 不能出现重复的
+  if (desktop.indexOf(app.name) == -1 && installed.indexOf(app.name) == -1) {
+    desktop.push(app.name);
+    localStorage.setItem("desktop", JSON.stringify(desktop));
+    installed.push(app);
+    localStorage.setItem("installed", JSON.stringify(installed));
+  }
+
   store.dispatch({ type: "ADDAPP", payload: app });
   store.dispatch({
     type: "DESKADD",
