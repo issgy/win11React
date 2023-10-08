@@ -133,6 +133,15 @@ const appReducer = (state = defState, action) => {
     tmpState["terminal"] = obj;
 
     return tmpState;
+  } else if (action.type == "ADDAPP") {
+    let tmpState = { ...state };
+    tmpState[action.payload.name] = action.payload;
+    tmpState[action.payload.name].size = "full";
+    tmpState[action.payload.name].hide = true;
+    tmpState[action.payload.name].max = null;
+    tmpState[action.payload.name].z = 0;
+
+    return tmpState;
   } else {
     const keys = Object.keys(state); //state的每个key遍历装在一个叫keys的数组里
 

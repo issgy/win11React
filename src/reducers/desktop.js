@@ -10,15 +10,27 @@ const defState = {
 
 const desktopReducer = (state = defState, action) => {
   switch (action.type) {
-    case "DESKREM":
-      let arr = state.apps.filter(
-        (x) =>
-          x.action != action.payload.type || x.payload != action.payload.payload
+    case "DESKDEL":
+      let arrdel = state.apps.filter(
+        (x) => x.action != action.payload.type || x.payload != null
       );
-      localStorage.setItem("desktop", JSON.stringify(arr.map((x) => x.name)));
+      localStorage.setItem(
+        "desktop",
+        JSON.stringify(arrdel.map((x) => x.name))
+      );
       return {
         ...state,
-        apps: arr,
+        apps: arrdel,
+      };
+    case "DESKADD": //更新桌面图标
+      let arradd = [...state.apps];
+      // 重复则不更新
+      if (!arradd.some((item) => item.name == action.payload.name)) {
+        arradd.push(action.payload);
+      }
+      return {
+        ...state,
+        apps: arradd,
       };
     case "DESKSHOW":
       return {

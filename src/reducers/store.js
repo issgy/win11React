@@ -12,9 +12,13 @@ const storeReducer = (state = defState, action) => {
       if (!desktop) desktop = dfApps.desktop;
       else desktop = JSON.parse(desktop);
 
-      if (desktop.indexOf(action.payload.name) == -1) {
-        console.log(111111);
+      // 不能出现重复的
+      if (
+        desktop.indexOf(action.payload.name) == -1 &&
+        installed.indexOf(action.payload.name) == -1
+      ) {
         desktop.push(action.payload.name);
+        console.log(desktop);
         localStorage.setItem("desktop", JSON.stringify(desktop));
         installed = JSON.parse(installed);
         installed.push(action.payload);

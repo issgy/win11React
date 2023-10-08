@@ -24,7 +24,6 @@ const Taskbar = () => {
       payload: event.target.dataset.payload,
       type: event.target.dataset.action,
     };
-
     if (action.type) {
       dispatch(action);
     }
@@ -169,17 +168,24 @@ const Taskbar = () => {
         {/* taskbar右侧图标 */}
         <div className="taskright">
           <Icon className="taskIcon" fafa="faChevronUp" width={10} />
-          <Icon className="taskIcon" src="wifi" ui width={14} />
-          <Battery
-            level={batteryStatus}
-            charging={batteryStatus === "*" ? true : false}
-          />
-          <Icon
-            className="taskIcon"
-            src={"audio" + tasks.audio}
-            ui
-            width={16}
-          />
+          <div
+            className="prtclk handcr my-1 px-1 hvdark flex rounded"
+            onClick={clickDispatch}
+            data-action="PANETOGG"
+          >
+            <Icon className="taskIcon" src="wifi" ui width={14} />
+            <Icon
+              className="taskIcon"
+              src={"audio" + tasks.audio}
+              ui
+              width={16}
+            />
+            <Battery
+              level={batteryStatus}
+              charging={batteryStatus === "*" ? true : false}
+            />
+          </div>
+
           <div
             className="taskDate handcr prtclk hvdark"
             onClick={clickDispatch}
@@ -200,14 +206,6 @@ const Taskbar = () => {
               })}
             </div>
           </div>
-          <Icon
-            className="taskIcon mr-2 hvdark"
-            ui
-            src="sidepane"
-            width={16}
-            invert
-            click="PANETOGG"
-          />
           <Icon className="graybd" ui width={6} click="SHOWDSK" pr />
         </div>
       </div>

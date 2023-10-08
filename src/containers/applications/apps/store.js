@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Icon, ToolBar, Image } from "../../../utils/general";
 
 import storedata from "./assets/store.json";
+import { installApp } from "../../../actions";
 import "./assets/store.scss";
 
 const geneStar = (item, rv = 0) => {
@@ -58,7 +59,6 @@ export const MicroStore = () => {
   const toTab = (e) => {
     const x = e.target && e.target.dataset.action;
     if (x) {
-      console.log(x);
       setTab(x);
       setPage(0);
     }
@@ -435,15 +435,8 @@ const DetailPage = ({ app }) => {
   const download = () => {
     setDownState(1);
     setTimeout(() => {
-      dispatch({
-        type: "APPDOWNLOAD",
-        payload: {
-          ...app,
-          type: "app",
-          pwa: "true",
-        },
-      });
-      setDownState(2);
+      installApp(app);
+      setDownState(3);
     }, 2000);
   };
 

@@ -82,8 +82,22 @@ export const performApp = (act, menu) => {
   } else if (act == "delshort") {
     if (data.type)
       store.dispatch({
-        type: "DESKREM",
+        type: "DESKDEL",
         payload: data,
       });
   }
+};
+
+export const installApp = (data) => {
+  const app = { ...data, type: "app" };
+  store.dispatch({ type: "APPDOWNLOAD", payload: data });
+  store.dispatch({ type: "ADDAPP", payload: app });
+  store.dispatch({
+    type: "DESKADD",
+    payload: app,
+  });
+  store.dispatch({
+    type: "WNSTORE",
+    payload: "mnmz",
+  });
 };

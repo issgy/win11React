@@ -146,3 +146,8 @@ var tmpWdgt = await fetchApi(widget);
     }
 
 });
+
+## 10.8:
+
+1、taskbar 栏更新
+2、store 下载功能逻辑重写

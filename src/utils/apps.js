@@ -185,7 +185,7 @@ const apps = [
     type: "app",
   },
   {
-    name: "Paint",
+    name: "Paint.",
     icon: "paint",
     type: "app",
   },
@@ -238,7 +238,7 @@ const apps = [
     type: "app",
   },
   {
-    name: "Soltaire",
+    name: "Soltaire.",
     icon: "soltaire",
     type: "app",
   },
