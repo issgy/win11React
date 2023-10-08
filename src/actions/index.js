@@ -88,11 +88,24 @@ export const performApp = (act, menu) => {
           apps[x].action == data.type ||
           (apps[x].payload == data.payload && apps[x].payload != null)
       );
-    }
 
-    app = apps[app];
-    if (app) {
-      store.dispatch({ type: "DESKREM", payload: app.name });
+      app = apps[app];
+      if (app) {
+        store.dispatch({ type: "DESKREM", payload: app.name });
+      }
+    }
+  }
+};
+
+export const delApp = (act, menu) => {
+  let data = {
+    type: menu.dataset.action,
+    payload: menu.dataset.payload,
+  };
+
+  if (act == "delete") {
+    if (data.type) {
+      console.log(data.type);
     }
   }
 };
