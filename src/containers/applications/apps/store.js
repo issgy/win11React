@@ -445,6 +445,12 @@ const DetailPage = ({ app }) => {
   const openApp = () => {
     dispatch({ type: apps[app.icon].action, payload: "full" });
   };
+  useEffect(() => {
+    let installed = JSON.parse(localStorage.getItem("installed"));
+    if (installed && installed.some((item) => item.name == app.name)) {
+      setDownState(3);
+    }
+  }, []);
 
   return (
     <div className="detailpage w-full absolute top-0 flex">

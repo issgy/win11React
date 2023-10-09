@@ -1,5 +1,6 @@
 import store from "../reducers";
 import { dfApps } from "../utils";
+import { gene_name } from "../utils/apps";
 
 export const refresh = (payload, menu) => {
   // 刷新操作
@@ -88,10 +89,9 @@ export const performApp = (act, menu) => {
           apps[x].action == data.type ||
           (apps[x].payload == data.payload && apps[x].payload != null)
       );
-
       app = apps[app];
       if (app) {
-        store.dispatch({ type: "DESKREM", payload: app.name });
+        store.dispatch({ type: "DESKDEL", payload: app.name });
       }
     }
   }
@@ -105,14 +105,28 @@ export const delApp = (act, menu) => {
 
   if (act == "delete") {
     if (data.type) {
-      console.log(data.type);
+      let apps = store.getState().apps;
+      let app = Object.keys(apps).filter((x) => apps[x].action == data.type);
+
+      if (app) {
+        app = apps[app];
+        if (app.pwa == true) {
+          //只有在store安装的应用才可删除
+          store.dispatch({ type: "DELAPP", payload: app.icon });
+
+          let installed = JSON.parse(localStorage.getItem("installed"));
+          installed = installed.filter((x) => x.icon != app.icon);
+          localStorage.setItem("installed", JSON.stringify(installed));
+          store.dispatch({ type: "DESKDEL", payload: app.name });
+        }
+      }
     }
   }
 };
 
 export const installApp = (data) => {
-  const app = { ...data, type: "app" };
-  // store.dispatch({ type: "APPDOWNLOAD", payload: data });
+  const app = { ...data, type: "app", pwa: true }; //pwa属性标记在store安装的应用
+
   let installed = localStorage.getItem("installed");
   if (!installed) installed = "[]";
 
@@ -121,14 +135,13 @@ export const installApp = (data) => {
   let desktop = localStorage.getItem("desktop");
   if (!desktop) desktop = dfApps.desktop;
   else desktop = JSON.parse(desktop);
-  // 不能出现重复的
-  if (desktop.indexOf(app.name) == -1 && installed.indexOf(app.name) == -1) {
-    desktop.push(app.name);
-    localStorage.setItem("desktop", JSON.stringify(desktop));
-    installed.push(app);
-    localStorage.setItem("installed", JSON.stringify(installed));
-  }
 
+  desktop.push(app.name);
+  localStorage.setItem("desktop", JSON.stringify(desktop));
+  installed.push(app);
+  localStorage.setItem("installed", JSON.stringify(installed));
+
+  app.action = gene_name();
   store.dispatch({ type: "ADDAPP", payload: app });
   store.dispatch({
     type: "DESKADD",

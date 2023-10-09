@@ -151,3 +151,10 @@ var tmpWdgt = await fetchApi(widget);
 
 1、taskbar 栏更新
 2、store 下载功能逻辑重写
+
+## 10.9：
+
+1、修复在 store 下载一个 app，关闭 store 界面，再点进 store 该 app 仍能下载问题
+在 store 界面设置变量，让已经下载过的 app 不能再下载
+使用 useEffect 钩子，第二个参数设为空数组，每次进入 app 详情页面就判断该 app 是否下载过，下载则将 downState 变量设为 3
+2、删除 app 逻辑
