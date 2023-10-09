@@ -108,6 +108,7 @@ export const StartMenu = () => {
     }
 
     arr.contApps = allApps;
+    arr.allApps = tmpApps;
     return arr;
   });
 

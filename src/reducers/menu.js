@@ -9,6 +9,7 @@ const defState = {
     desk: [
       {
         name: "查看",
+        icon: "ui/view",
         opts: [
           {
             name: "大图标",
@@ -38,6 +39,7 @@ const defState = {
       },
       {
         name: "排序方式",
+        icon: "ui/sort",
         opts: [
           {
             name: "名称",
@@ -58,18 +60,40 @@ const defState = {
       },
       {
         name: "刷新",
+        icon: "ui/refresh",
         action: "refresh",
       },
       {
         type: "hr",
       },
       {
-        name: "粘贴",
-        dsb: true,
+        name: "新建",
+        icon: "ui/new",
+        opts: [
+          {
+            name: "文件夹",
+          },
+          {
+            name: "快捷方式",
+          },
+          {
+            name: "文档",
+          },
+          {
+            name: "zip压缩文件",
+          },
+        ],
       },
       {
-        name: "粘贴快捷方式",
-        dsb: true,
+        type: "hr",
+      },
+      {
+        name: "展示设置",
+        icon: "ui/display",
+      },
+      {
+        name: "个性化",
+        icon: "ui/personalize",
       },
       {
         name: "切换桌面壁纸",
@@ -82,25 +106,17 @@ const defState = {
         payload: "C:\\Users\\issgy\\Desktop",
       },
       {
-        type: "hr",
-      },
-      {
-        name: "新建",
-        dsb: true,
-      },
-      {
-        type: "hr",
-      },
-      {
-        name: "个性化",
-        icon: "win/themes",
-        dsb: true,
-      },
-      {
         name: "关于",
         action: "DESKABOUT",
         icon: "win/info",
         payload: true,
+      },
+      {
+        type: "hr",
+      },
+      {
+        name: "显示更多",
+        icon: "ui/more",
       },
     ],
     task: [

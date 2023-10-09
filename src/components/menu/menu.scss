@@ -1,6 +1,6 @@
 .actmenu{
   position: absolute;
-  width: 200px;
+  width: 300px;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(21px);
   z-index: 10000;
@@ -24,9 +24,9 @@
   display: none;
   top: 0;
   left: 98%;
-  min-width: 160px;
+  min-width: 200px;
   // min-height: 280px;
-  background: #f7f7f7;
+  background: rgba(255, 255, 255, 0.9);
   z-index: 10000;
   padding: 4px 0;
   border: solid 1px #aaa;
@@ -34,13 +34,19 @@
 }
 
 .menuopt{
+  height: 28px;
   box-sizing: border-box;
   position: relative;
-  width: 100%;
+  width: calc(100% - 8px);
   padding: 3px 24px;
+  margin: 6px;
   font-weight: 500;
-  font-size: 9.6px;
+  font-size: 12px;
   cursor: default;
+  display: flex;
+  align-items: center;
+  color: #333;
+  transition: all 0.1s ease;
 
   &:hover{
     background: rgba(0, 0, 0, 0.08);
@@ -57,8 +63,8 @@
 
   .uicon{
     position: absolute;
-    top: 3px;
-    left: 4px;
+    top: 8px;
+    left: 1px;
   }
 
   .prtclk{
