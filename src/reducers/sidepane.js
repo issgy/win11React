@@ -4,55 +4,64 @@ const defState = {
       ui: true,
       src: "wifi",
       name: "网络",
-      state: true,
+      state: "network.wifi.state",
+      action: "STNGTOGG",
     },
     {
       ui: true,
       src: "bluetooth",
       name: "蓝牙",
-      state: false,
+      state: "devices.bluetooth",
+      action: "STNGTOGG",
     },
     {
       ui: true,
       src: "airplane",
       name: "飞行模式",
-      state: false,
+      state: "network.airplane",
+      action: "STNGTOGG",
     },
     {
       ui: true,
       src: "saver",
       name: "节电模式",
-      state: false,
+      state: "system.power.saver.state",
+      action: "STNGTOGG",
     },
     {
       ui: true,
-      src: "moon",
-      name: "专注助手",
-      state: false,
+      src: "sun",
+      name: "主题",
+      state: "person.theme",
+      action: "changeTheme",
     },
     {
       ui: true,
       src: "location",
       name: "定位",
-      state: false,
+      state: "privacy.location.state",
+      action: "STNGTOGG",
     },
     {
       ui: true,
       src: "nightlight",
       name: "夜间模式",
-      state: false,
+      state: "system.display.nightlight.state",
+      action: "STNGTOGG",
     },
     {
       ui: true,
       src: "connect",
       name: "连接",
-      state: false,
+      state: "system.display.connect",
+      action: "STNGTOGG",
     },
     {
       ui: true,
       src: "project",
       name: "投影",
       state: false,
+      action: "",
     },
   ],
   hide: true,
@@ -61,12 +70,10 @@ const defState = {
 
 const paneReducer = (state = defState, action) => {
   switch (action.type) {
-    case "PANEQBTN": {
-      const tmpState = { ...state };
-      tmpState.quicks[action.payload].state =
-        !tmpState.quicks[action.payload].state;
+    case "PANETHEME":
+      let tmpState = { ...state };
+      tmpState.quicks[4].src = action.payload;
       return tmpState;
-    }
     case "PANETOGG":
       return {
         ...state,

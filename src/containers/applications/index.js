@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import "./tabs.scss";
 import "./tab2.scss";
-import "./wnapp.css";
+import "./wnapp.scss";
 
 export * from "./apps/edge";
 

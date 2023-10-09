@@ -152,3 +152,13 @@ export const installApp = (data) => {
     payload: "mnmz",
   });
 };
+
+export const changeTheme = () => {
+  let theme = store.getState().settings.person.theme;
+  theme = theme == "light" ? "dark" : "light";
+  let icon = theme == "light" ? "sun" : "moon";
+
+  document.body.dataset.theme = theme;
+  store.dispatch({ type: "STNGTHEME", payload: theme });
+  store.dispatch({ type: "PANETHEME", payload: icon });
+};
