@@ -11,22 +11,24 @@
           url("https://db.onlinewebfonts.com/t/1ccdd11fd9d1d81756c40d7acb17d0aa.svg#Spotify") format("svg");
   }
   
-  body{
+  body {
     --dark-txt: #000;
     --txt-col: #222;
     --med-txt: #3c3c3c;
     --comp-txt: #ddd;
     --gray-txt: #555;
     --sat-txt: #777;
+    --clrPrm: #0067c0;
   }
   
-  body[data-theme="dark"]{
+  body[data-theme="dark"] {
     --dark-txt: #fff;
     --txt-col: #ddd;
     --med-txt: #c3c3c3;
     --comp-txt: #222;
     --gray-txt: #aaa;
     --sat-txt: #999;
+    --clrPrm: #4cc2ff;
   }
   
   .edgeBrowser {

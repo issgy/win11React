@@ -100,10 +100,15 @@ const Taskbar = () => {
         {/* taskbar中间图标 */}
         <div className="tasksCont" data-side={tasks.align} data-menu="task">
           <div className="tsbar" onMouseOut={hidePrev}>
-            <Icon className="tsIcon" src="home" width={22} click="STARTOGG" />
+            <Icon
+              className="tsIcon hvlight"
+              src="home"
+              width={22}
+              click="STARTOGG"
+            />
             {tasks.search ? (
               <Icon
-                className="tsIcon"
+                className="tsIcon hvlight searchIcon"
                 src="search"
                 width={22}
                 click="STARTSRC"
@@ -111,7 +116,7 @@ const Taskbar = () => {
             ) : null}
             {tasks.widgets ? (
               <Icon
-                className="tsIcon"
+                className="tsIcon hvlight"
                 src="widget"
                 width={22}
                 click="WIDGTOGG"
@@ -128,7 +133,7 @@ const Taskbar = () => {
                 >
                   <Icon
                     key={i}
-                    className="tsIcon"
+                    className="tsIcon hvlight"
                     src={task.icon}
                     width={22}
                     open={isHidden ? null : true}
@@ -152,7 +157,7 @@ const Taskbar = () => {
                 >
                   <Icon
                     key={i}
-                    className="tsIcon"
+                    className="tsIcon hvlight"
                     width={22}
                     active={apps[key].z == apps.hz}
                     click={apps[key].action}
@@ -169,7 +174,7 @@ const Taskbar = () => {
         <div className="taskright">
           <Icon className="taskIcon" fafa="faChevronUp" width={10} />
           <div
-            className="prtclk handcr my-1 px-1 hvdark flex rounded"
+            className="prtclk handcr my-1 px-1 hvlight flex rounded"
             onClick={clickDispatch}
             data-action="PANETOGG"
           >
@@ -187,7 +192,7 @@ const Taskbar = () => {
           </div>
 
           <div
-            className="taskDate handcr prtclk hvdark"
+            className="taskDate handcr prtclk hvlight"
             onClick={clickDispatch}
             data-action="CALNTOGG"
           >
@@ -206,7 +211,7 @@ const Taskbar = () => {
               })}
             </div>
           </div>
-          <Icon className="graybd" ui width={6} click="SHOWDSK" pr />
+          <Icon className="graybd my-3" ui width={6} click="SHOWDSK" pr />
         </div>
       </div>
     </div>

@@ -1,44 +1,67 @@
-.taskbar{
+.taskbar {
+  --bg1: rgba(243, 243, 243, 0.85);
+
   position: absolute;
   width: 100vw;
-  height: 41px;
-  background: rgba(254, 254, 254, 0.8);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
+  height: 39px;
+  color: var(--dark-txt);
+  background: var(--bg1);
+  -webkit-backdrop-filter: saturate(3) blur(20px);
+  backdrop-filter: saturate(3) blur(20px);
   bottom: 0;
   z-index: 10000;
 }
 
-.battery{
+body[data-theme="dark"] .taskbar {
+  --bg1: rgba(32, 32, 32, 0.75);
+
+  .taskIcon,
+  .searchIcon img {
+    filter: invert(1);
+  }
+}
+
+.battery {
   display: inline-block;
-  position:relative;
-  color:black;
+  position: relative;
+  margin-top: 2px;
+
+  i {
+    color: #232323;
+  }
+
+  .uicon {
+    position: absolute;
+    margin-top: 24%;
+    margin-left: -12%;
+    z-index: 1;
+    filter: drop-shadow(1px 1px #fefefe) invert(0.14);
+  }
 }
 
-.battery .fa{
-  font:normal normal normal 14px/2 FontAwesome;
+.battery .fa {
+  font: normal normal normal 14px/2 FontAwesome;
 }
 
-.battery .animate{
-  width:88%; 
-  position:absolute;
-  left:0; 
-  top:3px; 
+.battery .animate {
+  width: 88%;
+  position: absolute;
+  left: 0;
+  top: 0;
   overflow: hidden;
-  color:black;
-  z-index: -1;
-  -webkit-transition:all 0.5s ease;
-  -moz-transition:all 0.5s ease;
-  transition:all 0.5s ease;
+  z-index: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
-.taskcont{
+.taskcont {
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-.taskright{
+.taskright {
   position: absolute;
   top: 0;
   right: 0;
@@ -48,44 +71,45 @@
   display: flex;
 }
 
-.taskIcon{
+.taskIcon {
   width: 24px;
 
-  svg{
-    color: #212121;
+  svg {
+    color: #303030;
   }
 }
 
-.taskDate{
-  height: 100%;
+.taskDate {
+  width: 44px;
+  // height: 100%;
   display: flex;
-  padding: 6px 8px 6px 6px;
+  padding: 1px 4px 4px 4px;
   font-size: 0.64em;
   flex-direction: column;
 
-  div{
+  div {
     width: 100%;
-    text-align: right;
+    text-align: center;
     font-weight: 400;
   }
 }
 
-.tasksCont{
+.tasksCont {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 
-  &[data-side="center"]{
+  &[data-side="center"] {
     align-items: center;
   }
 
-  &[data-side="left"]{
+  &[data-side="left"] {
     align-items: flex-start;
   }
 }
 
-.tsbar{
+.tsbar {
   width: auto;
   height: 100%;
   display: flex;
@@ -93,7 +117,7 @@
   transition: all ease-in-out 200ms;
 }
 
-.tsIcon{
+.tsIcon {
   position: relative;
   width: 33px;
   height: 33px;
@@ -103,46 +127,50 @@
   background: rgba(254, 254, 254, 0);
   transform-origin: center;
   animation: popintro 800ms ease-in-out;
+  border-radius: 4px;
 
-  &:hover{
-    background: rgba(#fefefe, 0.64);
-    border-radius: 4px;
-    transition: all ease-in-out 200ms;
-  }
-
-  &[data-open='true']:after{
+  &:after {
     content: "";
     position: absolute;
     display: block;
     bottom: 0;
-    width: 6px;
+    width: 0px;
     height: 3px;
     border-radius: 4px;
     background: #858585;
+    transition: all 0.2s ease-in-out;
   }
 
-  &[data-active='true']:after{
+  &[data-open="true"]:after {
+    width: 6px;
+  }
+
+  &[data-active="true"]:after {
     width: 12px;
-    background: #1f4dcd;
+    background: var(--clrPrm);
   }
 }
 
-.graybd{
-  border: solid 1px #c3c3c3;
+.graybd {
+  border: solid 1px transparent;
+  height: 33%;
+}
+.graybd:hover {
+  border: solid 1px #a1a1a1;
   border-width: 0 0 0 2px;
 }
 
 @keyframes popintro {
-  0%{
+  0% {
     transform: scale(0);
   }
-  40%{
+  40% {
     transform: scale(1.125);
   }
-  70%{
+  70% {
     transform: scale(0.725);
   }
-  100%{
+  100% {
     transform: scale(1);
   }
 }

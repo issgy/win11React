@@ -75,27 +75,32 @@ export const ActMenu = () => {
             data-payload={opt.payload}
             key={i}
           >
-            {opt.name}
-            {opt.icon ? <Icon src={opt.icon} width={14} /> : null}
+            <div className="spcont">
+              {opt.icon ? <Icon src={opt.icon} width={16} /> : null}
+            </div>
+            <div className="nopt">{opt.name}</div>
             {opt.opts ? (
-              <Icon fafa="faChevronRight" width={10} color="#999" />
+              <Icon
+                className="micon rightIcon"
+                fafa="faChevronRight"
+                width={10}
+                color="#999"
+              />
             ) : null}
             {opt.dot ? (
               <Icon
-                className="dotIcon"
+                className="micon dotIcon"
                 fafa="faCircle"
                 width={4}
                 height={4}
-                color="#333"
               />
             ) : null}
             {opt.check ? (
               <Icon
-                className="checkIcon"
+                className="micon checkIcon"
                 fafa="faCheck"
                 width={8}
                 height={8}
-                color="#333"
               />
             ) : null}
             {opt.opts ? (
