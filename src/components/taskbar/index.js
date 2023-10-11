@@ -192,7 +192,7 @@ const Taskbar = () => {
           </div>
 
           <div
-            className="taskDate handcr prtclk hvlight"
+            className="taskDate m-1 handcr prtclk rounded hvlight"
             onClick={clickDispatch}
             data-action="CALNTOGG"
           >

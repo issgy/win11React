@@ -6257,6 +6257,11 @@ immutable@^4.0.0:
   resolved "https://registry.npmmirror.com/immutable/-/immutable-4.3.4.tgz#2e07b33837b4bb7662f288c244d1ced1ef65a78f"
   integrity sha512-fsXeu4J4i6WNWSikpI88v/PcVflZz+6kMhUfIwc5SY+poQRPnaf5V7qds6SUyUN3cVxEzuCab7QIoLOQ+DQ1wA==
 
+immutable@^5.0.0-beta.4:
+  version "5.0.0-beta.4"
+  resolved "https://registry.npmmirror.com/immutable/-/immutable-5.0.0-beta.4.tgz#6c12ac4ad8b16aeec4d064c9d2f4024bb270b7ca"
+  integrity sha512-sl9RE3lqd2LoQSESc8VV0k8qE9y57iT7dinq3Q+8mR2dqReHDZlgUrudzmFfZhDXBLXlNJMVWv3SG1YpQIokig==
+
 import-cwd@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/import-cwd/-/import-cwd-2.1.0.tgz#aa6cf36e722761285cb371ec6519f53e2435b0a9"

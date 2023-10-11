@@ -20,10 +20,17 @@
       type="text/css"
     />
   </head>
-  <body>
+  <body data-force="false">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <div id="brightoverlay"></div>
     <script type="text/javascript" src="dycalendar.js"></script>
+    <div id="warningmsg">
+      This project is &nbsp;<rediv
+        >not in anyway affiliated with Microsoft</rediv
+      >&nbsp;and should not be confused with Microsoft’s Operating System or
+      Products.
+    </div>
+    <button id="probtn" onclick="removeWarning()">Proceed anyway</button>
   </body>
 </html>

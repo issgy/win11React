@@ -14,6 +14,7 @@
     "@testing-library/user-event": "^12.1.10",
     "axios": "^1.5.0",
     "fortawesome": "^0.0.1-security",
+    "immutable": "^5.0.0-beta.4",
     "node-sass": "^9.0.0",
     "react": "^17.0.2",
     "react-canvas-draw": "^1.2.1",

@@ -279,6 +279,14 @@ a {
   pointer-events: none;
 }
 
+#warningmsg {
+  display: none;
+}
+
+#probtn {
+  display: none;
+}
+
 @media screen and (max-width: 650px) {
   body[data-force="false"] #root {
     display: none;
@@ -293,5 +301,32 @@ a {
 
   body[data-force="false"]::before {
     display: none;
+  }
+
+  body[data-force="false"] #warningmsg {
+    display: block;
+    font-size: 1.4rem;
+    color: #fefefe;
+    font-family: sans-serif;
+    letter-spacing: 2px;
+    text-align: left;
+    word-spacing: 4px;
+    line-height: 48px;
+    inset: 50px;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  body[data-force="false"] #probtn {
+    display: block;
+    position: absolute;
+    bottom: 25%;
+    padding: 16px;
+    color: #aaa;
+    font-weight: 600;
+    font-size: 1.2em;
+    background: #16161b;
+    border-radius: 8px;
+    border: none;
   }
 }
