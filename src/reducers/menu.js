@@ -111,13 +111,6 @@ const defState = {
         icon: "win/info",
         payload: true,
       },
-      {
-        type: "hr",
-      },
-      {
-        name: "显示更多",
-        icon: "ui/more",
-      },
     ],
     task: [
       {
