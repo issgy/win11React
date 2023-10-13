@@ -309,7 +309,7 @@ export const StartMenu = () => {
             />
           </div>
           <div className="flex py-4 px-1 text-xs">
-            <div className="opts w-1/2 text-gray-700 flex justify-between">
+            <div className="opts w-1/2 flex justify-between">
               <div className="border-b-2">All</div>
               <div>Apps</div>
               <div>Documents</div>
@@ -327,7 +327,7 @@ export const StartMenu = () => {
               </div>
               {query.length ? (
                 <div className="textResult h-16">
-                  <div className="smatch flex my-2 bg-gray-100 p-3 rounded">
+                  <div className="smatch flex my-2 p-3 rounded">
                     <Icon src={match.icon} width={24} />
                     <div className="matchInfo flex-col px-2">
                       <div className="font-semibold text-xs">{match.name}</div>
@@ -335,7 +335,7 @@ export const StartMenu = () => {
                     </div>
                   </div>
                   <div
-                    className="smatch flex my-2 bg-gray-100 p-3 rounded handcr prtclk"
+                    className="smatch flex my-2 p-3 rounded handcr prtclk"
                     onClick={clickDispatch}
                     data-action="EDGELINK"
                     data-payload={query}
@@ -352,10 +352,7 @@ export const StartMenu = () => {
                   <div className="topApps flex w-full justify-between">
                     {start.rcApps.slice(0, 5).map((app, i) => {
                       return (
-                        <div
-                          key={i}
-                          className="topApp pt-4 py-2 bg-gray-100 ltShad"
-                        >
+                        <div key={i} className="topApp pt-4 py-2 ltShad">
                           <Icon
                             src={app.icon}
                             width={24}

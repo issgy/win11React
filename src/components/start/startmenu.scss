@@ -28,6 +28,9 @@
 }
 
 .startMenu {
+  --bg1:rgba(242,242,242,0.9);
+  --bg2:rgba(255,255,255,0.9);
+
   --roundRad: 6px;
   position: absolute;
   bottom: 10px;
@@ -46,7 +49,8 @@
     left: 8px;
   }
 
-  background: rgba(255, 255, 255, 0.88);
+  color: var(--dark-txt);
+  background: var(--bg1);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
   border-radius: var(--roundRad);
@@ -59,6 +63,11 @@
     opacity: 0;
     pointer-events: none;
   }
+}
+
+body[data-theme='dark'] .startMenu{
+  --bg1: rgba(36, 36, 36, 0.8);
+  --bg2: rgba(255, 255, 255, 0.1);
 }
 
 .allCont,
@@ -92,7 +101,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  background: rgba(175, 175, 175, 0.1);
+  background: rgba(0,0,0,0.1);
 }
 
 .profile {
@@ -104,7 +113,7 @@
     margin-left: 12px;
     font-size: 0.7em;
     font-weight: 400;
-    color: #111;
+    color: var(--txt-col);
   }
 }
 
@@ -120,11 +129,11 @@
   .gpname {
     font-weight: 600;
     font-size: 0.74em;
-    color: #111;
+    color: var(--dark-col);
   }
 
   .gpbtn {
-    background: rgba(255, 255, 255, 0.9);
+    background: var(--bg2);
     padding: 0 8px 2px;
     font-size: 0.64em;
     font-weight: 400;
@@ -137,7 +146,7 @@
     svg {
       margin-left: 4px;
       padding-top: 2px;
-      color: #414141;
+      color: var(--med-txt);
     }
 
     .chevLeft svg {
@@ -183,7 +192,7 @@
       height: 0;
       top: -12px;
       padding: 0 42px 60px;
-      background: rgba(255, 255, 255, 0);
+      background: transparent;
       z-index: -1;
       transition: all ease-in-out 100ms;
       border-radius: 4px;
@@ -193,7 +202,7 @@
     .appName {
       width: 24px;
       display: flex;
-      color: #2f2f2f;
+      color: var(--txt-col);
       margin-top: 4px;
       font-weight: 500;
       font-size: 0.64em;
@@ -215,7 +224,7 @@
   }
 
   .pnApp:hover .pnIcon::after {
-    background: rgba(255, 255, 255, 0.5);
+    background:var(--bg2);
   }
 }
 
@@ -246,13 +255,13 @@
       margin: 0 12px;
 
       .appName {
-        color: #2f2f2f;
+        color: var(--txt-col);
         font-size: 0.7em;
         font-weight: 700;
       }
 
       .timeUsed {
-        color: #535353;
+        color: var(--gray-txt);
         font-size: 0.6em;
         font-weight: 500;
       }
@@ -289,7 +298,7 @@
   &::-webkit-scrollbar {
     display: none;
     width: 1.6px;
-    background-color: transparent;
+    background: transparent;
   }
 
   &:hover::-webkit-scrollbar {
@@ -299,7 +308,7 @@
   &::-webkit-scrollbar-thumb {
     width: 1.6px;
     border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: var(--sat-txt);
   }
 
   .allApp {
@@ -319,7 +328,7 @@
       left: 0;
       z-index: -1;
       border-radius: 4px;
-      background: rgba(255, 255, 255, 0.4);
+      background: var(--bg2);
     }
 
     .ltName {
@@ -333,7 +342,7 @@
       text-align: left;
       width: 20%;
       padding-left: 4px;
-      color: #2f2f2f;
+      color: var(--txt-col);
       font-weight: 500;
       font-size: 0.6em;
       margin: 0 12px;
@@ -366,7 +375,7 @@
   display: grid;
   grid-template-columns: repeat(4,minmax(0,1fr));
   grid-template-rows: repeat(7,minmax(0,1fr));
-  color: #010101;
+  color: var(--txt-col);
   cursor: pointer;
 
   .allApp {
@@ -376,6 +385,6 @@
 
   .dullApp {
     cursor: default;
-    color: rgba(0, 0, 0, 0.36);
+    color: var(--sat-txt);
   }
 }
