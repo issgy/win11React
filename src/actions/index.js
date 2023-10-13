@@ -162,3 +162,14 @@ export const changeTheme = () => {
   store.dispatch({ type: "STNGTHEME", payload: theme });
   store.dispatch({ type: "PANETHEME", payload: icon });
 };
+
+export const loadSettings = () => {
+  let setting = localStorage.getItem("setting") || "{}";
+  setting = JSON.parse(setting);
+
+  if (setting.person == null) setting = store.getState().settings;
+
+  if (setting.person.theme != "light") changeTheme();
+
+  store.dispatch({ type: "SETTINGLOAD", payload: setting });
+};

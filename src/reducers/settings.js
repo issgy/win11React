@@ -46,18 +46,23 @@ const changeVal = (tmpState, path) => {
   return tmpState;
 };
 const settingReducer = (state = defState, action) => {
+  let tmpState = { ...state },
+    changed = false;
+
   switch (action.type) {
     case "STNGTOGG":
-      let tmpState = { ...state };
+      changed = true;
       tmpState = changeVal(tmpState, action.payload);
-      return tmpState;
+      break;
     case "STNGTHEME":
-      let tmp = { ...state };
-      tmp.person.theme = action.payload;
-      return tmp;
-    default:
-      return state;
+      changed = true;
+      tmpState.person.theme = action.payload;
+      break;
+    case "SETTINGLOAD":
+      tmpState = { ...action.payload };
   }
+  if (changed) localStorage.setItem("setting", JSON.stringify(tmpState));
+  return tmpState;
 };
 
 export default settingReducer;

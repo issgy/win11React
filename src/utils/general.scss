@@ -5,6 +5,7 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
+  background: inherit;
 
   &[data-float="false"]{
     z-index: 10;
@@ -98,66 +99,6 @@
   }
 }
 
-.snapLay{
-  display: grid;
-  grid-column-gap: 3px;
-  grid-row-gap: 3px;
-
-  &:nth-child(1){
-    grid-template-columns: auto auto;
-  }
-
-  &:nth-child(2){
-    grid-template-columns: auto auto auto;
-
-    .snapper:first-child{
-      grid-column-end: span 2;
-    }
-  }
-
-  &:nth-child(3){
-    grid-template-columns: auto auto auto;
-  }
-
-  &:nth-child(4){
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto;
-
-    .snapper:first-child{
-      grid-row: 1 / span 2;
-    }
-  }
-
-  &:nth-child(5){
-    grid-template-columns: auto auto;
-    grid-template-rows: auto auto;
-    grid-column-gap: 4px;
-  }
-
-  &:nth-child(6){
-    grid-template-columns: auto auto auto auto auto auto auto;
-
-    .snapper{
-      grid-column-end: span 2;
-    }
-
-    .snapper:nth-child(2){
-      grid-column: 3 / span 3;
-    }
-  }
-}
-
-.snapper{
-  box-sizing: border-box;
-  border: solid 1px #999;
-  background: #e6e6e6;
-  transition: all ease-in-out 100ms;
-
-  &:hover{
-    background: #0066ff;
-  }
-}
-
 .uicon{
   position: relative;
   display: grid;
@@ -179,5 +120,21 @@
   img[data-free="false"]{
     max-width: 100%;
     max-height: 100%;
+  }
+}
+
+.imageCont.rounded{
+  overflow: hidden;
+}
+
+body[data-theme='dark']{
+  .appFullName {
+    color: #fefefe;
+  }
+
+  .actbtns{
+    .uicon img{
+      filter: invert(1);
+    }
   }
 }

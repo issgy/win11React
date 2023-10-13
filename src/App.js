@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Background, LockScreen, BootScreen } from "./containers/background";
 import Taskbar from "./components/taskbar";
 import {
@@ -13,6 +13,7 @@ import * as Applications from "./containers/applications";
 import "./index.css";
 import "./short.css";
 import { useDispatch, useSelector } from "react-redux";
+import { loadSettings } from "./actions";
 
 function App() {
   const dispatch = useDispatch();
@@ -71,10 +72,19 @@ function App() {
     dispatch({ type: "WALLBOOTED" });
   });
 
+  useEffect(() => {
+    if (!window.onstart) {
+      loadSettings();
+      window.onstart = setTimeout(() => {
+        dispatch({ type: "WALLBOOTED" });
+      }, 5000);
+    }
+  });
+
   return (
     <div className="App">
-      {/* {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
-      {wall.locked ? <LockScreen dir={wall.dir} /> : null} */}
+      {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
+      {wall.locked ? <LockScreen dir={wall.dir} /> : null}
       <div className="appwrap">
         <Background />
         <div className="desktop" data-menu="desk">

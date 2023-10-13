@@ -164,3 +164,4 @@ var tmpWdgt = await fetchApi(widget);
 
 1、startmenu 和 searchpane 黑暗主题下的样式修复
 2、修复右击窗口显示 bug 以及替换 menu 图标
+3、本地存储
