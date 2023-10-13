@@ -20,7 +20,7 @@ export const AboutWin = () => {
   };
   return open || abOpen ? (
     <div className="aboutApp floatTab dpShad">
-      <div className="py-1 px-2 bg-gray-100 text-xss">
+      <div className="py-1 px-2 aboutTop text-xss">
         <div className="">About Windows</div>
       </div>
       <div className="windowScreen flex flex-col" data-dock="true">

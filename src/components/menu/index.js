@@ -21,15 +21,14 @@ export const ActMenu = () => {
     const wnwidth = window.innerWidth,
       wnheight = window.innerHeight;
 
-    const ewidth = 200,
-      eheight = acount * 18.8;
+    const ewidth = 312,
+      eheight = acount * 28;
 
     // 根据窗口的宽度和菜单的宽度来判断是否要在左侧显示菜单。
     // 如果窗口的宽度减去菜单的左侧位置小于等于菜单的宽度，则菜单将在右侧显示
     tmpLeft = wnwidth - tmpos.left > 360;
     if (wnwidth - tmpos.left < ewidth) {
-      tmpos.right = wnwidth - tmpos.left;
-      tmpos.left = null;
+      tmpos.left = wnwidth - ewidth;
     }
     if (wnheight - tmpos.top < eheight) {
       tmpos.bottom = wnheight - tmpos.top;
@@ -76,7 +75,15 @@ export const ActMenu = () => {
             key={i}
           >
             <div className="spcont">
-              {opt.icon ? <Icon src={opt.icon} width={16} /> : null}
+              {opt.icon && opt.type == null ? (
+                <Icon src={opt.icon} width={16} />
+              ) : null}
+              {opt.icon && opt.type == "svg" ? (
+                <Icon icon={opt.icon} width={16} />
+              ) : null}
+              {opt.icon && opt.type == "fa" ? (
+                <Icon fafa={opt.icon} width={16} />
+              ) : null}
             </div>
             <div className="nopt">{opt.name}</div>
             {opt.opts ? (

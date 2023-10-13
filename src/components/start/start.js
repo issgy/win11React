@@ -297,7 +297,7 @@ export const StartMenu = () => {
         </>
       ) : (
         <div className="searchMenu">
-          <div className="searchBar">
+          <div className="searchBar searchIcon">
             <Icon src="search" ui width={16} />
             <input
               type="text"

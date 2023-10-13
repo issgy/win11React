@@ -159,3 +159,8 @@ var tmpWdgt = await fetchApi(widget);
 使用 useEffect 钩子，第二个参数设为空数组，每次进入 app 详情页面就判断该 app 是否下载过，下载则将 downState 变量设为 3
 2、删除 app 逻辑
 3、修复搜索框搜索 app 不按顺序呈现的 bug
+
+## 10.13:
+
+1、startmenu 和 searchpane 黑暗主题下的样式修复
+2、修复右击窗口显示 bug 以及替换 menu 图标

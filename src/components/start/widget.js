@@ -7,9 +7,13 @@ import axios from "axios";
 export const WidPane = () => {
   const widget = useSelector((state) => state.widpane);
   const dispatch = useDispatch();
+  const theme = useSelector((state) => state.settings.person.theme);
 
   const getRandom = (x = 0) => {
-    return `hsl(${Math.floor(Math.random() * 360)}deg 36% 84%)`;
+    if (theme == "light")
+      return `hsl(${Math.floor(Math.random() * 360)}deg 36% 84%)`;
+    if (theme == "dark")
+      return `hsl(${Math.floor(Math.random() * 360)}deg 36% 16%)`;
   };
 
   useEffect(() => {

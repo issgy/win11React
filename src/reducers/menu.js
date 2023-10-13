@@ -9,7 +9,8 @@ const defState = {
     desk: [
       {
         name: "查看",
-        icon: "ui/view",
+        icon: "view",
+        type: "svg",
         opts: [
           {
             name: "大图标",
@@ -39,7 +40,8 @@ const defState = {
       },
       {
         name: "排序方式",
-        icon: "ui/sort",
+        icon: "sort",
+        type: "svg",
         opts: [
           {
             name: "名称",
@@ -60,15 +62,17 @@ const defState = {
       },
       {
         name: "刷新",
-        icon: "ui/refresh",
+        icon: "refresh",
         action: "refresh",
+        type: "svg",
       },
       {
         type: "hr",
       },
       {
         name: "新建",
-        icon: "ui/new",
+        icon: "New",
+        type: "svg",
         opts: [
           {
             name: "文件夹",
@@ -89,11 +93,13 @@ const defState = {
       },
       {
         name: "展示设置",
-        icon: "ui/display",
+        icon: "display",
+        type: "svg",
       },
       {
         name: "个性化",
-        icon: "ui/personalize",
+        icon: "personalize",
+        type: "svg",
       },
       {
         name: "切换桌面壁纸",
@@ -108,7 +114,8 @@ const defState = {
       {
         name: "关于",
         action: "DESKABOUT",
-        icon: "win/info",
+        icon: "info",
+        type: "svg",
         payload: true,
       },
     ],
