@@ -60,6 +60,7 @@ export const StartMenu = () => {
   };
 
   const clickDispatch = (event) => {
+    event.stopPropagation();
     var action = {
       type: event.target.dataset.action,
       payload: event.target.dataset.payload,

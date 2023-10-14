@@ -75,6 +75,7 @@ export const SidePane = () => {
   const [paneState, setPaneState] = useState([]); //记录sidepane的状态
 
   const clickDispatch = (event) => {
+    event.stopPropagation();
     let action = {
       type: event.target.dataset.action,
       payload: event.target.dataset.payload,
@@ -198,6 +199,9 @@ export const CalnWid = () => {
   const sidepane = useSelector((state) => state.sidepane);
   const [loaded, setLoad] = useState(false);
 
+  const handleClick = (e) => {
+    e.stopPropagation();
+  };
   useEffect(() => {
     if (!loaded) {
       setLoad(true);
@@ -216,6 +220,7 @@ export const CalnWid = () => {
       className="calnpane dpShad"
       data-hide={sidepane.calhide}
       style={{ "--prefix": "CALN" }}
+      onClick={handleClick}
     >
       <div id="dycalendar"></div>
     </div>

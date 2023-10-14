@@ -21,6 +21,8 @@ function App() {
   const wall = useSelector((state) => state.wallpaper);
 
   const hideAll = (event) => {
+    // event.stopPropagation();
+
     const ess = [
       ["START", "STARTHID"],
       ["PANE", "PANEHIDE"],
@@ -40,8 +42,11 @@ function App() {
       "--prefix"
     );
 
+    console.log(actionType, actionType0);
+
     ess.forEach((item, i) => {
       if (!actionType.startsWith(item[0]) && !actionType0.startsWith(item[0])) {
+        console.log("dispatch");
         dispatch({ type: item[1] });
       }
     });
