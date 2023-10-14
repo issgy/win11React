@@ -173,28 +173,3 @@ export const loadSettings = () => {
 
   store.dispatch({ type: "SETTINGLOAD", payload: setting });
 };
-
-export const hideApps = () => {
-  /*
-      ["START", "STARTHID"], //startmenu
-      ["PANE", "PANEHIDE"], //sidepane.hide
-      ["WIDG", "WIDGHIDE"], //widpane
-      ["CALN", "CALNHIDE"], //sidepane.calhide
-      ["MENU", "MENUHIDE"], //menu
-  */
-  let arr = [
-    ["START", "STARTHID"], //startmenu
-    ["PANE", "PANEHIDE"], //sidepane.hide
-    ["WIDG", "WIDGHIDE"], //widpane
-    ["CALN", "CALNHIDE"], //sidepane.calhide
-    ["MENU", "MENUHIDE"], //menu
-  ];
-
-  arr[0].push(store.getState().startmenu.hide);
-  arr[1].push(store.getState().sidepane.hide);
-  arr[2].push(store.getState().widpane.hide);
-  arr[3].push(store.getState().sidepane.calhide);
-  arr[4].push(store.getState().menus.hide);
-
-  console.log(arr);
-};

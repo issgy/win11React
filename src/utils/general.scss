@@ -21,6 +21,8 @@
 }
 
 .topInfo{
+  height: 100%;
+  
   &[data-float="true"]{
     opacity: 0;
   }

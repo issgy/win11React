@@ -212,6 +212,12 @@ const appReducer = (state = defState, action) => {
           obj.z = tmpState.hz;
         } else if (action.payload === "resize") {
           console.log("resize");
+          obj.size = "cstm";
+          obj.hide = false;
+          obj.max = true;
+          if (obj.z != tmpState.hz) tmpState.hz += 1;
+          obj.z = tmpState.hz;
+          obj.dim = action.dim;
         } else if (action.payload === "close") {
           console.log("close");
           obj.hide = true;

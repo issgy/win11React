@@ -59,11 +59,11 @@
     border-radius: 0;
   }
 
-  &[data-size="cstm"] {
-    border-radius: 0;
-    filter: none;
-    border: solid 1px #c7c7c7;
-  }
+  // &[data-size="cstm"] {
+  //   border-radius: 0;
+  //   filter: none;
+  //   border: solid 1px #c7c7c7;
+  // }
 
   &[data-hide="true"] {
     top: 0;

@@ -156,6 +156,58 @@ export const ToolBar = (props) => {
     });
   };
 
+  let appStart = [0, 0],
+    mouseStart = [0, 0],
+    wnapp = {};
+
+  const toolDrag = (e) => {
+    e.preventDefault();
+    mouseStart = [e.clientY, e.clientX];
+
+    wnapp = e.target.parentElement && e.target.parentElement.parentElement;
+
+    if (wnapp) {
+      wnapp.classList.add("notrans");
+      wnapp.classList.add("z9900");
+      appStart = [wnapp.offsetTop, wnapp.offsetLeft];
+    }
+
+    document.onmousemove = handleMouseMove;
+    document.onmouseup = handleMouseUp;
+  };
+
+  const handleMouseMove = (e) => {
+    e = e || window.event;
+    e.preventDefault();
+    let appEndY = appStart[0] + e.clientY - mouseStart[0],
+      appEndX = appStart[1] + e.clientX - mouseStart[1];
+
+    wnapp.style.top = appEndY + "px";
+    wnapp.style.left = appEndX + "px";
+  };
+
+  const handleMouseUp = (e) => {
+    document.onmousemove = null;
+    document.onmouseup = null;
+
+    wnapp.classList.remove("notrans");
+    wnapp.classList.remove("z9900");
+
+    console.log(props);
+    let action = {
+      type: props.app,
+      payload: "resize",
+      dim: {
+        width: getComputedStyle(wnapp).width,
+        height: getComputedStyle(wnapp).height,
+        top: wnapp.style.top,
+        left: wnapp.style.left,
+      },
+    };
+
+    dispatch(action);
+  };
+
   return (
     <div
       className="toolbar"
@@ -166,9 +218,10 @@ export const ToolBar = (props) => {
       data-noinvert={props.noinvert != null}
     >
       <div
-        className="topInfo flex items-center"
+        className="topInfo flex flex-grow items-center"
         data-float={props.float != null}
         onClick={toolClick}
+        onMouseDown={toolDrag}
       >
         <Icon src={props.icon} width={14} />
         <div className="appFullName text-xss" data-white={props.invert != null}>
@@ -201,7 +254,15 @@ export const ToolBar = (props) => {
           {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}
         </div>
         {/* 关闭图标 */}
-        <Icon click={props.app} payload="close" pr src="close" ui width={8} />
+        <Icon
+          invert={props.invert}
+          click={props.app}
+          payload="close"
+          pr
+          src="close"
+          ui
+          width={8}
+        />
       </div>
     </div>
   );
