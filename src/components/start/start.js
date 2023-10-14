@@ -53,6 +53,11 @@ export const StartMenu = () => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
   const [match, setMatch] = useState({});
+  const [atab, setTab] = useState("All");
+
+  const tabSw = (e) => {
+    setTab(e.target.innerText.trim());
+  };
 
   const clickDispatch = (event) => {
     var action = {
@@ -310,11 +315,21 @@ export const StartMenu = () => {
           </div>
           <div className="flex py-4 px-1 text-xs">
             <div className="opts w-1/2 flex justify-between">
-              <div className="border-b-2">All</div>
-              <div>Apps</div>
-              <div>Documents</div>
-              <div>Web</div>
-              <div>More</div>
+              <div value={atab == "All"} onClick={tabSw}>
+                All
+              </div>
+              <div value={atab == "Apps"} onClick={tabSw}>
+                Apps
+              </div>
+              <div value={atab == "Documents"} onClick={tabSw}>
+                Documents
+              </div>
+              <div value={atab == "Web"} onClick={tabSw}>
+                Web
+              </div>
+              <div value={atab == "More"} onClick={tabSw}>
+                More
+              </div>
             </div>
           </div>
           <div className="shResult w-full flex justify-between">

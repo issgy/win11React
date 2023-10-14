@@ -465,7 +465,7 @@ const DetailPage = ({ app }) => {
         />
         <div className="flex flex-col items-center text-center relative">
           <div className="text-2xl font-semibold mt-6">{app.name}</div>
-          <div className="text-xs text-blue-800">Community</div>
+          <div className="text-xs text-blue-500">Community</div>
           {downState == 0 ? (
             <div className="instbtn mt-12 mb-8 handcr" onClick={download}>
               Get
@@ -534,7 +534,7 @@ const DetailPage = ({ app }) => {
           <div className="text-xs font-semibold">Ratings and reviews</div>
           <div className="flex mt-4 items-center">
             <div className="flex flex-col items-center">
-              <div className="text-5xl text-gray-900 font-bold">{stars}</div>
+              <div className="text-5xl reviewtxt font-bold">{stars}</div>
               <div className="text-xss">
                 {Math.round(reviews / 100) / 10}K RATINGS
               </div>

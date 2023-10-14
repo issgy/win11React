@@ -58,7 +58,8 @@ export const WhiteBoard = () => {
         app={wnapp.action}
         icon={wnapp.icon}
         name="Microsoft Whiteboard"
-        bg="#f0f0f0"
+        bg="#f9f9f9"
+        noinvert
       />
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="restWindow flex-grow flex flex-col">

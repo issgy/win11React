@@ -191,9 +191,12 @@ export const WidPane = () => {
                 .splice(4, widget.data.news.length)
                 .map((article, i) => {
                   return (
-                    <div
+                    <a
                       className="articleCont ltShad"
                       key={i}
+                      href={article.url}
+                      rel="noopener noreferrer"
+                      target="_blank"
                       style={{
                         "--backgrad": getRandom(2),
                         backgroundImage: `url(${article.urlToImage})`,
@@ -206,7 +209,7 @@ export const WidPane = () => {
                           <div className="tpdesc">{article.content}</div>
                         ) : null}
                       </div>
-                    </div>
+                    </a>
                   );
                 })}
             </div>

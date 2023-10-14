@@ -66,25 +66,25 @@ body[data-theme='dark'] .aboutApp {
   align-items: flex-end;
   // justify-content: flex-end;
   padding: 0 32px;
-  color: #333;
+  color: var(--dark-txt);
 }
 
 .eqCont{
   font-size: 0.22em;
-  color: #888;
+  color: var(--sat-txt);
 }
 
 .msrVal{
   display: flex;
   padding: 16px 0;
   font-size: 0.64em;
-  color: #888;
+  color: var(--sat-txt);
 
   div{
     margin: 0 24px;
 
     &:nth-child(n+3){
-      color: #111;
+      color: var(--txt-col);
       font-weight: 600;
     }
   }
@@ -98,20 +98,25 @@ body[data-theme='dark'] .aboutApp {
   box-sizing: border-box;
   grid-template-rows: repeat(6,minmax(0,1fr));
   grid-template-columns: repeat(4,minmax(0,1fr));
+  margin: 4px;
+  gap: 2px;
 
   &[data-err="true"]{
 
-    .oper{
-      color: #aaa;
-      pointer-events: none;
-
-      &:nth-child(3){
-        pointer-events: auto;
-        color: #444;
-      }
-
-      &:last-child{
-        color: #ccc;
+    .oper {
+      &:nth-child(1),
+      &:nth-child(5),
+      &:nth-child(6),
+      &:nth-child(7),
+      &:nth-child(8),
+      &:nth-child(12),
+      &:nth-child(16),
+      &:nth-child(20),
+      &:nth-child(21),
+      &:nth-child(23) {
+        background: var(--err-bg);
+        color: var(--err-txt);
+        pointer-events: none;
       }
     }
   }
@@ -122,30 +127,37 @@ body[data-theme='dark'] .aboutApp {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  border: solid 2px #eee;
-  background: #f9f9f9;
+  border: solid 1px rgb(0, 0, 0, 0.1);
+  background: var(--bg2);
+  color: var(--dark-txt);
   font-size: 1.128em;
-  font-weight: 600;
   cursor: pointer;
+  border-radius: 4px;
 
   *{
     pointer-events: none;
   }
 
-  &:nth-child(-n + 8), &:nth-child(4n){
-    background: rgba(255, 255, 255, 0.3);
-    color: #444;
+  &:hover {
+    background: var(--bg3);
   }
 
-  &:hover{
-    background: rgba(136, 136, 136, 0.12);
+  &:nth-child(-n + 8), &:nth-child(4n){
+    background: var(--bg3);
+    color: var(--dark-txt);
+
+    &:hover{
+      background: var(--bg2);
+    }
   }
 
   &:last-child{
-    background: rgba(0, 100, 255, 0.48);
+    background: var(--clrPrm);
+    color: var(--bg1);
 
     &:hover{
-      background: rgba(0, 101, 255, 0.72);
+      background: var(--clrPrm);
+      filter: brightness(0.9);
     }
   }
 
@@ -155,7 +167,7 @@ body[data-theme='dark'] .aboutApp {
 
   &:nth-child(4){
     font-size: 1em;
-    color: #333;
+    color: var(--dark-txt);
   }
 
   &:nth-child(8){

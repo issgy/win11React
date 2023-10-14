@@ -127,7 +127,7 @@
   overflow: hidden;
 }
 
-body[data-theme='dark']{
+body[data-theme='dark'] .toolbar[data-noinvert="false"]{
   .appFullName {
     color: #fefefe;
   }

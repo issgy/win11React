@@ -152,7 +152,7 @@ export const Calculator = () => {
       <div className="windowScreen flex flex-col" data-dock="true">
         <div className="flex pt-2">
           <div className="flex pl-2 items-center">
-            <Icon fafa="faBars" color="#222" width={14} />
+            <Icon className="menuBars" fafa="faBars" color="#222" width={14} />
             <div className="mx-4 font-semibold pb-1">Standard</div>
           </div>
         </div>
@@ -248,7 +248,7 @@ export const Calculator = () => {
             </div>
           </div>
           <div className="calcHis flex flex-col">
-            <div className="text-xs font-semibold">History</div>
+            <div className="text-sm font-semibold">History</div>
             {hist.length === 0 ? (
               <div className="text-xs mt-4">There's no history yet</div>
             ) : null}

@@ -115,11 +115,11 @@ body[data-theme="dark"] .sidePane {
   --topStoriesClr: #c6a0ff;
 
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 12px;
+  left: 12px;
+  bottom: 12px;
+  border-radius: 8px;
   width: 610px;
-  height: 100%;
-  margin: 6px;
   overflow: hidden;
   transform: translateX(0);
   -webkit-backdrop-filter: blur(40px);
@@ -143,8 +143,7 @@ body[data-theme='dark'] .widPaneCont {
 
 .WidPane {
   width: 100%;
-  border-radius: 8px;
-  height: calc(100% - 12px);
+  height: 100%;
   background: var(--bg1);
   color:var(--dark-text);
   display: flex;

@@ -1,6 +1,7 @@
 .searchMenu{
     min-height: 500px;
     padding: 12px;
+    text-align: left;
   }
   
   .searchBar{
@@ -31,7 +32,7 @@
     background: var(--bg2);
   }
 
-  opts {
+  .opts {
     color: var(--med-txt);
 
     div {

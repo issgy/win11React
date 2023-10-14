@@ -163,6 +163,7 @@ export const ToolBar = (props) => {
         background: props.bg,
       }}
       data-float={props.float != null}
+      data-noinvert={props.noinvert != null}
     >
       <div
         className="topInfo flex items-center"

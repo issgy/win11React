@@ -84,12 +84,11 @@ body[data-theme="dark"] {
 }
 
 .taskDate {
-  width: 44px;
-  // height: 100%;
   display: flex;
-  padding: 1px 4px 4px 4px;
-  font-size: 0.64em;
+  padding: 0 8px;
+  font-size: 11px;
   flex-direction: column;
+  justify-content: center;
 
   div {
     width: 100%;

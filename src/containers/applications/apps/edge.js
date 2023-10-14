@@ -90,7 +90,7 @@ export const EdgeMenu = () => {
       <div className="windowScreen flex flex-col">
         <div className="overTool flex">
           <Icon src={wnapp.icon} width={14} margin="0 6px" />
-          <div className="btab bg-gray-100">
+          <div className="btab">
             <div>New Tab</div>
             <Icon
               fafa="faTimes"
@@ -102,8 +102,9 @@ export const EdgeMenu = () => {
         </div>
         <div className="restWindow flex-grow flex flex-col">
           {/* 地址栏 */}
-          <div className="addressBar w-full bg-gray-100 h-10 flex items-center">
+          <div className="addressBar w-full h-10 flex items-center">
             <Icon
+              className="edgenavicon"
               src="left"
               onClick={action}
               payload={4}
@@ -112,6 +113,7 @@ export const EdgeMenu = () => {
               margin="0 8px"
             />
             <Icon
+              className="edgenavicon"
               src="right"
               onClick={action}
               payload={5}
@@ -120,6 +122,7 @@ export const EdgeMenu = () => {
               margin="0 8px"
             />
             <Icon
+              className="edgenavicon"
               fafa="faRedo"
               onClick={action}
               payload={0}
@@ -128,6 +131,7 @@ export const EdgeMenu = () => {
               margin="0 8px"
             />
             <Icon
+              className="edgenavicon"
               fafa="faHome"
               onClick={action}
               payload={1}
@@ -137,7 +141,7 @@ export const EdgeMenu = () => {
             />
             <div className="addCont relative">
               <input
-                className="ltShad w-full bg-gray-0 h-6 px-4 text-gray-900"
+                className="w-full h-6 px-4"
                 onKeyDown={action}
                 data-payload={3}
                 defaultValue={url}
