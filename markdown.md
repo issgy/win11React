@@ -168,4 +168,4 @@ var tmpWdgt = await fetchApi(widget);
 
 ## 10.14:
 
-1、增加 app 界面拖动功能
+1、修复"Maximum update depth exceeded" bug

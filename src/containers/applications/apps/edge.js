@@ -10,14 +10,6 @@ export const EdgeMenu = () => {
   const [hist, setHist] = useState(["https://bing.com", "https://bing.com"]);
   const dispatch = useDispatch();
 
-  // const clickDispatch = (event) => {
-  //   var action = {
-  //     type: event.target.dataset.action,
-  //     payload: event.target.dataset.payload,
-  //   };
-  //   if (action.type) dispatch(action);
-  // };
-
   const isValidURL = (string) => {
     var res = string.match(
       /(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g

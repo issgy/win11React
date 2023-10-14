@@ -81,6 +81,7 @@ export const LockScreen = (props) => {
   const [forgot, setForgot] = useState(false);
 
   const action = (e) => {
+    e.stopPropagation();
     const action = e.target.dataset.action;
 
     if (action === "splash") setLock(true);

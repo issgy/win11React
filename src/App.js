@@ -14,6 +14,7 @@ import "./index.css";
 import "./short.css";
 import { useDispatch, useSelector } from "react-redux";
 import { loadSettings } from "./actions";
+import store from "./reducers";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,15 +22,19 @@ function App() {
   const wall = useSelector((state) => state.wallpaper);
 
   const hideAll = (event) => {
-    // event.stopPropagation();
-
     const ess = [
-      ["START", "STARTHID"],
-      ["PANE", "PANEHIDE"],
-      ["WIDG", "WIDGHIDE"],
-      ["CALN", "CALNHIDE"],
-      ["MENU", "MENUHIDE"],
+      ["START", "STARTHID"], //startmenu
+      ["PANE", "PANEHIDE"], //sidepane.hide
+      ["WIDG", "WIDGHIDE"], //widpane
+      ["CALN", "CALNHIDE"], //sidepane.calhide
+      ["MENU", "MENUHIDE"], //menu
     ];
+
+    ess[0].push(store.getState().startmenu.hide);
+    ess[1].push(store.getState().sidepane.hide);
+    ess[2].push(store.getState().widpane.hide);
+    ess[3].push(store.getState().sidepane.calhide);
+    ess[4].push(store.getState().menus.hide);
 
     let actionType;
     try {
@@ -42,12 +47,11 @@ function App() {
       "--prefix"
     );
 
-    console.log(actionType, actionType0);
-
     ess.forEach((item, i) => {
       if (!actionType.startsWith(item[0]) && !actionType0.startsWith(item[0])) {
-        console.log("dispatch");
-        dispatch({ type: item[1] });
+        if (!item[2]) {
+          dispatch({ type: item[1] });
+        }
       }
     });
   };
