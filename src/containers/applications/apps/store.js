@@ -36,7 +36,7 @@ export const MicroStore = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.store);
   const [tab, setTab] = useState("sthome");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [opapp, setOpapp] = useState(storedata[0]);
 
   const action = (e) => {
@@ -46,10 +46,10 @@ export const MicroStore = () => {
     if (action == "page1") {
       setPage(action[4]);
     } else if (action == "page2") {
-      setPage(2);
       for (let i = 0; i < storedata.length; i++) {
         if (storedata[i].data.url == payload) {
           setOpapp(storedata[i]);
+          setPage(2);
           break;
         }
       }
@@ -59,19 +59,42 @@ export const MicroStore = () => {
   const toTab = (e) => {
     const x = e.target && e.target.dataset.action;
     if (x) {
-      setTab(x);
       setPage(0);
+      let target = document.getElementById(x);
+      if (target) {
+        let scTop = target.parentNode.parentNode.scrollTop, //获取元素内容顶部相对于其可视区域的距离,即元素滚动的距离
+          ofTop = target.offsetTop; //获取元素顶部边缘相对于其offsetParent元素的顶部边缘的距离
+
+        //通过计算两者绝对值之差是否大于窗口高度的10%，来判断目标元素是否在可视区域内
+        if (Math.abs(scTop - ofTop) > window.innerHeight * 0.1) {
+          target.parentNode.parentNode.scrollTop = target.offsetTop;
+        }
+      } else {
+        setTab(x);
+      }
     }
   };
 
-  useEffect(() => {
+  const frontScroll = (e) => {
     if (page == 0) {
-      const target = document.getElementById(tab);
-      if (target) {
-        target.parentNode.parentNode.scrollTop = target.offsetTop;
-      }
+      let tabs = ["sthome", "apprib", "gamerib", "movrib"],
+        mntab = "sthome",
+        windowHeight = window.innerHeight;
+      tabs.forEach((x) => {
+        let target = document.getElementById(x);
+        if (target) {
+          let scTop = target.parentNode.parentNode.scrollTop,
+            ofTop = target.offsetTop;
+          if (Math.abs(scTop - ofTop) < windowHeight) {
+            mntab = x;
+
+            windowHeight = Math.abs(scTop - ofTop);
+          }
+        }
+      });
+      setTab(mntab);
     }
-  }, [tab]);
+  };
 
   return (
     <div
@@ -126,7 +149,7 @@ export const MicroStore = () => {
           />
         </div>
         {/* 右侧对应的内容 */}
-        <div className="restWindow msfull thinScroll">
+        <div className="restWindow msfull thinScroll" onScroll={frontScroll}>
           {page == 0 ? <FrontPage /> : null}
           {page == 1 ? <DownPage action={action} /> : null}
           {page == 2 ? <DetailPage app={opapp} /> : null}
@@ -284,9 +307,9 @@ const FrontPage = memo(() => {
         className="frontCont amzMovies my-8 py-20 w-auto mx-8 flex justify-between noscroll overflow-x-scroll overflow-y-hidden"
       >
         <div className="flex w-64 flex-col text-gray-100 h-full px-8">
-          <div className="text-xl">Featured Games</div>
+          <div className="text-xl">Featured Films</div>
           <div className="text-xs mt-2">
-            Explore fun to play xbox games and find a new favorite
+            Rent or buy the latest hit films and watch them at home or on the go
           </div>
         </div>
         <div className="flex w-max pr-8">

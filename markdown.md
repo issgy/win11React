@@ -174,3 +174,4 @@ var tmpWdgt = await fetchApi(widget);
 ## 10.15:
 
 1、实现 app 缩小后边框能拖拽改变大小
+2、修复 store 界面进度条滚动左侧 tab 栏图标跟随问题
