@@ -358,6 +358,11 @@ const DownPage = ({ action }) => {
         >
           Games
         </div>
+        <div className="absolute right-0 mr-4 text-sm">
+          <a href="" className="catbtn" target="_blank">
+            Add your own app
+          </a>
+        </div>
       </div>
       <div className="appscont mt-8">
         {storedata.map((item, i) => {

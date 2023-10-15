@@ -159,17 +159,35 @@ export const ToolBar = (props) => {
   let appStart = [0, 0],
     mouseStart = [0, 0],
     wnapp = {};
+  let dimP = [0, 0],
+    op = 0,
+    vec = [0, 0];
 
   const toolDrag = (e) => {
     e.preventDefault();
     mouseStart = [e.clientY, e.clientX];
+    op = e.target.dataset.op;
 
-    wnapp = e.target.parentElement && e.target.parentElement.parentElement;
+    if (op == 0) {
+      wnapp = e.target.parentElement && e.target.parentElement.parentElement;
+    } else {
+      vec = e.target.dataset.vec.split(",");
+      wnapp =
+        e.target.parentElement &&
+        e.target.parentElement.parentElement &&
+        e.target.parentElement.parentElement.parentElement;
+    }
+
+    console.log(wnapp);
 
     if (wnapp) {
       wnapp.classList.add("notrans");
       wnapp.classList.add("z9900");
       appStart = [wnapp.offsetTop, wnapp.offsetLeft];
+      dimP = [
+        parseFloat(getComputedStyle(wnapp).height.replaceAll("px", "")),
+        parseFloat(getComputedStyle(wnapp).width.replaceAll("px", "")),
+      ];
     }
 
     document.onmousemove = handleMouseMove;
@@ -181,9 +199,22 @@ export const ToolBar = (props) => {
     e.preventDefault();
     let appEndY = appStart[0] + e.clientY - mouseStart[0],
       appEndX = appStart[1] + e.clientX - mouseStart[1];
+    let dim0 = dimP[0] + vec[0] * (e.clientY - mouseStart[0]),
+      dim1 = dimP[1] + vec[1] * (e.clientX - mouseStart[1]);
 
-    wnapp.style.top = appEndY + "px";
-    wnapp.style.left = appEndX + "px";
+    if (op == 0) {
+      wnapp.style.top = appEndY + "px";
+      wnapp.style.left = appEndX + "px";
+    } else {
+      dim0 = Math.max(dim0, 360);
+      dim1 = Math.max(dim1, 360);
+      appEndY = appStart[0] + Math.min(vec[0], 0) * (dim0 - dimP[0]);
+      appEndX = appStart[1] + Math.min(vec[1], 0) * (dim1 - dimP[1]);
+      wnapp.style.top = appEndY + "px";
+      wnapp.style.left = appEndX + "px";
+      wnapp.style.height = dim0 + "px";
+      wnapp.style.width = dim1 + "px";
+    }
   };
 
   const handleMouseUp = (e) => {
@@ -193,15 +224,14 @@ export const ToolBar = (props) => {
     wnapp.classList.remove("notrans");
     wnapp.classList.remove("z9900");
 
-    console.log(props);
     let action = {
       type: props.app,
       payload: "resize",
       dim: {
         width: getComputedStyle(wnapp).width,
         height: getComputedStyle(wnapp).height,
-        top: wnapp.style.top,
-        left: wnapp.style.left,
+        top: getComputedStyle(wnapp).top,
+        left: getComputedStyle(wnapp).left,
       },
     };
 
@@ -209,62 +239,126 @@ export const ToolBar = (props) => {
   };
 
   return (
-    <div
-      className="toolbar"
-      style={{
-        background: props.bg,
-      }}
-      data-float={props.float != null}
-      data-noinvert={props.noinvert != null}
-    >
+    <>
       <div
-        className="topInfo flex flex-grow items-center"
+        className="toolbar"
+        style={{
+          background: props.bg,
+        }}
         data-float={props.float != null}
-        onClick={toolClick}
-        onMouseDown={toolDrag}
+        data-noinvert={props.noinvert != null}
       >
-        <Icon src={props.icon} width={14} />
-        <div className="appFullName text-xss" data-white={props.invert != null}>
-          {props.name}
+        <div
+          className="topInfo flex flex-grow items-center"
+          data-float={props.float != null}
+          onClick={toolClick}
+          onMouseDown={toolDrag}
+          data-op="0"
+        >
+          <Icon src={props.icon} width={14} />
+          <div
+            className="appFullName text-xss"
+            data-white={props.invert != null}
+          >
+            {props.name}
+          </div>
         </div>
-      </div>
-      <div className="actbtns flex items-center">
-        {/* 缩小图标 */}
-        <Icon
-          invert={props.invert}
-          click={props.app}
-          payload="mnmz"
-          pr
-          src="minimize"
-          ui
-          width={8}
-        />
-        {/* 切换图标 */}
-        <div className="snapbox h-full" data-hv={false}>
+        <div className="actbtns flex items-center">
+          {/* 缩小图标 */}
           <Icon
             invert={props.invert}
             click={props.app}
-            payload="mxmz"
+            payload="mnmz"
             pr
-            src="maximize"
+            src="minimize"
             ui
             width={8}
           />
-          {/* <SnapScreen app={props.app} snap={snap} closeSnap={closeSnap} /> */}
-          {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}
+          {/* 切换图标 */}
+          <div className="snapbox h-full" data-hv={false}>
+            <Icon
+              invert={props.invert}
+              click={props.app}
+              payload="mxmz"
+              pr
+              src="maximize"
+              ui
+              width={8}
+            />
+            {/* <SnapScreen app={props.app} snap={snap} closeSnap={closeSnap} /> */}
+            {/* {snap?<SnapScreen app={props.app} closeSnap={closeSnap}/>:null} */}
+          </div>
+          {/* 关闭图标 */}
+          <Icon
+            invert={props.invert}
+            click={props.app}
+            payload="close"
+            pr
+            src="close"
+            ui
+            width={8}
+          />
         </div>
-        {/* 关闭图标 */}
-        <Icon
-          invert={props.invert}
-          click={props.app}
-          payload="close"
-          pr
-          src="close"
-          ui
-          width={8}
-        />
       </div>
-    </div>
+      <div className="resizecont topone">
+        <div className="flex">
+          <div
+            className="conrsz cursor-nw"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="-1,-1"
+          ></div>
+          <div
+            className="edgrsz cursor-n wdws"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="-1,0"
+          ></div>
+        </div>
+      </div>
+      <div className="resizecont leftone">
+        <div className="h-full">
+          <div
+            className="edgrsz cursor-w hdws"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="0,-1"
+          ></div>
+        </div>
+      </div>
+      <div className="resizecont rightone">
+        <div className="h-full">
+          <div
+            className="edgrsz cursor-w hdws"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="0,1"
+          ></div>
+        </div>
+      </div>
+      <div className="resizecont bottomone">
+        <div className="flex">
+          <div
+            className="conrsz cursor-ne"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="1,-1"
+          ></div>
+          <div
+            className="edgrsz cursor-n wdws"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="1,0"
+          ></div>
+          <div
+            className="conrsz cursor-nw"
+            data-op="1"
+            onMouseDown={toolDrag}
+            data-vec="1,1"
+          ></div>
+        </div>
+      </div>
+    </>
   );
 };
 

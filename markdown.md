@@ -170,3 +170,7 @@ var tmpWdgt = await fetchApi(widget);
 
 1、修复"Maximum update depth exceeded" bug
 2、实现 app 拖拽功能
+
+## 10.15:
+
+1、实现 app 缩小后边框能拖拽改变大小

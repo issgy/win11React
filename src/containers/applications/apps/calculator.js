@@ -261,7 +261,7 @@ export const Calculator = () => {
                       className="flex flex-col items-end mb-6 text-gray-500"
                     >
                       {his[0]} {his[1]} {his[2]} {his[3]}
-                      <div className="text-2xl text-gray-800">{his[4]}</div>
+                      <div className="text-2xl text-gray-600">{his[4]}</div>
                     </div>
                   );
                 })}
