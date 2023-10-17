@@ -275,6 +275,15 @@ export const CalnWid = () => {
       style={{ "--prefix": "CALN" }}
       onClick={handleClick}
     >
+      <div className="topBar">
+        <div className="text-sm" style={{ textAlign: "center" }}>
+          {new Date().toLocaleDateString("zh-CN", {
+            weekday: "long",
+            month: "long",
+            day: "numeric",
+          })}
+        </div>
+      </div>
       <div id="dycalendar"></div>
     </div>
   );
