@@ -136,7 +136,7 @@ export const StartMenu = () => {
                         <Icon
                           className="pnIcon"
                           src={app.icon}
-                          width={24}
+                          width={32}
                           payload={app.payload ? app.payload : "full"}
                           click={app.action}
                         />
@@ -149,19 +149,19 @@ export const StartMenu = () => {
               {/* Recommended apps */}
               <div className="recApps">
                 <div className="stAcbar">
-                  <div className="stAcbar">
-                    <div className="gpname">Recommended</div>
-                    {/* <div className="gpbtn none">
+                  {/* <div className="stAcbar"> */}
+                  <div className="gpname">Recommended</div>
+                  {/* <div className="gpbtn none">
                     <div>More</div>
                     <Icon fafa="faChevronRight" width={8} />
                   </div> */}
-                  </div>
+                  {/* </div> */}
                 </div>
                 <div className="reApps">
                   {start.rcApps.slice(0, 6).map((app, i) => {
                     return app.name ? (
                       <div key={i} className="rnApp">
-                        <Icon className="pnIcon" src={app.icon} width={22} />
+                        <Icon className="pnIcon" src={app.icon} width={32} />
                         <div className="acInfo">
                           <div className="appName">{app.name}</div>
                           <div className="timeUsed">{app.lastUsed}</div>
@@ -218,7 +218,7 @@ export const StartMenu = () => {
                             <Icon
                               className="pnIcon"
                               src={item.icon}
-                              width={20}
+                              width={24}
                             />
                             <div className="appName">{item.name}</div>
                           </div>
@@ -270,7 +270,7 @@ export const StartMenu = () => {
               />
               <div className="usName">issgy</div>
             </div>
-            <div className="relative">
+            <div className="relative powerMenu">
               <div data-vis={start.pwcrtl} className="powerCont">
                 <div
                   className="flex prtclk"

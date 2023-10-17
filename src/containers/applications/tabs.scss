@@ -100,6 +100,8 @@
 .windowScreen {
   width: 100%;
   flex-grow: 1;
+  overflow: hidden;
+  border-radius: 0 0 6px 6px;
 
   &[data-dock="true"]{
     // height: calc(100% - 26px);
@@ -224,7 +226,7 @@
 
 .noteText{
   background: inherit;
-  color: #111;
+  color: var(--txt-col);
   font-family: inherit;
   font-size: 0.88em;
   resize: none;
@@ -236,8 +238,8 @@
   padding: 4px 8px;
 
   &::selection{
-    background: #0074ff;
-    color: #fefefe;
+    background: var(--clrPrm);
+    color: var(--wintheme)
   }
 
   &:active,

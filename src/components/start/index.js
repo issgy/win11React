@@ -6,6 +6,7 @@ import "./sidepane.scss";
 import "./searchpane.scss";
 
 import * as Actions from "../../actions";
+import { Battery } from "../taskbar/battery";
 
 export * from "./start";
 export * from "./widget";
@@ -73,6 +74,7 @@ export const SidePane = () => {
   const tasks = useSelector((state) => state.taskbar);
   const dispatch = useDispatch();
   const [paneState, setPaneState] = useState([]); //记录sidepane的状态
+  const [batteryStaus, setBatteryStatus] = useState("100");
 
   const clickDispatch = (event) => {
     event.stopPropagation();
@@ -109,8 +111,8 @@ export const SidePane = () => {
 
   useEffect(() => {
     //夜间模式逻辑
-    if ((paneApps.quicks[6].src = "nightlight")) {
-      if (paneState[6]) document.body.dataset.sepia = true;
+    if ((paneApps.quicks[5].src = "nightlight")) {
+      if (paneState[5]) document.body.dataset.sepia = true;
       else document.body.dataset.sepia = false;
     }
   });
@@ -126,6 +128,46 @@ export const SidePane = () => {
 
     return tmp;
   };
+
+  const showBatteryStatus = (battery) => {
+    let level = battery.level * 100;
+    if (battery.charging) {
+      if (level <= 10) {
+        level += 10;
+      } else if (level >= 80) {
+        level -= 10;
+      }
+      setBatteryStatus("*" + level);
+      return;
+    } else {
+      if (level <= 10) {
+        level += 10;
+      } else if (level >= 80) {
+        level -= 10;
+      }
+      setBatteryStatus(level.toString());
+    }
+  };
+
+  useEffect(() => {
+    const getBatteryStatus = async () => {
+      let battery = await navigator.getBattery();
+
+      battery.onchargingchange = () => {
+        showBatteryStatus(battery);
+      };
+      battery.onlevelchange = () => {
+        showBatteryStatus(battery);
+      };
+      showBatteryStatus(battery);
+    };
+
+    if (window.BatteryManager) {
+      getBatteryStatus();
+    }
+
+    return () => {};
+  }, []);
 
   useEffect(() => {
     let tmp = [];
@@ -189,6 +231,17 @@ export const SidePane = () => {
             max="100"
             defaultValue="100"
           />
+        </div>
+      </div>
+      <div className="bottomBar p-1">
+        <div className="px-3 battery-sidepane">
+          <Battery
+            level={batteryStaus}
+            charging={batteryStaus.startsWith("*")}
+          />
+          <div className="txt-xs">{`${
+            batteryStaus.startsWith("*") ? batteryStaus.slice(1) : batteryStaus
+          }%`}</div>
         </div>
       </div>
     </div>

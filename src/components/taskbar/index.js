@@ -74,7 +74,7 @@ const Taskbar = () => {
       try {
         const battery = await navigator.getBattery();
         battery.addEventListener("chargingchange", updateBattery); //订阅电池状态变化
-        battery.removeEventListener("levelchange", updateBattery); //订阅电池状态变化
+        battery.addEventListener("levelchange", updateBattery); //订阅电池状态变化
         showBatteryStatus(battery);
       } catch (error) {
         console.error(error);
@@ -86,7 +86,7 @@ const Taskbar = () => {
     }
 
     return () => {
-      // 取消订阅电池状态变化
+      // 取消订阅电池状态变化;
       if (batteryStatus) {
         batteryStatus.removeEventListener("chargingchange", updateBattery);
         batteryStatus.removeEventListener("levelchange", updateBattery);

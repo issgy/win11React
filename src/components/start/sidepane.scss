@@ -106,6 +106,24 @@ body[data-theme="dark"] .sidePane {
   border-radius: 8px;
 }
 
+.bottomBar {
+  margin-top: 1rem;
+  background: var(--bg4);
+  height: 3rem;
+  display: flex;
+  align-items: center;
+
+  .battery-sidepane {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--bg2);
+    }
+  }
+}
+
 // widget
 .widPaneCont {
   --bg1: rgba(234, 234, 234, 0.25);

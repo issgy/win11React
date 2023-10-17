@@ -143,11 +143,14 @@ export const LockScreen = (props) => {
         <Image
           className="rounded-full overflow-hidden"
           src="/img/asset/issgy.png"
-          w={160}
+          w={200}
           ext
         />
         <div className="mt-2 text-xl font-medium text-gray-200">issgy</div>
-        <div className="flex items-center mt-6">
+        <div className="flex items-center mt-6 signInBtn" onClick={proceed}>
+          Sign in
+        </div>
+        {/* <div className="flex items-center mt-6">
           <input
             type={passType ? "text" : "password"}
             value={password}
@@ -190,7 +193,7 @@ export const LockScreen = (props) => {
             click="passkey"
             payload={passType === 1}
           />
-        </div>
+        </div> */}
       </div>
       <div className="bottomInfo flex">
         <Icon className="mx-2" src="wifi" ui width={14} invert />

@@ -131,7 +131,7 @@ img[data-flip='true'], svg[data-flip='true'], i[data-flip='true'] {
 .desktop {
   position: absolute;
   width: 100vw;
-  height: calc(100vh - 39px);
+  height: calc(100vh - 48px);
   top: 0;
 }
 
