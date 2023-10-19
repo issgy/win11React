@@ -11,10 +11,12 @@
     --txt-col: #222;
     --med-txt: #3c3c3c;
     --comp-txt: #ddd;
+    --comp-clr: #e6e6e6;
     --gray-txt: #555;
     --sat-txt: #777;
     --clrPrm: #0067c0;
     --wintheme: #eee;
+    --scroll: rgba(32, 24, 148, 0.4);
   }
   
   body[data-theme="dark"] {
@@ -22,10 +24,12 @@
     --txt-col: #ddd;
     --med-txt: #c3c3c3;
     --comp-txt: #222;
+    --comp-clr: #191919;
     --gray-txt: #aaa;
     --sat-txt: #999;
     --clrPrm: #4cc2ff;
     --wintheme: #eee;
+    --scroll: rgba(77, 194, 255, 0.4);
   }
   
   .edgeBrowser {
@@ -82,11 +86,10 @@
   
   .notepad {
     --bg1: #f9f9f9;
-  --bg2: rgba(240, 240, 240, 0.9);
+    --bg2: rgba(240, 240, 240, 0.9);
 
   background: var(--bg2);
   color: var(--dark-txt);
-  backdrop-filter: blur(20px);
 
   .restWindow {
     background: var(--bg1);
@@ -107,8 +110,6 @@ body[data-theme="dark"] .notepad {
 
     background: var(--bg1);
     color: var(--dark-txt);
-    -webkit-backdrop-filter: blur(21px);
-    backdrop-filter: blur(21px);
   }
 
   body[data-theme="dark"] .calcApp {
@@ -123,7 +124,6 @@ body[data-theme="dark"] .notepad {
     }
   }
   
-  .msfiles,
   .whiteBoard {
     background: #fefefe;
   }
@@ -138,3 +138,22 @@ body[data-theme="dark"] .notepad {
     background: #060606;
   }
   
+  .msfiles{
+    --bg0: #eee;
+    --bg1: #f5f5f5;
+    --dsb-col: #aaa;
+    --gray1: #bbb;
+    --gray2: #ddd;
+    --hover-bg: rgba(0, 178, 255, 0.16);
+    --focus-bg: rgba(0, 183, 255, 0.25);
+  }
+  
+  body[data-theme="dark"] .msfiles{
+    --bg0: #19212e;
+    --bg1: #191919;
+    --dsb-col: #555;
+    --gray1: #444;
+    --gray2: #222;
+    --hover-bg: rgba(136, 136, 136, 0.5);
+    --focus-bg: rgba(228, 228, 228, 0.5);
+  }

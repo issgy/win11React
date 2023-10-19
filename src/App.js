@@ -56,11 +56,11 @@ function App() {
     });
   };
 
-  window.addEventListener("click", (e) => {
+  window.onclick = (e) => {
     hideAll(e);
-  });
+  };
 
-  window.addEventListener("contextmenu", (e) => {
+  window.oncontextmenu = (e) => {
     hideAll(e);
     e.preventDefault();
     if (e.target.dataset.menu != null) {
@@ -75,12 +75,11 @@ function App() {
         },
       });
     }
-  });
+  };
 
-  window.addEventListener("load", (e) => {
+  window.onload = () => {
     dispatch({ type: "WALLBOOTED" });
-  });
-
+  };
   useEffect(() => {
     if (!window.onstart) {
       loadSettings();
@@ -92,8 +91,8 @@ function App() {
 
   return (
     <div className="App">
-      {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
-      {wall.locked ? <LockScreen dir={wall.dir} /> : null}
+      {/* {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
+      {wall.locked ? <LockScreen dir={wall.dir} /> : null} */}
       <div className="appwrap">
         <Background />
         <div className="desktop" data-menu="desk">

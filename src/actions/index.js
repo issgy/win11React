@@ -2,6 +2,17 @@ import store from "../reducers";
 import { dfApps } from "../utils";
 import { gene_name } from "../utils/apps";
 
+export const dispatchAction = (event) => {
+  let action = {
+    type: event.target.dataset.action,
+    payload: event.target.dataset.payload,
+  };
+
+  if (action.type) {
+    store.dispatch(action);
+  }
+};
+
 export const refresh = (payload, menu) => {
   // 刷新操作
   if (menu.menus.desk[0].opts[4].check) {
@@ -172,4 +183,12 @@ export const loadSettings = () => {
   if (setting.person.theme != "light") changeTheme();
 
   store.dispatch({ type: "SETTINGLOAD", payload: setting });
+};
+
+// 双击打开文件
+export const handleFileOpen = (id) => {
+  const data = store.getState().files.data.getId(id);
+  if (data && data.type === "folder") {
+    store.dispatch({ type: "FILEDIR", payload: data.id });
+  }
 };

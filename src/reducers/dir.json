@@ -1,0 +1,117 @@
+{
+    "C:": {
+      "type": "folder",
+      "name": "C:",
+      "info": {
+        "size": "104000000000",
+        "used": "90000000000",
+        "spid": "%cdrive%"
+      },
+      "data": {
+        "backup": {
+          "type": "folder",
+          "name": "备份",
+          "data": {
+            "config": {
+              "type": "folder",
+              "name": "config"
+            }
+          }
+        },
+        "Users": {
+          "type": "folder",
+          "name": "用户",
+          "data": {
+            "公用": {},
+            "issgy": {
+              "type": "folder",
+              "name": "issgy",
+              "info": {
+                "spid": "%user%"
+              },
+              "data": {
+                "桌面": {
+                  "info": {
+                    "spid": "%desktop%",
+                    "icon": "desk"
+                  }
+                },
+                "文档": {
+                  "info": {
+                    "spid": "%documents%",
+                    "icon": "docs"
+                  }
+                },
+                "下载": {
+                  "info": {
+                    "spid": "%downloads%",
+                    "icon": "down"
+                  },
+                  "data": {
+                    "Hitman 3": {},
+                    "Atomforces": {},
+                    "Compressed": {},
+                    "textures": {},
+                    "Not A Virus": {}
+                  }
+                },
+                "音乐": {
+                  "info": {
+                    "spid": "%music%",
+                    "icon": "music"
+                  }
+                },
+                "图片": {
+                  "info": {
+                    "spid": "%pictures%",
+                    "icon": "pics"
+                  }
+                },
+                "视频": {
+                  "info": {
+                    "spid": "%videos%",
+                    "icon": "vid"
+                  }
+                },
+                "Github": {
+                  "info": {
+                    "spid": "%github%"
+                  }
+                },
+                "云盘": {
+                  "type": "folder",
+                  "name": "云盘",
+                  "info": {
+                    "spid": "%onedrive%",
+                    "icon": "onedrive"
+                  },
+                  "data": {
+                    "Atom": {
+                      "data": {
+                        "Codeforces": {},
+                        "JavaScript": {},
+                        "Github": {}
+                      }
+                    },
+                    "Attachments": {},
+                    "october": {},
+                    "Office": {},
+                    "party": {},
+                    "New Folder": {}
+                  }
+                },
+                "Programs": {},
+                "Postman": {},
+                "gif": {},
+                "Contacts": {},
+                "Favorites": {},
+                "AppData": {},
+                ".config": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  

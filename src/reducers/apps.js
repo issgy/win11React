@@ -17,6 +17,7 @@ for (let i = 0; i < allApps.length; i++) {
 
   // 刷新页面自动出现的app界面
   if (allApps[i].icon === "explorer") {
+    defState[allApps[i].icon].size = "full";
     defState[allApps[i].icon].hide = false;
     defState[allApps[i].icon].max = true;
     defState[allApps[i].icon].z = 1;
@@ -24,7 +25,7 @@ for (let i = 0; i < allApps.length; i++) {
 }
 
 // 代表屏幕上能看到的app界面数量（最大屏/中屏），被最小化的界面不算
-defState.hz = 1;
+defState.hz = 2;
 
 const isOverlaped = (tmpState, key) => {
   var obj = tmpState[key];
