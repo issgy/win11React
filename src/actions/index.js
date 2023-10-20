@@ -1,3 +1,4 @@
+import axios from "axios";
 import store from "../reducers";
 import { dfApps } from "../utils";
 import { gene_name } from "../utils/apps";
@@ -174,6 +175,58 @@ export const changeTheme = () => {
   store.dispatch({ type: "PANETHEME", payload: icon });
 };
 
+const loadWidget = async () => {
+  let tmpWdgt = { ...store.getState().widpane };
+  let date = new Date();
+
+  let wikiUrl = "https://en.wikipedia.org/api/rest_v1/feed/onthisday/events";
+  await axios
+    .get(`${wikiUrl}/${date.getMonth()}/${date.getDay()}`)
+    .then((res) => res.data)
+    .then((data) => {
+      let event = data.events[Math.floor(Math.random() * data.events.length)];
+      date.setFullYear(event.year);
+
+      tmpWdgt.data.date = date.toLocaleDateString("zh-CN", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      });
+
+      tmpWdgt.data.event = event;
+    })
+    .catch((error) => {});
+
+  let newsUrl = "https://saurav.tech/NewsAPI";
+  await axios
+    .get(`${newsUrl}/top-headlines/category/general/in.json`)
+    .then((res) => res.data)
+    .then((data) => {
+      var newsList = [];
+      for (var i = 0; i < data.totalResults; i++) {
+        var item = {
+          ...data.articles[i],
+        };
+        item.title = item.title
+          .split("-")
+          .reverse()
+          .splice(1)
+          .reverse()
+          .join("-")
+          .trim();
+        newsList.push(item);
+      }
+
+      tmpWdgt.data.news = newsList;
+    })
+    .catch((error) => {});
+
+  store.dispatch({
+    type: "WIDGREST",
+    payload: tmpWdgt,
+  });
+};
+
 export const loadSettings = () => {
   let setting = localStorage.getItem("setting") || "{}";
   setting = JSON.parse(setting);
@@ -183,6 +236,9 @@ export const loadSettings = () => {
   if (setting.person.theme != "light") changeTheme();
 
   store.dispatch({ type: "SETTINGLOAD", payload: setting });
+  if (process.env.REACT_APP_DEVELOPEMENT != "development") {
+    loadWidget();
+  }
 };
 
 // 双击打开文件

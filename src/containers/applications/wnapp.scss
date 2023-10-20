@@ -8,6 +8,7 @@
   
   body {
     --dark-txt: #000;
+    --med-dark:#111;
     --txt-col: #222;
     --med-txt: #3c3c3c;
     --comp-txt: #ddd;
@@ -21,6 +22,7 @@
   
   body[data-theme="dark"] {
     --dark-txt: #fff;
+    --med-dark:#eee;
     --txt-col: #ddd;
     --med-txt: #c3c3c3;
     --comp-txt: #222;
@@ -139,8 +141,9 @@ body[data-theme="dark"] .notepad {
   }
   
   .msfiles{
-    --bg0: #eee;
-    --bg1: #f5f5f5;
+    --bg0: #edf2fe;
+    --bg1: #ffffff;
+    --bg2:#f5f5f5;
     --dsb-col: #aaa;
     --gray1: #bbb;
     --gray2: #ddd;
@@ -151,6 +154,7 @@ body[data-theme="dark"] .notepad {
   body[data-theme="dark"] .msfiles{
     --bg0: #19212e;
     --bg1: #191919;
+    --bg2:#1c1c1c;
     --dsb-col: #555;
     --gray1: #444;
     --gray2: #222;

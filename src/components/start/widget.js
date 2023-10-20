@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
 
-import axios from "axios";
-
 export const WidPane = () => {
   const widget = useSelector((state) => state.widpane);
   const dispatch = useDispatch();
@@ -16,33 +14,13 @@ export const WidPane = () => {
       return `hsl(${Math.floor(Math.random() * 360)}deg 36% 16%)`;
   };
 
-  useEffect(() => {
-    // 防止竞态状态
-    if (process.env.REACT_APP_DEVELOPEMENT != "development") {
-      async function fetchData() {
-        if (!widget.updated && !widget.hide) {
-          var tmpWdgt = await fetchApi(widget);
-          console.log("Fetching Api's");
-          if (tmpWdgt.updated) {
-            dispatch({
-              type: "WIDGREST",
-              payload: tmpWdgt,
-            });
-          }
-        }
-      }
-
-      fetchData();
-    }
-  });
-
   return (
     <div
       className="widPaneCont"
       data-hide={widget.hide}
       style={{ "--prefix": "WIDG" }}
     >
-      <div className="WidPane" loading="lazy">
+      <div className="WidPane thinScroll" loading="lazy">
         <div className="widtop">
           <Icon fafa="faEllipsisH" width={12} />
         </div>
@@ -55,7 +33,10 @@ export const WidPane = () => {
         <div className="widgetCont">
           <div className="topWidgets">
             <div className="weatherCont ltShad">
-              <div className="wthtop">WEATHER</div>
+              <div className="wthtop">
+                <Icon src="weather" width={18} />
+                <span>Weather</span>
+              </div>
               <div className="wthcity">
                 <Icon fafa="faMapMarkerAlt" width={8} />
                 {widget.data.weather.city}, {widget.data.weather.country}
@@ -218,61 +199,4 @@ export const WidPane = () => {
       </div>
     </div>
   );
-};
-
-const fetchApi = async (widget) => {
-  var tmpWdgt = { ...widget };
-  var date = new Date();
-
-  await axios
-    .get(
-      `https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/${date.getMonth()}/${date.getDay()}`
-    )
-    .then((res) => res.data)
-    .then((data) => {
-      console.log("Fetched");
-      var event = data.events[Math.floor(Math.random() * data.events.length)];
-      date.setYear(event.year);
-
-      tmpWdgt.data.date = date.toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      });
-
-      tmpWdgt.data.event = event;
-    })
-    .catch((error) => {
-      console.log("Fetch failed");
-    });
-
-  console.log("fetching NEWS");
-  await axios
-    .get(`https://saurav.tech/NewsAPI/top-headlines/category/general/in.json`)
-    .then((res) => res.data)
-    .then((data) => {
-      console.log("NEWS Fetched");
-      var newsList = [];
-      for (var i = 0; i < data.totalResults; i++) {
-        var item = {
-          ...data.articles[i],
-        };
-        item.title = item.title
-          .split("-")
-          .reverse()
-          .splice(1)
-          .reverse()
-          .join("-")
-          .trim();
-        newsList.push(item);
-      }
-
-      tmpWdgt.data.news = newsList;
-    })
-    .catch((error) => {
-      console.log("Fetch failed");
-    });
-
-  tmpWdgt.updated = true;
-  return tmpWdgt;
 };

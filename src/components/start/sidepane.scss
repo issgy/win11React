@@ -2,6 +2,9 @@
   --bg1: rgba(242, 242, 242, 0.9);
   --bg2: #fbfbfb;
   --bg3: #f5f5f5;
+  --bg4: rgba(0, 0, 0, 0.033);
+  --bg5: rgba(0, 0, 0, 0.05);
+  --sliderThumbClr: white;
 
   position: absolute;
   bottom: 1rem;
@@ -163,7 +166,7 @@ body[data-theme='dark'] .widPaneCont {
   width: 100%;
   height: 100%;
   background: var(--bg1);
-  color:var(--dark-text);
+  color:var(--dark-txt);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -212,8 +215,17 @@ body[data-theme='dark'] .widPaneCont {
 
     .wthtop {
       width: 100%;
-      font-size: 0.6em;
-      font-weight: 400;
+      display: flex;
+      align-items: center;
+      font-size: 0.8em;
+
+      .uicon{
+        margin-right: 0.5em;
+      }
+
+      span{
+        padding-bottom: 2px;
+      }
     }
 
     .wthcity {

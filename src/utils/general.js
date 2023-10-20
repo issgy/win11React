@@ -108,12 +108,12 @@ export const Icon = (props) => {
     return (
       <div
         className={`uicon ${props.className || ""} ${prtclk}`}
-        data-open={props.open != null}
+        data-open={props.open}
         data-action={props.click}
         data-active={props.active}
         data-payload={props.payload}
         data-menu={props.menu}
-        data-pr={props.pr != null}
+        data-pr={props.pr}
         onClick={props.onClick || (props.pr && clickDispatch) || null}
       >
         <img
@@ -406,6 +406,7 @@ export const Image = (props) => {
           data-var={props.var}
           src={src}
           alt=""
+          loading={props.lazy ? "lazy" : null}
           onError={errorHandler}
         />
       ) : null}

@@ -103,9 +103,8 @@ export const Explorer = () => {
   const files = useSelector((state) => state.files);
   const path = useSelector((state) => state.files.cpath);
   const [cpath, setCpath] = useState(path);
+  const fdata = files.data.getId(files.cdir);
   const dispatch = useDispatch();
-
-  console.log(cpath, path);
 
   const handleChange = (e) => {
     setCpath(e.target.value);
@@ -145,10 +144,10 @@ export const Explorer = () => {
         <Ribbon />
         <div className="restWindow flex-grow flex flex-col">
           <div className="sec1">
-            <Icon fafa="faArrowLeft" width={14} />
-            <Icon fafa="faArrowRight" width={14} />
-            <Icon fafa="faArrowUp" width={14} />
-            <div className="path-bar">
+            <Icon fafa="faArrowLeft" width={14} click="FILEPREV" pr />
+            <Icon fafa="faArrowRight" width={14} click="FILENEXT" pr />
+            <Icon fafa="faArrowUp" width={14} click="FILEBACK" pr />
+            <div className="path-bar" noscroll>
               <input
                 className="path-field"
                 type="text"
@@ -157,11 +156,35 @@ export const Explorer = () => {
                 onKeyDown={handleEnter}
               />
             </div>
-            <div className="srchbar">搜索</div>
+            <div className="srchbar">
+              <Icon className="searchIcon" src="search" width={12} />
+              <input type="text" placeholder="搜索" />
+            </div>
           </div>
           <div className="sec2">
             <NavPane />
             <ContentArea />
+          </div>
+          <div className="sec3">
+            <div className="item-count text-xs">{fdata.data.length} items</div>
+            <div className="view-opts flex">
+              <Icon
+                className="viewicon p-1"
+                click="FILEVIEW"
+                payload="5"
+                open={files.view === 5}
+                src="win/viewinfo"
+                width={16}
+              />
+              <Icon
+                className="viewicon p-1"
+                click="FILEVIEW"
+                payload="1"
+                open={files.view == 1}
+                src="win/viewlarge"
+                width={16}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -243,6 +266,7 @@ const ContentArea = () => {
   const [selected, setSelected] = useState(null);
   //根据cdir来获得lookup中对应的对象
   const fdata = files.data.getId(files.cdir);
+  const dispatch = useDispatch();
 
   const handleClick = (e) => {
     setSelected(e.target.dataset.id);
@@ -252,8 +276,23 @@ const ContentArea = () => {
     handleFileOpen(e.target.dataset.id);
   };
 
+  const emptyClick = () => {
+    setSelected(null);
+  };
+
+  const handleKey = (e) => {
+    if (e.key === "Backspace") {
+      dispatch({ type: "FILEPREV" });
+    }
+  };
+
   return (
-    <div className="contentarea">
+    <div
+      className="contentarea"
+      onClick={emptyClick}
+      onKeyDown={handleKey}
+      tabIndex="-1"
+    >
       <div className="contentwrap medScroll">
         <div className="gridshow" data-size="lg">
           {fdata
@@ -262,7 +301,7 @@ const ContentArea = () => {
                 return (
                   <div
                     key={item.id}
-                    className="gridele flex flex-col items-center prtclk"
+                    className="conticon flex flex-col items-center prtclk"
                     data-id={item.id}
                     data-focus={selected == item.id}
                     onClick={handleClick}
@@ -275,6 +314,9 @@ const ContentArea = () => {
               })
             : null}
         </div>
+        {fdata.data.length === 0 ? (
+          <span className="text-xs mx-auto">此文件为空</span>
+        ) : null}
       </div>
     </div>
   );

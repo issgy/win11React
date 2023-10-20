@@ -379,7 +379,7 @@ export const Spotify = () => {
             {/* 左侧 */}
             <div className="snfo flex items-center">
               {queue[curr].albumArt ? (
-                <Image src={queue[curr].albumArt} w={56} ext />
+                <Image src={queue[curr].albumArt} w={56} ext lazy />
               ) : (
                 <Icon src="./img/asset/album.png" ext width={56} />
               )}
@@ -607,6 +607,7 @@ const Home = ({ tab, action, sid, paused }) => {
                     onClick={action}
                     click={card.type}
                     payload={"[" + i + "," + j + "]"}
+                    lazy
                   />
                   <div className="sover p-4 nopt">
                     {card.type == "mix" ? card.name : null}
@@ -685,6 +686,7 @@ const Playlist = ({ type, tdata, action, action2, sid, paused }) => {
           ext
           w={232}
           h={232}
+          lazy
         />
         <div className="playdet ml-6 text-gray-100 flex flex-col justify-end">
           <div className="text-xs font-bold uppercase">{type}</div>
@@ -758,6 +760,7 @@ const Playlist = ({ type, tdata, action, action2, sid, paused }) => {
                         h={40}
                         ext
                         err="/img/asset/mixdef.jpg"
+                        lazy
                       />
                     ) : null}
                     <div className="scolsong flex flex-col" data-play={ptype}>
@@ -815,7 +818,7 @@ const Queue = ({ queue, curr, action, action2, paused }) => {
             <Icon src="./img/asset/equaliser.gif" ext width={16} />
           )}
         </div>
-        <Image src={queue[curr].albumArt} ext w={40} />
+        <Image src={queue[curr].albumArt} ext w={40} lazy />
         <div className="flex flex-col ml-4">
           <div className="capitalize font-semibold gcol">
             {queue[curr].name}
@@ -838,7 +841,7 @@ const Queue = ({ queue, curr, action, action2, paused }) => {
             onClick={() => action2("clickq", (curr + i + 1) % queue.length)}
           >
             <div className="w-10 text-center font-semibold">{i + 2}</div>
-            <Image src={qs.albumArt} w={40} ext />
+            <Image src={qs.albumArt} w={40} ext lazy />
             <div className="flex flex-col">
               <div className="capitalize font-semibold gcol">{qs.name}</div>
               <div className="capitalize font-medium text-sm">{qs.artist}</div>
@@ -944,6 +947,7 @@ const Search = ({ sid, paused, action, action2 }) => {
                 ext
                 w={92}
                 err="/img/asset/mixdef.jpg"
+                lazy
               />
               <div className="fplay">
                 <div className="tria"></div>
@@ -974,7 +978,7 @@ const Search = ({ sid, paused, action, action2 }) => {
                   data-payload={`"` + song.song_id + `"`}
                   key={i}
                 >
-                  <Image src={song.song_image.to150()} w={40} ext />
+                  <Image src={song.song_image.to150()} w={40} ext lazy />
                   <div className="acol ml-4 flex-grow">
                     <div
                       className={
@@ -1020,6 +1024,7 @@ const Search = ({ sid, paused, action, action2 }) => {
                       onClick={action}
                       click="album"
                       payload={card.album_id}
+                      lazy
                     />
                     <div
                       className="mt-4 mb-1 text-gray-100 text-sm font-semibold"

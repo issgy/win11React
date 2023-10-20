@@ -384,11 +384,11 @@ export const StartMenu = () => {
                   <div className="text-xss font-semibold mt-8">
                     Quick Searches
                   </div>
-                  <div className="quickSearches pl-4 mt-2">
+                  <div className="quickSearches mt-2">
                     {start.qksrch.map((srch, i) => {
                       return (
                         <div
-                          className="qksrch flex align-center py-3 handcr prtclk"
+                          className="qksrch flex item-center p-3 handcr prtclk"
                           key={i}
                           data-action="EDGELINK"
                           onClick={clickDispatch}
