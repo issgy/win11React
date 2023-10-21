@@ -103,6 +103,7 @@ export const Explorer = () => {
   const files = useSelector((state) => state.files);
   const path = useSelector((state) => state.files.cpath);
   const [cpath, setCpath] = useState(path);
+  const [serachTxt, setSearchTxt] = useState("");
   const fdata = files.data.getId(files.cdir);
   const dispatch = useDispatch();
 
@@ -123,8 +124,58 @@ export const Explorer = () => {
     }
   };
 
+  const handleSearchChange = (e) => {
+    setSearchTxt(e.target.value);
+  };
+
+  const DirCont = () => {
+    let arr = [],
+      curr = fdata;
+
+    while (curr) {
+      arr.push(
+        <div className="dirCont flex items-center" key={curr.id || null}>
+          <div
+            className="dncont"
+            onClick={dispatchAction}
+            data-action="FILEDIR"
+            data-payload={curr.id}
+            tabIndex="-1"
+          >
+            {curr.name}
+          </div>
+          <Icon className="dirchev" fafa="faChevronRight" width={8} />
+        </div>
+      );
+
+      curr = curr.host; //host存储着父节点
+    }
+
+    arr.push(
+      <div className="dirCont flex items-center" key={1}>
+        <div className="dncont" tabIndex="-1">
+          此电脑
+        </div>
+        <Icon className="dirchev" fafa="faChevronRight" width={8} />
+      </div>
+    );
+
+    arr.push(
+      <div className="dirCont flex items-center" key={0}>
+        <Icon
+          className="pr-1 pb-px"
+          src={"win/" + fdata.info.icon + "-sm"}
+          width={16}
+        />
+        <Icon className="dirchev" fafa="faChevronRight" width={8} />
+      </div>
+    );
+    return <div className="dirfbox h-full flex">{arr.reverse()}</div>;
+  };
+
   useEffect(() => {
     setCpath(path);
+    setSearchTxt("");
   }, [path]);
 
   return (
@@ -144,10 +195,33 @@ export const Explorer = () => {
         <Ribbon />
         <div className="restWindow flex-grow flex flex-col">
           <div className="sec1">
-            <Icon fafa="faArrowLeft" width={14} click="FILEPREV" pr />
-            <Icon fafa="faArrowRight" width={14} click="FILENEXT" pr />
-            <Icon fafa="faArrowUp" width={14} click="FILEBACK" pr />
-            <div className="path-bar" noscroll>
+            <Icon
+              className={
+                "navIcon hvtheme" + (files.hide == 0 ? " disableIt" : "")
+              }
+              fafa="faArrowLeft"
+              width={14}
+              click="FILEPREV"
+              pr
+            />
+            <Icon
+              className={
+                "navIcon hvtheme" +
+                (files.hide + 1 == files.history.length ? " disableIt" : "")
+              }
+              fafa="faArrowRight"
+              width={14}
+              click="FILENEXT"
+              pr
+            />
+            <Icon
+              className="navIcon hvtheme"
+              fafa="faArrowUp"
+              width={14}
+              click="FILEBACK"
+              pr
+            />
+            <div className="path-bar" tabIndex="-1">
               <input
                 className="path-field"
                 type="text"
@@ -155,29 +229,35 @@ export const Explorer = () => {
                 onChange={handleChange}
                 onKeyDown={handleEnter}
               />
+              <DirCont />
             </div>
             <div className="srchbar">
               <Icon className="searchIcon" src="search" width={12} />
-              <input type="text" placeholder="搜索" />
+              <input
+                type="text"
+                onChange={handleSearchChange}
+                value={serachTxt}
+                placeholder="搜索"
+              />
             </div>
           </div>
           <div className="sec2">
             <NavPane />
-            <ContentArea />
+            <ContentArea serachtxt={serachTxt} />
           </div>
           <div className="sec3">
             <div className="item-count text-xs">{fdata.data.length} items</div>
             <div className="view-opts flex">
               <Icon
-                className="viewicon p-1"
+                className="viewicon hvtheme p-1"
                 click="FILEVIEW"
                 payload="5"
-                open={files.view === 5}
+                open={files.view == 5}
                 src="win/viewinfo"
                 width={16}
               />
               <Icon
-                className="viewicon p-1"
+                className="viewicon hvtheme p-1"
                 click="FILEVIEW"
                 payload="1"
                 open={files.view == 1}
@@ -253,14 +333,14 @@ const NavPane = memo(() => {
           <Dropdown icon="pics" title="图片" spid="%pictures%" />
           <Dropdown icon="vid" title="视频" spid="%videos%" />
           <Dropdown icon="disc" title="Windows (C:)" spid="%cdrive%" />
-          <Dropdown icon="disk" title="issgy (D:)" />
+          <Dropdown icon="disk" title="issgy (D:)" spid="%ddrive%" />
         </Dropdown>
       </div>
     </div>
   );
 });
 
-const ContentArea = () => {
+const ContentArea = ({ serachtxt }) => {
   const files = useSelector((state) => state.files);
   const special = useSelector((state) => state.files.data.special);
   const [selected, setSelected] = useState(null);
@@ -269,10 +349,12 @@ const ContentArea = () => {
   const dispatch = useDispatch();
 
   const handleClick = (e) => {
+    e.stopPropagation();
     setSelected(e.target.dataset.id);
   };
 
   const handleDoubleClick = (e) => {
+    e.stopPropagation();
     handleFileOpen(e.target.dataset.id);
   };
 
@@ -297,19 +379,20 @@ const ContentArea = () => {
         <div className="gridshow" data-size="lg">
           {fdata
             ? fdata.data.map((item) => {
-                let icon = (item.info && item.info.icon) || item.type;
                 return (
-                  <div
-                    key={item.id}
-                    className="conticon flex flex-col items-center prtclk"
-                    data-id={item.id}
-                    data-focus={selected == item.id}
-                    onClick={handleClick}
-                    onDoubleClick={handleDoubleClick}
-                  >
-                    <Image src={`icon/win/${icon}`} />
-                    <span>{item.name}</span>
-                  </div>
+                  item.name.includes(serachtxt) && (
+                    <div
+                      key={item.id}
+                      className="conticon hvtheme flex flex-col items-center prtclk"
+                      data-id={item.id}
+                      data-focus={selected == item.id}
+                      onClick={handleClick}
+                      onDoubleClick={handleDoubleClick}
+                    >
+                      <Image src={`icon/win/${item.info.icon}`} />
+                      <span>{item.name}</span>
+                    </div>
+                  )
                 );
               })
             : null}

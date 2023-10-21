@@ -18,11 +18,62 @@
             }
           }
         },
+        "Microsoft": {},
+        "Program Files": {
+          "data": {
+            "7-Zip": {},
+            "Adobe": {},
+            "AMD": {},
+            "BraveSoftware": {},
+            "Common Files": {},
+            "Dell": {},
+            "dotnet": {},
+            "Git": {},
+            "Goodix": {},
+            "heroku": {},
+            "Intel": {},
+            "Internet Explorer": {},
+            "mcafee": {},
+            "Microsoft Office 15": {},
+            "Microsoft OneDrive": {},
+            "Microsoft Update Health Tools": {},
+            "ModifiableWindowsApps": {},
+            "MongoDB": {},
+            "MSBuild": {},
+            "MySQL": {},
+            "nodejs": {},
+            "OpenVPN": {},
+            "PCHealthCheck": {},
+            "PowerShell": {},
+            "PowerToys": {},
+            "Realtek": {},
+            "Reference Assemblies": {},
+            "Riot Vanguard": {},
+            "Rivet Networks": {},
+            "Waves": {},
+            "Windows Defender": {},
+            "Windows Mail": {},
+            "Windows Media Player": {},
+            "Windows NT": {},
+            "Windows Photo Viewer": {},
+            "WindowsPowerShell": {},
+            "WinRAR": {}
+          }
+        },
+        "temp": {},
         "Users": {
           "type": "folder",
           "name": "用户",
           "data": {
-            "公用": {},
+            "公用": {
+              "data": {
+                "Public Documents": {},
+                "Public Downloads": {},
+                "Public Music": {},
+                "Public Pictures": {},
+                "Public Videos": {}
+              }
+            },
             "issgy": {
               "type": "folder",
               "name": "issgy",
@@ -30,6 +81,8 @@
                 "spid": "%user%"
               },
               "data": {
+                ".config":{},
+                "应用数据":{},
                 "桌面": {
                   "info": {
                     "spid": "%desktop%",
@@ -65,6 +118,15 @@
                   "info": {
                     "spid": "%pictures%",
                     "icon": "pics"
+                  },
+                  "data": {
+                    "DCIM": {},
+                    "2007": {},
+                    "High School": {
+                      "data": {
+                        "Did you really expected that": {}
+                      }
+                    }
                   }
                 },
                 "视频": {
@@ -76,6 +138,26 @@
                 "Github": {
                   "info": {
                     "spid": "%github%"
+                  },
+                  "data": {
+                    "atomforces": {},
+                    "blueapi": {},
+                    "BlueBlog": {},
+                    "BlueBlogs---A-social-platform": {},
+                    "blueedgetechno": {},
+                    "blueedgetechno.github.io": {},
+                    "blueimage": {},
+                    "bluelab": {},
+                    "blueothello": {},
+                    "blueweb": {},
+                    "codeblue": {},
+                    "handwritten-digit-recognition": {},
+                    "jiosaavn": {},
+                    "jiosaavn-api": {},
+                    "minesweeper": {},
+                    "othello": {},
+                    "Saavn-Downloader": {},
+                    "Sanfoundary": {}
                   }
                 },
                 "云盘": {
@@ -100,18 +182,29 @@
                     "New Folder": {}
                   }
                 },
-                "Programs": {},
-                "Postman": {},
-                "gif": {},
                 "Contacts": {},
                 "Favorites": {},
-                "AppData": {},
-                ".config": {}
+                "Programs": {},
+                "Postman": {},
+                "gif": {}
               }
             }
           }
         }
       }
+  },
+  "D:":{
+    "name": "D:",
+    "info":{
+      "spid": "%ddrive%"
+    },
+    "data": {
+      "Adobe": {},
+      "Programs": {},
+      "Unity": {},
+      "WindowsApp": {},
+      "Temp": {}
     }
   }
+}
   

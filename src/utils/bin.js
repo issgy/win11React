@@ -2,7 +2,8 @@ export class Item {
   constructor({ type, name, info, data, host }) {
     this.type = type || "folder";
     this.name = name;
-    this.info = info;
+    this.info = info || {};
+    this.info.icon = this.info.icon || this.type;
     this.data = data;
     this.host = host;
     this.id = this.gene();
@@ -19,9 +20,9 @@ export class Item {
 
 export class Bin {
   constructor() {
-    this.tree = [];
-    this.lookup = {};
-    this.special = {};
+    this.tree = []; //存储将json格式数据转为js格式数据后的对象（可以想象成一棵二叉树结构
+    this.lookup = {}; //遍历一遍二叉树后，存储着tree中每一个节点，属性名为id
+    this.special = {}; // %xxx%与id的映射标
   }
 
   setId(id, item) {
@@ -29,6 +30,7 @@ export class Bin {
   }
 
   getId(id) {
+    //返回对应的节点信息
     return this.lookup[id];
   }
 
@@ -119,13 +121,13 @@ export class Bin {
       type: data.type,
       name: data.name || name,
       info: data.info,
-      host: host,
+      host: host, //host中存储其父节点信息
     });
 
-    this.setId(item.id, item);
+    this.setId(item.id, item); //首次调用，初始化lookup
 
     if (data.info && data.info.spid) {
-      this.setSpecial(data.info.spid, item.id);
+      this.setSpecial(data.info.spid, item.id); //首次调用，初始化special对象
     }
 
     if (item.type != "folder") {

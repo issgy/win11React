@@ -2,7 +2,7 @@ import { Bin } from "../utils/bin";
 import fileData from "./dir.json";
 
 const defState = {
-  cdir: "%onedrive%",
+  cdir: "%user%",
   history: [],
   hide: 0,
   view: 1,
@@ -37,6 +37,8 @@ const fileReducer = (state = defState, action) => {
     //返回文件夹上一层
     let item = tmp.data.getId(tmp.cdir);
     if (item.host) tmp.cdir = item.host.id;
+  } else if (action.type === "FILEVIEW") {
+    tmp.view = action.payload;
   }
 
   if (!navHist && tmp.cdir != tmp.history[tmp.hide]) {

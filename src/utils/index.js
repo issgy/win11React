@@ -16,7 +16,7 @@ let { taskbar, desktop, pinned, recent } = {
     "File Explorer",
     "Store",
     "Edge",
-    "Github",
+    "VS Code",
     "Spotify",
   ],
   pinned: (localStorage.getItem("pinned") &&

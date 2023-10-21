@@ -59,7 +59,7 @@ export const EdgeMenu = () => {
       dispatch({ type: "EDGELINK" });
     }
   }, [wnapp.url]);
-  console.log("edge");
+
   return (
     <div
       className="edgeBrowser floatTab dpShad"

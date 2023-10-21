@@ -10,7 +10,7 @@ export const VsCode = () => {
 
   useEffect(() => {
     if (url === null) {
-      setUrl(process.env.REACT_APP_VSCODE || "https://github1s.com/");
+      setUrl("https://github1s.com/issgy/win11React");
     }
   });
 
