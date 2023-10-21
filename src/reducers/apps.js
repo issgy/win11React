@@ -16,7 +16,7 @@ for (let i = 0; i < allApps.length; i++) {
   defState[allApps[i].icon].z = 0;
 
   // 刷新页面自动出现的app界面
-  if (allApps[i].icon === "explorer") {
+  if (allApps[i].icon === "settings") {
     defState[allApps[i].icon].size = "full";
     defState[allApps[i].icon].hide = false;
     defState[allApps[i].icon].max = true;

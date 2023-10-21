@@ -27,6 +27,8 @@ export * from "./apps/spotify";
 
 export * from "./apps/camera";
 
+export * from "./apps/settings";
+
 //app被最小化后鼠标覆盖出现的小屏
 export const ScreenPreview = () => {
   const tasks = useSelector((state) => state.taskbar);

@@ -139,6 +139,17 @@ body[data-theme="dark"] .notepad {
   .wnCam {
     background: #060606;
   }
+
+  .settingsApp {
+    --bg0: #eff4f9;
+  
+    background: var(--bg0);
+    color: var(--dark-txt);
+  }
+  
+  body[data-theme="dark"] .settingsApp {
+    --bg0: #202020;
+  }
   
   .msfiles{
     --bg0: #edf2fe;
