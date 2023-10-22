@@ -315,6 +315,7 @@ const NavPane = memo(() => {
             notoggle
             pinned
           />
+          <Dropdown icon="user" title="issgy" spid="%user%" notoggle pinned />
           <Dropdown
             icon="docs"
             title="文档"

@@ -56,7 +56,7 @@ const apps = [
   },
   {
     name: "issgy",
-    icon: "win/userDir",
+    icon: "win/user",
     type: "short",
   },
   {
@@ -82,7 +82,7 @@ const apps = [
     action: "CAMERA",
   },
   {
-    name: "VS Code",
+    name: "VS Studio Code",
     icon: "code",
     type: "app",
     action: "VSCODE",

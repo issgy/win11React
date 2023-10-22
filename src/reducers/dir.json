@@ -78,7 +78,8 @@
               "type": "folder",
               "name": "issgy",
               "info": {
-                "spid": "%user%"
+                "spid": "%user%",
+                "icon":"user"
               },
               "data": {
                 ".config":{},

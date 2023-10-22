@@ -5,6 +5,7 @@ import { Icon, ToolBar, Image } from "../../../utils/general";
 import storedata from "./assets/store.json";
 import { installApp } from "../../../actions";
 import "./assets/store.scss";
+import axios from "axios";
 
 const geneStar = (item, rv = 0) => {
   var url = item.data.url,
@@ -35,9 +36,12 @@ const emap = (v) => {
 export const MicroStore = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.store);
+  const hide = useSelector((state) => state.apps.store.hide);
   const [tab, setTab] = useState("sthome");
   const [page, setPage] = useState(0);
   const [opapp, setOpapp] = useState(storedata[0]);
+  const [storeapps, setStoreapps] = useState(storedata);
+  const [fetch, setFetch] = useState(0);
 
   const action = (e) => {
     const action = e.target && e.target.dataset.action,
@@ -46,9 +50,9 @@ export const MicroStore = () => {
     if (action == "page1") {
       setPage(action[4]);
     } else if (action == "page2") {
-      for (let i = 0; i < storedata.length; i++) {
-        if (storedata[i].data.url == payload) {
-          setOpapp(storedata[i]);
+      for (let i = 0; i < storeapps.length; i++) {
+        if (storeapps[i].data.url == payload) {
+          setOpapp(storeapps[i]);
           setPage(2);
           break;
         }
@@ -60,18 +64,18 @@ export const MicroStore = () => {
     const x = e.target && e.target.dataset.action;
     if (x) {
       setPage(0);
-      let target = document.getElementById(x);
-      if (target) {
-        let scTop = target.parentNode.parentNode.scrollTop, //获取元素内容顶部相对于其可视区域的距离,即元素滚动的距离
-          ofTop = target.offsetTop; //获取元素顶部边缘相对于其offsetParent元素的顶部边缘的距离
+      setTimeout(() => {
+        let target = document.getElementById(x);
+        if (target) {
+          let scTop = target.parentNode.parentNode.scrollTop, //获取元素内容顶部相对于其可视区域的距离,即元素滚动的距离
+            ofTop = target.offsetTop; //获取元素顶部边缘相对于其offsetParent元素的顶部边缘的距离
 
-        //通过计算两者绝对值之差是否大于窗口高度的10%，来判断目标元素是否在可视区域内
-        if (Math.abs(scTop - ofTop) > window.innerHeight * 0.1) {
-          target.parentNode.parentNode.scrollTop = target.offsetTop;
+          //通过计算两者绝对值之差是否大于窗口高度的10%，来判断目标元素是否在可视区域内
+          if (Math.abs(scTop - ofTop) > window.innerHeight * 0.1) {
+            target.parentNode.parentNode.scrollTop = target.offsetTop;
+          }
         }
-      } else {
-        setTab(x);
-      }
+      }, 200);
     }
   };
 
@@ -95,6 +99,25 @@ export const MicroStore = () => {
       setTab(mntab);
     }
   };
+
+  useEffect(() => {
+    if (!wnapp.hide && fetch == 0) {
+      let url = "https://store.win11react.com/store/index.json";
+
+      axios
+        .get(url)
+        .then((res) => res.data)
+        .then((data) => {
+          console.log(data);
+          if (data) setStoreapps(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      setFetch(1);
+    }
+  }, [hide]);
 
   return (
     <div
@@ -151,7 +174,12 @@ export const MicroStore = () => {
         {/* 右侧对应的内容 */}
         <div className="restWindow msfull thinScroll" onScroll={frontScroll}>
           {page == 0 ? <FrontPage /> : null}
-          {page == 1 ? <DownPage action={action} /> : null}
+          {page == 1 ? (
+            <DownPage
+              action={action}
+              apps={(storeapps.length && storeapps) || storedata}
+            />
+          ) : null}
           {page == 2 ? <DetailPage app={opapp} /> : null}
         </div>
       </div>
@@ -355,7 +383,7 @@ const FrontPage = memo(() => {
   );
 });
 
-const DownPage = ({ action }) => {
+const DownPage = ({ action, apps }) => {
   const [catg, setCatg] = useState("all");
   return (
     <div className="pagecont w-full absolute top-0 box-border p-12">
@@ -388,7 +416,7 @@ const DownPage = ({ action }) => {
         </div>
       </div>
       <div className="appscont mt-8">
-        {storedata.map((item, i) => {
+        {apps.map((item, i) => {
           if (item.type != catg && catg != "all") return;
 
           const stars = geneStar(item);

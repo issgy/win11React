@@ -263,6 +263,7 @@ export const Spotify = () => {
       }}
       id={wnapp.icon + "App"}
     >
+      <div className="navcover w-50 h-16 absolute"></div>
       <ToolBar
         app={wnapp.action}
         icon={wnapp.icon}
