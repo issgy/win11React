@@ -15,6 +15,41 @@ import "./short.css";
 import { useDispatch, useSelector } from "react-redux";
 import { loadSettings } from "./actions";
 import store from "./reducers";
+import { ErrorBoundary } from "react-error-boundary";
+
+function ErrorFallback({ error, resetErrorBoundary }) {
+  return (
+    <div>
+      <meta charSet="UTF-8" />
+      <title>404 - Page</title>
+      <script src="./script.js"></script>
+      <link rel="stylesheet" href="https://win11.blueedge.me/style.css" />
+      {/* partial:index.partial.html */}
+      <div id="page">
+        <div id="container">
+          <h1>:(</h1>
+          <h2>
+            Your PC ran into a problem and needs to restart. We're just
+            collecting some error info, and then we'll restart for you.
+          </h2>
+          <h2>
+            <span id="percentage">0</span>% complete
+          </h2>
+          <div id="details">
+            <div id="stopcode">
+              <h5>
+                <br />
+                Stop Code: {error.message}
+              </h5>
+              <button onClick={resetErrorBoundary}>Try again</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* partial */}
+    </div>
+  );
+}
 
 function App() {
   const dispatch = useDispatch();
@@ -91,26 +126,28 @@ function App() {
 
   return (
     <div className="App">
-      {/* {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
-      {wall.locked ? <LockScreen dir={wall.dir} /> : null} */}
-      <div className="appwrap">
-        <Background />
-        <div className="desktop" data-menu="desk">
-          <DesktopApp />
-          {Object.keys(Applications).map((key, i) => {
-            const WinApp = Applications[key];
-            return <WinApp key={i} />;
-            // or:
-            // return <div>{Applications[key]()}</div>;
-          })}
-          <StartMenu />
-          <SidePane />
-          <WidPane />
-          <CalnWid />
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
+        {wall.locked ? <LockScreen dir={wall.dir} /> : null}
+        <div className="appwrap">
+          <Background />
+          <div className="desktop" data-menu="desk">
+            <DesktopApp />
+            {Object.keys(Applications).map((key, i) => {
+              const WinApp = Applications[key];
+              return <WinApp key={i} />;
+              // or:
+              // return <div>{Applications[key]()}</div>;
+            })}
+            <StartMenu />
+            <SidePane />
+            <WidPane />
+            <CalnWid />
+          </div>
+          <Taskbar />
+          <ActMenu />
         </div>
-        <Taskbar />
-        <ActMenu />
-      </div>
+      </ErrorBoundary>
     </div>
   );
 }

@@ -56,11 +56,6 @@ const Taskbar = () => {
       setBatteryStatus("*");
       return;
     } else {
-      if (level <= 10) {
-        level += 10;
-      } else if (level >= 80) {
-        level -= 10;
-      }
       setBatteryStatus(level);
     }
   };

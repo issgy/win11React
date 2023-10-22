@@ -5,9 +5,15 @@
     font-family: "Spotify";
     src: url("./apps/assets/spotify.woff2") format("woff2"), url("./apps/assets/spotify.ttf") format("truetype");
   }
+
+  // @font-face {
+  //   font-family: SettingsIcons;
+  //   src: url("./apps/assets/SettingsIcons.woff2") format("woff2");
+  // }
   
   body {
     --dark-txt: #000;
+    --alt-txt: #fff;
     --med-dark:#111;
     --txt-col: #222;
     --med-txt: #3c3c3c;

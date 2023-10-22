@@ -13,22 +13,50 @@
 
   top: 12%;
   left: 30%;
-  width: auto;
+  width: 28rem;
   height: auto;
-  border-radius: 4px;
   color: var(--dark-txt);
   background: var(--bg1);
-  z-index: 0;
+  overflow: hidden;
+  font-size: 14px;
+
+  a {
+    color: var(--clrPrm);
+    font-weight: 500;
+  }
+
+  .content {
+    background: var(--bg2);
+  }
+
+  .okbtn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    border-top: 1px solid var(--comp-txt);
+
+    div {
+      background: var(--clrPrm);
+      color: var(--alt-txt);
+      border: 1px solid transparent;
+      font-weight: 500;
+      padding: 6px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &[data-allow="false"] {
+        background: var(--bg2);
+        color: var(--sat-txt);
+        border: 1px solid;
+        cursor: not-allowed;
+      }
+    }
+  }
 }
 
 body[data-theme='dark'] .aboutApp {
   --bg1: #202020;
     --bg2: #2b2b2b;
-}
-
-.aboutTop {
-  background: var(--bg2);
-  border-radius: 4px 4px 0 0;
 }
 
 .calcHis{
@@ -255,34 +283,6 @@ body[data-theme='dark'] .aboutApp {
   img{
     margin-top: 36%;
     width: 56%;
-  }
-}
-
-.abCont{
-  font-size: 9px;
-  width: 19rem;
-  color: var(--txt-col);
-  font-weight: 500;
-
-  mark{
-    background: none;
-    color: #008216;
-    font-weight: 600;
-  }
-}
-
-.okbtn{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-
-  div{
-    border: solid 1px var(--clrPrm);
-    padding: 2px 24px;
-    border-radius: 4px;
-    cursor: pointer;
-    background: var(--bg2);
   }
 }
 

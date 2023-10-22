@@ -132,19 +132,9 @@ export const SidePane = () => {
   const showBatteryStatus = (battery) => {
     let level = battery.level * 100;
     if (battery.charging) {
-      if (level <= 10) {
-        level += 10;
-      } else if (level >= 80) {
-        level -= 10;
-      }
       setBatteryStatus("*" + level);
       return;
     } else {
-      if (level <= 10) {
-        level += 10;
-      } else if (level >= 80) {
-        level -= 10;
-      }
       setBatteryStatus(level.toString());
     }
   };

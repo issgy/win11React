@@ -1,82 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Image } from "../../../utils/general";
 
 export const AboutWin = () => {
   const dispatch = useDispatch();
   const { abOpen } = useSelector((state) => state.desktop);
-  const [open, setOpen] = useState(() => {
-    if (localStorage.getItem("closeAbout", true)) {
-      return false;
-    } else {
-      return true;
-    }
-  });
+  const { locked, booted } = useSelector((state) => state.wallpaper);
+  const [open, setOpen] = useState(!localStorage.getItem("closeAbout"));
+  const [timer, setTimer] = useState(
+    localStorage.getItem("closeAbout") == "true" ? 0 : 5
+  );
 
   const action = () => {
     setOpen(false);
     localStorage.setItem("closeAbout", true);
     dispatch({ type: "DESKABOUT", payload: false });
   };
+
+  useEffect(() => {
+    if (timer > 0 && !locked && booted) {
+      setTimeout(() => {
+        setTimer(timer - 1);
+      }, 1000);
+    }
+  }, [timer, locked, booted]);
+
   return open || abOpen ? (
     <div className="aboutApp floatTab dpShad">
-      <div className="py-1 px-2 aboutTop text-xss">
-        <div className="">About Windows</div>
+      <div className="content p-6">
+        <div className="text-xl font-semibold">About</div>
+        <p>
+          win11React is an open source project made in the hope to replicate the
+          Windows 11 desktop experience on web, using standard web technologies
+          like React, CSS, and JavaScript.
+        </p>
+        <p>
+          This project is licensed under&nbsp;
+          <a
+            target="_blank"
+            href="https://github.com/issgy/win11React/blob/main/LICENSE"
+          >
+            Creative Commons
+          </a>
+          .
+        </p>
+        <p className="pl-4">
+          contact :&nbsp;
+          <a target="_blank" href="mailto:xjmgsq@163.com">
+            xjmgsq@163.com
+          </a>
+        </p>
+
+        <p>
+          This project is not in anyway affiliated with Microsoft and should not
+          be confused with Microsoft's Operating System or Products.
+        </p>
+        <p>
+          This is also not&nbsp;
+          <a target="_blank" href="https://www.microsoft.com/en-in/windows-365">
+            Windows 365 cloud PC
+          </a>
+          .
+        </p>
+        <p>
+          Microsoft, Windows and Other demonstrated Products in this project are
+          trademarks of the Microsoft group of companies.
+        </p>
       </div>
-      <div className="windowScreen flex flex-col" data-dock="true">
-        <div className="restWindow h-full flex-grow flex flex-col items-center p-4">
-          <Image src="windows11" free />
-          <div className="w-88 h-px bg-gray-400 my-4"></div>
-          <div className="abCont">
-            <div>Microsoft Windows (in React)</div>
-            <div>Version 21H2 (OS Build 22000.51)</div>
-            <div>&copy; issgy. All rights reserved.</div>
-            <br />
-            <div>
-              The Windows 11 Home Single Language Operating System and its user
-              interface are protected by the trademark and other pending or
-              existing intellectual property rights in the China and other
-              countries/regions.
-            </div>
-            <br />
-            <br />
-            <div>
-              This product is licensed with{" "}
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href="https://github.com/issgy/win11React/blob/main/LICENSE"
-              >
-                Creative Commons
-              </a>
-              .
-            </div>
-            <div className="mt-1">
-              &nbsp;&nbsp; &nbsp;&nbsp; contact:{" "}
-              <a target="_blank" rel="noreferrer" href="mailto:xjmgsq@163.com">
-                xjmgsq@163.com
-              </a>
-            </div>
-            <br />
-            <br />
-            <div>
-              <span>
-                The current working apps are
-                <mark> Calculator</mark>,<mark> Edge</mark>,
-                <mark> Notepad</mark>,<mark> Store</mark>,<mark> Terminal</mark>
-                ,<mark> Vscode</mark>,<mark> Whiteboard....</mark>
-              </span>
-            </div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <div className="okbtn">
-              <div className="bg-gray-100" onClick={action}>
-                Ok
-              </div>
-            </div>
-          </div>
+      <div className="okbtn px-6 py-4">
+        <div data-allow={timer == 0} onClick={timer == 0 ? action : null}>
+          Ok, I understand {timer > 0 ? <span>{`( ${timer} )`}</span> : null}
         </div>
       </div>
     </div>
