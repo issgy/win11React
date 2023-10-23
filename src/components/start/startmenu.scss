@@ -185,6 +185,10 @@ body[data-theme='dark'] .startMenu{
   }
 }
 
+.appCont .stAcbar{
+  padding-right: 64px; 
+}
+
 .pnApps {
   min-height: 150px;
   padding: 20px 0;
@@ -307,22 +311,6 @@ body[data-theme='dark'] .startMenu{
     transform: scale(0);
     opacity: 0;
     pointer-events: none;
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
-    width: 1.6px;
-    background: transparent;
-  }
-
-  &:hover::-webkit-scrollbar {
-    display: block;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    width: 1.6px;
-    border-radius: 10px;
-    background-color: var(--sat-txt);
   }
 
   .allApp {

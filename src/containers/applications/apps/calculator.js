@@ -252,7 +252,7 @@ export const Calculator = () => {
             {hist.length === 0 ? (
               <div className="text-xs mt-4">There's no history yet</div>
             ) : null}
-            <div className="histCont thinScroll">
+            <div className="histCont win11Scroll">
               <div className="hct h-max flex-grow">
                 {hist.map((his, i) => {
                   return (

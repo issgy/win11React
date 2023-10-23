@@ -281,7 +281,7 @@ export const WnTerminal = () => {
       <div className="windowScreen flex" data-dock="true">
         <div className="restWindow h-full flex-grow text-gray-100">
           <div
-            className="cmdcont w-full box-border overflow-y-scroll thinScroll prtclk"
+            className="cmdcont w-full box-border overflow-y-scroll win11Scroll prtclk"
             id="cmdcont"
             onMouseOver={action}
             onClick={action}

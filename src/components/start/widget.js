@@ -21,7 +21,7 @@ export const WidPane = () => {
       data-hide={widget.hide}
       style={{ "--prefix": "WIDG" }}
     >
-      <div className="WidPane thinScroll" loading="lazy">
+      <div className="WidPane win11Scroll" loading="lazy">
         <div className="widtop">
           <Icon fafa="faEllipsisH" width={12} />
         </div>

@@ -147,7 +147,7 @@ export const StartMenu = () => {
                 </div>
               </div>
               {/* Recommended apps */}
-              <div className="recApps">
+              <div className="recApps win11Scroll">
                 <div className="stAcbar">
                   {/* <div className="stAcbar"> */}
                   <div className="gpname">Recommended</div>
@@ -195,7 +195,7 @@ export const StartMenu = () => {
                 </div>
               </div>
               {/* 按字母排序的所有app */}
-              <div className="allApps" data-alpha={start.alpha}>
+              <div className="allApps win11Scroll" data-alpha={start.alpha}>
                 {start.contApps.map((contapp, i) => {
                   if (contapp.length === 0) return null;
 

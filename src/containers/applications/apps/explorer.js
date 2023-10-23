@@ -305,7 +305,7 @@ const NavPane = memo(() => {
   const files = useSelector((state) => state.files);
   const special = useSelector((state) => state.files.data.special);
   return (
-    <div className="navpane medScroll">
+    <div className="navpane win11Scroll">
       <div className="extcont">
         <Dropdown title="快速访问" icon="star" isDropped action="">
           <Dropdown
@@ -376,7 +376,7 @@ const ContentArea = ({ serachtxt }) => {
       onKeyDown={handleKey}
       tabIndex="-1"
     >
-      <div className="contentwrap medScroll">
+      <div className="contentwrap win11Scroll">
         <div className="gridshow" data-size="lg">
           {fdata
             ? fdata.data.map((item) => {

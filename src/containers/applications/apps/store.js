@@ -172,7 +172,7 @@ export const MicroStore = () => {
           />
         </div>
         {/* 右侧对应的内容 */}
-        <div className="restWindow msfull thinScroll" onScroll={frontScroll}>
+        <div className="restWindow msfull win11Scroll" onScroll={frontScroll}>
           {page == 0 ? <FrontPage /> : null}
           {page == 1 ? (
             <DownPage
@@ -564,7 +564,7 @@ const DetailPage = ({ app }) => {
       <div className="growcont flex flex-col">
         <div className="briefcont py-2 pb-3">
           <div className="text-xs font-semibold">Screenshots</div>
-          <div className="overflow-x-scroll medScroll mt-4">
+          <div className="overflow-x-scroll win11Scroll mt-4">
             <div className="w-max flex">
               {app.data.gallery &&
                 app.data.gallery.map((x, i) => (

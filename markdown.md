@@ -203,3 +203,4 @@ var tmpWdgt = await fetchApi(widget);
 ## 10.23:
 
 1、settings 界面完成
+2、统一滚动条样式

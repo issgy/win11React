@@ -109,7 +109,7 @@ export const Settings = () => {
               page === e && (
                 <main key={e}>
                   <h1>{e}</h1>
-                  <div className="tilesCont">
+                  <div className="tilesCont win11Scroll">
                     {data[e].map((e) => {
                       switch (e.type) {
                         case "sysTop":

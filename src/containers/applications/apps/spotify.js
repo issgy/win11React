@@ -299,39 +299,41 @@ export const Spotify = () => {
               <div className="text-gray-500 text-xs font-semibold tracking-widest mt-10 mb-4">
                 YOUR LIBRARY
               </div>
-              <div className="w-full h-max">
-                {libr.map((lib, i) => (
-                  <div
-                    className="snav mb-4 handcr text-sm font-semibold"
-                    key={i}
-                    data-act={tab == i + 2}
-                    onClick={action}
-                    data-action="discv"
-                    data-payload={i + 2}
-                  >
-                    {lib}
+              <div className="navcont overflow-y-scroll win11Scroll win11ScrollDark">
+                <div className="w-full h-max">
+                  {libr.map((lib, i) => (
+                    <div
+                      className="snav mb-4 handcr text-sm font-semibold"
+                      key={i}
+                      data-act={tab == i + 2}
+                      onClick={action}
+                      data-action="discv"
+                      data-payload={i + 2}
+                    >
+                      {lib}
+                    </div>
+                  ))}
+                  <div className="text-gray-500 font-semibold text-xs tracking-widest mt-12 mb-4">
+                    PLAYLISTS
                   </div>
-                ))}
-                <div className="text-gray-500 font-semibold text-xs tracking-widest mt-12 mb-4">
-                  PLAYLISTS
+                  {data.playlist.map((play, i) => (
+                    <div
+                      className="snav mb-4 handcr text-sm font-semibold"
+                      key={i}
+                      data-act={i + 2 + libr.length}
+                      onClick={action}
+                      data-action="playlist"
+                      data-payload={i}
+                    >
+                      {play.name}
+                    </div>
+                  ))}
                 </div>
-                {data.playlist.map((play, i) => (
-                  <div
-                    className="snav mb-4 handcr text-sm font-semibold"
-                    key={i}
-                    data-act={i + 2 + libr.length}
-                    onClick={action}
-                    data-action="playlist"
-                    data-payload={i}
-                  >
-                    {play.name}
-                  </div>
-                ))}
               </div>
             </div>
           </div>
           {/* 点击菜单栏对应的右侧展示界面 */}
-          <div className="spscreen thinScroll lightScroll" id="sphome">
+          <div className="spscreen win11Scroll win11ScrollDark" id="sphome">
             <div className="h-max relative">
               <div className="absolute w-full pb-8">
                 {tab == 0 ? (
