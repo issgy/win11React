@@ -3,7 +3,7 @@ let locked = localStorage.getItem("locked");
 
 const walls = [
   "default/img0.jpg",
-  "default/img1.jpg",
+  "dark/img0.jpg",
   "ThemeA/img0.jpg",
   "ThemeA/img1.jpg",
   "ThemeA/img2.jpg",
@@ -22,10 +22,13 @@ const walls = [
   "ThemeD/img3.jpg",
 ];
 
+const themes = ["default", "dark", "ThemeA", "ThemeB", "ThemeD", "ThemeC"];
+
 //默认壁纸设置
 const defState = {
   wps: wps,
   src: walls[wps],
+  themes: themes,
   locked: !(locked == false),
   booted: false,
   dir: 0, //-1为转圈圈效果
@@ -73,6 +76,25 @@ const wallReducer = (state = defState, action) => {
         ...state,
         locked: true,
         dir: -1,
+      };
+    case "WALLSET":
+      let isIndex = !Number.isNaN(parseInt(action.payload)),
+        wps = 0,
+        src = "";
+
+      if (isIndex) {
+        wps = action.payload;
+        src = walls[action.payload];
+      } else {
+        src = action.payload;
+        wps = walls.indexOf(action.payload);
+        localStorage.setItem("wps", wps);
+      }
+
+      return {
+        ...state,
+        wps: wps,
+        src: src,
       };
     default:
       return state;

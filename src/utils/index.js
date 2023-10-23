@@ -5,7 +5,6 @@ let { taskbar, desktop, pinned, recent } = {
     JSON.parse(localStorage.getItem("taskbar"))) || [
     "Settings",
     "File Explorer",
-    "Edge",
     "Store",
     "Spotify",
   ],
