@@ -242,9 +242,6 @@ export const CalnWid = () => {
   const sidepane = useSelector((state) => state.sidepane);
   const [loaded, setLoad] = useState(false);
 
-  const handleClick = (e) => {
-    e.stopPropagation();
-  };
   useEffect(() => {
     if (!loaded) {
       setLoad(true);
@@ -263,7 +260,6 @@ export const CalnWid = () => {
       className="calnpane dpShad"
       data-hide={sidepane.calhide}
       style={{ "--prefix": "CALN" }}
-      onClick={handleClick}
     >
       <div className="topBar">
         <div className="text-sm" style={{ textAlign: "center" }}>
