@@ -9,6 +9,8 @@ export const ActMenu = () => {
   const menu = useSelector((state) => state.menus);
   const dispatch = useDispatch();
 
+  const menudata = menu.data[menu.opts];
+
   const { abpos, isLeft } = useSelector((state) => {
     const acount = state.menus.menus[state.menus.opts].length;
     const tmpos = {
@@ -74,17 +76,19 @@ export const ActMenu = () => {
             data-payload={opt.payload}
             key={i}
           >
-            <div className="spcont">
-              {opt.icon && opt.type == null ? (
-                <Icon src={opt.icon} width={16} />
-              ) : null}
-              {opt.icon && opt.type == "svg" ? (
-                <Icon icon={opt.icon} width={16} />
-              ) : null}
-              {opt.icon && opt.type == "fa" ? (
-                <Icon fafa={opt.icon} width={16} />
-              ) : null}
-            </div>
+            {menudata.ispace != false ? (
+              <div className="spcont">
+                {opt.icon && opt.type == null ? (
+                  <Icon src={opt.icon} width={16} />
+                ) : null}
+                {opt.icon && opt.type == "svg" ? (
+                  <Icon icon={opt.icon} width={16} />
+                ) : null}
+                {opt.icon && opt.type == "fa" ? (
+                  <Icon fafa={opt.icon} width={16} />
+                ) : null}
+              </div>
+            ) : null}
             <div className="nopt">{opt.name}</div>
             {opt.opts ? (
               <Icon
@@ -111,7 +115,9 @@ export const ActMenu = () => {
               />
             ) : null}
             {opt.opts ? (
-              <div className="minimenu">{menuobj(opt.opts)}</div>
+              <div className="minimenu" style={{ minWidth: menudata.secwid }}>
+                {menuobj(opt.opts)}
+              </div>
             ) : null}
           </div>
         );
@@ -127,6 +133,7 @@ export const ActMenu = () => {
       style={{
         ...abpos,
         "--prefix": "MENU",
+        width: menudata.width,
       }}
       data-hide={menu.hide}
       data-left={isLeft}

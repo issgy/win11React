@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "../../utils/general";
+import "./widget.scss";
 
 export const WidPane = () => {
   const widget = useSelector((state) => state.widpane);

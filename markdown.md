@@ -199,3 +199,7 @@ var tmpWdgt = await fetchApi(widget);
 
 1、文件夹地址栏切换
 2、搜索功能实现
+
+## 10.23:
+
+1、settings 界面完成

@@ -111,7 +111,7 @@ const Taskbar = () => {
             ) : null}
             {tasks.widgets ? (
               <Icon
-                className="tsIcon hvlight"
+                className="tsIcon hvlight widget"
                 src="widget"
                 width={22}
                 click="WIDGTOGG"

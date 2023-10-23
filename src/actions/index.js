@@ -236,9 +236,9 @@ export const loadSettings = () => {
   if (setting.person.theme != "light") changeTheme();
 
   store.dispatch({ type: "SETTINGLOAD", payload: setting });
-  if (process.env.REACT_APP_DEVELOPEMENT != "development") {
-    loadWidget();
-  }
+  // if (process.env.REACT_APP_DEVELOPEMENT != "development") {
+  loadWidget();
+  // }
 };
 
 // 双击打开文件
