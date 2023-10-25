@@ -199,7 +199,7 @@ export const LockScreen = (props) => {
       </div>
       <div className="bottomInfo flex">
         <Icon className="mx-2" src="wifi" ui width={14} invert />
-        <Battery />
+        <Battery invert />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useEffect, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./battery.scss";
 
-const Battery = memo(({ pct }) => {
+const Battery = memo(({ pct, invert }) => {
   const dispatch = useDispatch();
   const batteryLevel = useSelector(
     (state) => state.settings.system.power.battery
@@ -34,7 +34,7 @@ const Battery = memo(({ pct }) => {
 
   return (
     <>
-      <div className="uicon taskIcon">
+      <div className={`uicon taskIcon ${invert ? "invert" : ""}`}>
         <span className="battery">
           {batteryLevel < 0 ? (
             <div className="charger">

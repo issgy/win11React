@@ -16,6 +16,9 @@ export const Settings = () => {
   const [nav, setNav] = useState("");
   const [page, setPage] = useState("System");
 
+  const [updating, setUpdating] = useState(false);
+  const [upmodalOpen, setupmodalOpen] = useState(false);
+
   const themechecker = {
     default: "light",
     dark: "dark",
@@ -254,7 +257,20 @@ export const Settings = () => {
                                 </div>
                               </div>
                               <div className="right">
-                                <div className="btn">Check for updates</div>
+                                <div
+                                  className="btn"
+                                  onClick={() => {
+                                    setUpdating(true);
+                                    setTimeout(() => {
+                                      setUpdating(false);
+                                      setupmodalOpen(true);
+                                    }, Math.random() * 2000);
+                                  }}
+                                >
+                                  {updating
+                                    ? "Checking for updates..."
+                                    : "Check for updates"}
+                                </div>
                               </div>
                             </div>
                           );
@@ -284,6 +300,71 @@ export const Settings = () => {
               )
             );
           })}
+
+          {upmodalOpen && (
+            <>
+              <div className="absolute z-30 bg-black bg-opacity-60 h-full w-full top-0 left-0"></div>
+              <div
+                className="absolute top-[50%] left-[50%] z-50 rounded"
+                style={{
+                  transform: `translateX(-50%) translateY(-50%)`,
+                  background: `var(--wintheme)`,
+                  padding: `1.5rem`,
+                  top: `50%`,
+                  left: `50%`,
+                }}
+              >
+                <h1
+                  style={{
+                    marginBottom: `10px`,
+                  }}
+                  className="text-2xl font-semibold"
+                >
+                  Restart required
+                </h1>
+                <p>
+                  Some changes will not take effect until you restart your
+                  device.
+                </p>
+
+                <div
+                  className="flex"
+                  style={{
+                    marginTop: `14px`,
+                  }}
+                >
+                  <button
+                    style={{
+                      padding: "10px",
+                      backgroundColor: "var(--clrPrm)",
+                      color: "var(--alt-txt)",
+                      marginRight: "10px",
+                    }}
+                    onClick={() => {
+                      // Clear the cache and reload the page
+                      window.location =
+                        window.location.href + `?clearCache=${Math.random()}`;
+                    }}
+                    className="flex-1 rounded border-none hover:opacity-95"
+                  >
+                    Restart now
+                  </button>
+                  <button
+                    style={{
+                      padding: "10px",
+                      color: "var(--sat-txt)",
+                    }}
+                    className="flex-1 rounded border"
+                    onClick={() => {
+                      setupmodalOpen(false);
+                    }}
+                  >
+                    Restart later
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
