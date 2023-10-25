@@ -45,6 +45,7 @@ const defState = {
   ],
   hide: true,
   calhide: true,
+  banhide: true,
 };
 
 const paneReducer = (state = defState, action) => {
@@ -53,6 +54,10 @@ const paneReducer = (state = defState, action) => {
       let tmpState = { ...state };
       tmpState.quicks[4].src = action.payload;
       return tmpState;
+    case "BANDTOGG":
+      return { ...state, banhide: !state.banhide };
+    case "BANDHIDE":
+      return { ...state, banhide: true };
     case "PANETOGG":
       return {
         ...state,

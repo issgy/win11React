@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux/es/exports";
 import { Icon } from "../../utils/general";
-import { Battery } from "./battery";
+import Battery from "../shared/battery";
 
 import "./taskbar.scss";
 
@@ -17,7 +17,7 @@ const Taskbar = () => {
     }
     return tmpApps;
   });
-  const [batteryStatus, setBatteryStatus] = useState(null);
+  const [time, setTime] = useState(new Date());
 
   const clickDispatch = (event) => {
     const action = {
@@ -50,43 +50,11 @@ const Taskbar = () => {
     dispatch({ type: "TASKPHIDE" });
   };
 
-  const showBatteryStatus = (battery) => {
-    let level = battery.level * 100;
-    if (battery.charging) {
-      setBatteryStatus("*");
-      return;
-    } else {
-      setBatteryStatus(level);
-    }
-  };
-
   useEffect(() => {
-    const updateBattery = (e) => {
-      showBatteryStatus(e.target);
-    };
-
-    const getBatteryStatus = async () => {
-      try {
-        const battery = await navigator.getBattery();
-        battery.addEventListener("chargingchange", updateBattery); //订阅电池状态变化
-        battery.addEventListener("levelchange", updateBattery); //订阅电池状态变化
-        showBatteryStatus(battery);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    if (window.BatteryManager) {
-      getBatteryStatus();
-    }
-
-    return () => {
-      // 取消订阅电池状态变化;
-      if (batteryStatus) {
-        batteryStatus.removeEventListener("chargingchange", updateBattery);
-        batteryStatus.removeEventListener("levelchange", updateBattery);
-      }
-    };
+    const interval = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -167,7 +135,13 @@ const Taskbar = () => {
         </div>
         {/* taskbar右侧图标 */}
         <div className="taskright">
-          <Icon className="taskIcon" fafa="faChevronUp" width={10} />
+          <div
+            className="px-2 prtclk handcr hvlight flex"
+            onClick={clickDispatch}
+            data-action="BANDTOGG"
+          >
+            <Icon className="taskIcon" fafa="faChevronUp" width={10} />
+          </div>
           <div
             className="prtclk handcr my-1 px-1 hvlight flex rounded"
             onClick={clickDispatch}
@@ -180,10 +154,7 @@ const Taskbar = () => {
               ui
               width={16}
             />
-            <Battery
-              level={batteryStatus}
-              charging={batteryStatus === "*" ? true : false}
-            />
+            <Battery />
           </div>
 
           <div
@@ -192,14 +163,14 @@ const Taskbar = () => {
             data-action="CALNTOGG"
           >
             <div>
-              {new Date().toLocaleDateString("en-US", {
+              {time.toLocaleDateString("en-US", {
                 year: "2-digit",
                 month: "2-digit",
                 day: "numeric",
               })}
             </div>
             <div>
-              {new Date().toLocaleTimeString("en-US", {
+              {time.toLocaleTimeString("en-US", {
                 hour: "numeric",
                 minute: "numeric",
                 hour12: true,

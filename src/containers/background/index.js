@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./back.scss";
 import { Image, Icon } from "../../utils/general";
+import Battery from "../../components/shared/battery";
 
 // 桌面背景图片
 export const Background = () => {
@@ -198,7 +199,7 @@ export const LockScreen = (props) => {
       </div>
       <div className="bottomInfo flex">
         <Icon className="mx-2" src="wifi" ui width={14} invert />
-        <Icon className="mx-2" src="battery" ui width={16} invert />
+        <Battery />
       </div>
     </div>
   );

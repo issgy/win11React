@@ -4,6 +4,7 @@ import Taskbar from "./components/taskbar";
 import {
   StartMenu,
   DesktopApp,
+  BandPane,
   SidePane,
   WidPane,
   CalnWid,
@@ -63,6 +64,7 @@ function App() {
       ["WIDG", "WIDGHIDE"], //widpane
       ["CALN", "CALNHIDE"], //sidepane.calhide
       ["MENU", "MENUHIDE"], //menu
+      ["BAND", "BANDHIDE"], //sidepane.banhide
     ];
 
     ess[0].push(store.getState().startmenu.hide);
@@ -70,6 +72,7 @@ function App() {
     ess[2].push(store.getState().widpane.hide);
     ess[3].push(store.getState().sidepane.calhide);
     ess[4].push(store.getState().menus.hide);
+    ess[5].push(store.getState().sidepane.banhide);
 
     let actionType;
     try {
@@ -127,8 +130,8 @@ function App() {
   return (
     <div className="App">
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        {/* {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
-        {wall.locked ? <LockScreen dir={wall.dir} /> : null} */}
+        {!wall.booted ? <BootScreen dir={wall.dir} /> : null}
+        {wall.locked ? <LockScreen dir={wall.dir} /> : null}
         <div className="appwrap">
           <Background />
           <div className="desktop" data-menu="desk">
@@ -140,6 +143,7 @@ function App() {
               // return <div>{Applications[key]()}</div>;
             })}
             <StartMenu />
+            <BandPane />
             <SidePane />
             <WidPane />
             <CalnWid />

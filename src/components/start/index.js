@@ -6,7 +6,7 @@ import "./sidepane.scss";
 import "./searchpane.scss";
 
 import * as Actions from "../../actions";
-import { Battery } from "../taskbar/battery";
+import Battery from "../shared/battery";
 
 export * from "./start";
 export * from "./widget";
@@ -68,13 +68,30 @@ export const DesktopApp = () => {
   );
 };
 
+export const BandPane = () => {
+  const sidepane = useSelector((state) => state.sidepane);
+
+  return (
+    <div
+      className="bandpane dpShad"
+      data-hide={sidepane.banhide}
+      style={{ "--prefix": "BAND" }}
+    >
+      <div className="bandContainer">
+        <Icon className="hvlight" src="defender" width={17} />
+        <Icon className="hvlight" src="spotify" width={17} />
+        <Icon className="hvlight" src="teams" width={17} />
+      </div>
+    </div>
+  );
+};
+
 export const SidePane = () => {
   const paneApps = useSelector((state) => state.sidepane);
   const setting = useSelector((state) => state.settings);
   const tasks = useSelector((state) => state.taskbar);
   const dispatch = useDispatch();
   const [paneState, setPaneState] = useState([]); //记录sidepane的状态
-  const [batteryStaus, setBatteryStatus] = useState("100");
 
   const clickDispatch = (event) => {
     event.stopPropagation();
@@ -128,36 +145,6 @@ export const SidePane = () => {
 
     return tmp;
   };
-
-  const showBatteryStatus = (battery) => {
-    let level = battery.level * 100;
-    if (battery.charging) {
-      setBatteryStatus("*" + level);
-      return;
-    } else {
-      setBatteryStatus(level.toString());
-    }
-  };
-
-  useEffect(() => {
-    const getBatteryStatus = async () => {
-      let battery = await navigator.getBattery();
-
-      battery.onchargingchange = () => {
-        showBatteryStatus(battery);
-      };
-      battery.onlevelchange = () => {
-        showBatteryStatus(battery);
-      };
-      showBatteryStatus(battery);
-    };
-
-    if (window.BatteryManager) {
-      getBatteryStatus();
-    }
-
-    return () => {};
-  }, []);
 
   useEffect(() => {
     let tmp = [];
@@ -225,13 +212,7 @@ export const SidePane = () => {
       </div>
       <div className="bottomBar p-1">
         <div className="px-3 battery-sidepane">
-          <Battery
-            level={batteryStaus}
-            charging={batteryStaus.startsWith("*")}
-          />
-          <div className="txt-xs">{`${
-            batteryStaus.startsWith("*") ? batteryStaus.slice(1) : batteryStaus
-          }%`}</div>
+          <Battery pct />
         </div>
       </div>
     </div>
