@@ -26,6 +26,7 @@ const Battery = memo(({ pct, invert }) => {
     if (window.BatteryManager) {
       (async () => {
         let battery = await navigator.getBattery();
+        updateBatteryStatus(battery);
         battery.onlevelchange = () => updateBatteryStatus(battery);
         battery.onchargingchange = () => updateBatteryStatus(battery);
       })();

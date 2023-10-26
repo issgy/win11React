@@ -57,7 +57,8 @@ const apps = [
   {
     name: "issgy",
     icon: "win/user",
-    type: "short",
+    type: "app",
+    action: "EXPLORER",
   },
   {
     name: "Alarms",
