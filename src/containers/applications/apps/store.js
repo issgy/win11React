@@ -108,7 +108,6 @@ export const MicroStore = () => {
         .get(url)
         .then((res) => res.data)
         .then((data) => {
-          console.log(data);
           if (data) setStoreapps(data);
         })
         .catch((err) => {

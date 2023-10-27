@@ -10,6 +10,16 @@ import "./assets/spotify.scss";
 
 const { round, max, floor, ceil } = Math;
 
+String.prototype.to150 = function () {
+  return this.replace("500x500", "150x150").replace("50x50", "150x150");
+};
+
+String.prototype.to250 = function () {
+  return this.replace("500x500", "250x250")
+    .replace("150x150", "250x250")
+    .replace("50x50", "250x250");
+};
+
 export const Spotify = () => {
   const apps = useSelector((state) => state.apps);
   const wnapp = useSelector((state) => state.apps.spotify);
@@ -883,14 +893,9 @@ const Search = ({ sid, paused, action, action2 }) => {
       jiosaavn
         .searchQuery(query)
         .then((res) => {
-          setSongResults(res);
-        })
-        .catch((err) => console.log(err));
-
-      jiosaavn
-        .albumQuery(query)
-        .then((res) => {
-          setAlbumResults(res);
+          console.log(res);
+          setSongResults(res.songs.data);
+          setAlbumResults(res.albums.data);
         })
         .catch((err) => console.log(err));
     }
@@ -938,15 +943,15 @@ const Search = ({ sid, paused, action, action2 }) => {
               ))}
             </div>
           ) : null}
-          {songResults.length ? (
+          {songResults.length != 0 ? (
             <div
               className="topcard mt-4 p-5"
               onClick={action}
               data-action="song"
-              data-payload={`"` + songResults[0].song_id + `"`}
+              data-payload={`"` + songResults[0].id + `"`}
             >
               <Image
-                src={songResults[0].song_image.to150()}
+                src={songResults[0].image.to150()}
                 ext
                 w={92}
                 err="/img/asset/mixdef.jpg"
@@ -957,11 +962,11 @@ const Search = ({ sid, paused, action, action2 }) => {
               </div>
               <div
                 className="text-gray-100 mt-6 text-3xl thiker dotdot"
-                dangerouslySetInnerHTML={{ __html: songResults[0].song_name }}
+                dangerouslySetInnerHTML={{ __html: songResults[0].title }}
               ></div>
               <div
                 className="acol mt-1 text-sm font-semibold"
-                dangerouslySetInnerHTML={{ __html: songResults[0].song_artist }}
+                dangerouslySetInnerHTML={{ __html: songResults[0].description }}
               ></div>
             </div>
           ) : null}
@@ -978,21 +983,21 @@ const Search = ({ sid, paused, action, action2 }) => {
                   className="srCont flex p-2 items-center prtclk"
                   onClick={action}
                   data-action="song"
-                  data-payload={`"` + song.song_id + `"`}
+                  data-payload={`"` + song.id + `"`}
                   key={i}
                 >
-                  <Image src={song.song_image.to150()} w={40} ext lazy />
+                  <Image src={song.image.to150()} w={40} ext lazy />
                   <div className="acol ml-4 flex-grow">
                     <div
                       className={
                         "capitalize text-gray-100 dotdot font-semibold" +
-                        (sid == song.song_id ? " gcol" : "")
+                        (sid == song.id ? " gcol" : "")
                       }
-                      dangerouslySetInnerHTML={{ __html: song.song_name }}
+                      dangerouslySetInnerHTML={{ __html: song.title }}
                     ></div>
                     <div
                       className="capitalize dotdot text-sm mt-1 font-semibold"
-                      dangerouslySetInnerHTML={{ __html: song.song_artist }}
+                      dangerouslySetInnerHTML={{ __html: song.description }}
                     ></div>
                   </div>
                   <div className="acol text-sm font-semibold">
@@ -1003,47 +1008,47 @@ const Search = ({ sid, paused, action, action2 }) => {
             </div>
           </div>
         ) : null}
-        {albumResults.length ? (
-          <div className="sitem w-full my-12">
-            <div className="scbCont">
-              <div className="mx-2" onClick={scaction}>
-                {"<"}
-              </div>
-              <div className="mx-2" onClick={scaction}>
-                {">"}
-              </div>
+      </div>
+      {albumResults.length ? (
+        <div className="sitem w-full my-12">
+          <div className="scbCont">
+            <div className="mx-2" onClick={scaction}>
+              {"<"}
             </div>
-            <div className="text-xl text-gray-100 font-bold">Albums</div>
-            <div className="w-full h-px mt-2"></div>
-            <div className="w-full overflow-x-scroll smoothsc noscroll -ml-3">
-              <div className="w-max flex">
-                {albumResults.map((card, idx) => (
-                  <div className="scard pt-3 px-3 acol" key={idx}>
-                    <Image
-                      src={card.album_image}
-                      ext
-                      w={200}
-                      err="/img/asset/mixdef.jpg"
-                      onClick={action}
-                      click="album"
-                      payload={card.album_id}
-                      lazy
-                    />
-                    <div
-                      className="mt-4 mb-1 text-gray-100 text-sm font-semibold"
-                      dangerouslySetInnerHTML={{ __html: card.album_name }}
-                    ></div>
-                    <div
-                      className="my-1 leading-5 text-xs font-semibold tracking-wider"
-                      dangerouslySetInnerHTML={{ __html: card.album_artist }}
-                    ></div>
-                  </div>
-                ))}
-              </div>
+            <div className="mx-2" onClick={scaction}>
+              {">"}
             </div>
           </div>
-        ) : null}
-      </div>
+          <div className="text-xl text-gray-100 font-bold">Albums</div>
+          <div className="w-full h-px mt-2"></div>
+          <div className="w-full overflow-x-scroll smoothsc noscroll -ml-3">
+            <div className="w-max flex">
+              {albumResults.map((card, idx) => (
+                <div className="scard pt-3 px-3 acol" key={idx}>
+                  <Image
+                    src={card.image.to250()}
+                    ext
+                    w={200}
+                    err="/img/asset/mixdef.jpg"
+                    onClick={action}
+                    click="album"
+                    payload={card.id}
+                    lazy
+                  />
+                  <div
+                    className="mt-4 mb-1 text-gray-100 text-sm font-semibold"
+                    dangerouslySetInnerHTML={{ __html: card.title }}
+                  ></div>
+                  <div
+                    className="my-1 leading-5 text-xs font-semibold tracking-wider"
+                    dangerouslySetInnerHTML={{ __html: card.description }}
+                  ></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

@@ -29,7 +29,7 @@ const defState = {
   wps: wps,
   src: walls[wps],
   themes: themes,
-  locked: !(locked == false),
+  locked: !(locked == "false"),
   booted: false,
   dir: 0, //-1为转圈圈效果
   act: "",
