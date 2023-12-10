@@ -200,7 +200,6 @@ export const ToolBar = (props) => {
   };
 
   const handleMouseMove = (e) => {
-    console.log("mouseMove", e.clientX, e.clientY);
     e = e || window.event;
     e.preventDefault();
     let appEndOffsetTop =
@@ -232,7 +231,6 @@ export const ToolBar = (props) => {
   };
 
   const handleMouseUp = (e) => {
-    console.log("mouseUp");
     document.onmousemove = null;
     document.onmouseup = null;
 
