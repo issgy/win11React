@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import * as FaIcons from "@fortawesome/free-solid-svg-icons";
 import * as FaRegIcons from "@fortawesome/free-regular-svg-icons";
 import * as AllIcons from "./icons";
+import { debounce, throttle } from "lodash";
 
 import "./general.scss";
 
@@ -150,27 +151,31 @@ export const ToolBar = (props) => {
   //   setSnap(false);
   // };
   const toolClick = () => {
+    // 拖拽界面移动松手后
     dispatch({
       type: props.app,
       payload: "front",
     });
   };
 
-  let appStart = [0, 0],
-    mouseStart = [0, 0],
+  let appStartOffsetTandL = [0, 0],
+    mouseStartClientYandX = [0, 0],
     wnapp = {};
-  let dimP = [0, 0],
+  let pressMouseAppHandW = [0, 0],
     op = 0,
     vec = [0, 0];
 
   const toolDrag = (e) => {
     e.preventDefault();
-    mouseStart = [e.clientY, e.clientX];
+    // 鼠标按下时相对于浏览器窗口客户区域的垂直和水平坐标位置属性
+    mouseStartClientYandX = [e.clientY, e.clientX];
     op = e.target.dataset.op;
 
+    // 拖拽移动界面
     if (op == 0) {
       wnapp = e.target.parentElement && e.target.parentElement.parentElement;
     } else {
+      //拖拽改变界面大小
       vec = e.target.dataset.vec.split(",");
       wnapp =
         e.target.parentElement &&
@@ -178,46 +183,56 @@ export const ToolBar = (props) => {
         e.target.parentElement.parentElement.parentElement;
     }
 
-    console.log(wnapp);
-
     if (wnapp) {
       wnapp.classList.add("notrans");
       wnapp.classList.add("z9900");
-      appStart = [wnapp.offsetTop, wnapp.offsetLeft];
-      dimP = [
+      // 界面距离浏览器顶部和左部的距离
+      appStartOffsetTandL = [wnapp.offsetTop, wnapp.offsetLeft];
+      // 鼠标按下时的界面的高度和宽度
+      pressMouseAppHandW = [
         parseFloat(getComputedStyle(wnapp).height.replaceAll("px", "")),
         parseFloat(getComputedStyle(wnapp).width.replaceAll("px", "")),
       ];
     }
 
-    document.onmousemove = handleMouseMove;
+    document.onmousemove = debounce(handleMouseMove, 10);
     document.onmouseup = handleMouseUp;
   };
 
   const handleMouseMove = (e) => {
+    console.log("mouseMove", e.clientX, e.clientY);
     e = e || window.event;
     e.preventDefault();
-    let appEndY = appStart[0] + e.clientY - mouseStart[0],
-      appEndX = appStart[1] + e.clientX - mouseStart[1];
-    let dim0 = dimP[0] + vec[0] * (e.clientY - mouseStart[0]),
-      dim1 = dimP[1] + vec[1] * (e.clientX - mouseStart[1]);
+    let appEndOffsetTop =
+        appStartOffsetTandL[0] + e.clientY - mouseStartClientYandX[0],
+      appEndOffsetLeft =
+        appStartOffsetTandL[1] + e.clientX - mouseStartClientYandX[1];
+    let releaseMouseAppHeight =
+        pressMouseAppHandW[0] + vec[0] * (e.clientY - mouseStartClientYandX[0]),
+      releaseMouseAppWidth =
+        pressMouseAppHandW[1] + vec[1] * (e.clientX - mouseStartClientYandX[1]);
 
     if (op == 0) {
-      wnapp.style.top = appEndY + "px";
-      wnapp.style.left = appEndX + "px";
+      wnapp.style.top = appEndOffsetTop + "px";
+      wnapp.style.left = appEndOffsetLeft + "px";
     } else {
-      dim0 = Math.max(dim0, 360);
-      dim1 = Math.max(dim1, 360);
-      appEndY = appStart[0] + Math.min(vec[0], 0) * (dim0 - dimP[0]);
-      appEndX = appStart[1] + Math.min(vec[1], 0) * (dim1 - dimP[1]);
-      wnapp.style.top = appEndY + "px";
-      wnapp.style.left = appEndX + "px";
-      wnapp.style.height = dim0 + "px";
-      wnapp.style.width = dim1 + "px";
+      // 此处不可省略，因为拖拽一侧边框改变某一侧时，其余侧不可动，例如拉伸上侧边框，左右和下侧不可动
+      appEndOffsetTop =
+        appStartOffsetTandL[0] +
+        Math.min(vec[0], 0) * (releaseMouseAppHeight - pressMouseAppHandW[0]);
+      appEndOffsetLeft =
+        appStartOffsetTandL[1] +
+        Math.min(vec[1], 0) * (releaseMouseAppWidth - pressMouseAppHandW[1]);
+      wnapp.style.top = appEndOffsetTop + "px";
+      wnapp.style.left = appEndOffsetLeft + "px";
+      // 界面宽度和高度最小不能小于360
+      wnapp.style.height = Math.max(releaseMouseAppHeight, 360) + "px";
+      wnapp.style.width = Math.max(releaseMouseAppWidth, 360) + "px";
     }
   };
 
   const handleMouseUp = (e) => {
+    console.log("mouseUp");
     document.onmousemove = null;
     document.onmouseup = null;
 
@@ -300,6 +315,7 @@ export const ToolBar = (props) => {
           />
         </div>
       </div>
+      {/* 可拖拽的四个方向的侧边 */}
       <div className="resizecont topone">
         <div className="flex">
           <div

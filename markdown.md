@@ -209,3 +209,49 @@ var tmpWdgt = await fetchApi(widget);
 
 1、修复了时间无法自动更新问题
 2、重构 Battery 组件逻辑
+
+## 12.6
+
+图标可拖拽改变大小的逻辑:
+ToolBar 是公共组件，每个界面的代码都有 ToolBar 组件包裹，因此想为每个图标实现拖拽功能，可以修改 ToolBar 的逻辑，给其加上四个 div 盒子,
+
+让鼠标变为水平拉升的箭头的 css 属性:
+cursor: w-resize
+
+当鼠标移至四条边（即 div 盒子）上时改变鼠标变为水平拉伸的箭头，点击时触发 toolDrag 函数：
+由于触发 toolDrag 函数有两个（一个是点击拖动界面，一个是点击拖拽改变界面大小），使用 data-op 属性来区分，为 0 则是拖拽移动界面，为 1 则是拖拽改变界面大小。)需要一个 if 条件判断。
+
+鼠标按下时：
+记录鼠标按下时相对于浏览器窗口客户区域的垂直和水平坐标位置属性：mouseStartClientYandX=[e.clientY,e.clientX]
+记录界面即相对于浏览器顶部和左部的距离：
+wnapp = e.target.parentElement.parentElement.parentElement;//界面的最外层 div 盒子元素
+appStartOffsetTandL = [wnapp.offsetTop, wnapp.offsetLeft];
+记录界面的高和宽：
+pressMouseAppHandW = [
+parseFloat(getComputedStyle(wnapp).height.replaceAll("px", "")),
+parseFloat(getComputedStyle(wnapp).width.replaceAll("px", "")),
+];
+
+鼠标按下不松手拖拽界面移动时，触发 handleMouseMove 函数 ：
+用当前鼠标相对于浏览器窗口的距离 e.clientY 和 e.clientX 减去鼠标按下时相对于浏览器窗口的距离再加上界面初始时距离浏览器顶部和左侧的距离即是鼠标松手后界面相对于浏览器顶部和左侧的距离：
+let appEndOffsetTop = appStartOffsetTandL[0] + e.clientY - mouseStartClientYandX[0],
+appEndOffsetLeft = appStartOffsetTandL[1] + e.clientX - mouseStartClientYandX[1];
+
+鼠标松手后界面的高度和宽度等于按下鼠标时界面的宽度和高度+鼠标按下和松手时移动的差值：
+let releaseMouseAppHeight = pressMouseAppHandW[0] + vec[0] _ (e.clientY - mouseStartClientYandX[0]),
+releaseMouseAppWidth = pressMouseAppHandW[1] + vec[1] _ (e.clientX - mouseStartClientYandX[1]);
+
+op===0（即拖拽界面移动但不改变大小）：
+wnapp.style.top = appEndOffsetTop + "px";
+wnapp.style.left = appEndOffsetLeft + "px";
+
+op===1（拖拽界面改变大小但不移动）：
+// 此处不可省略，因为拖拽一侧边框改变某一侧时，其余侧不可动，例如拉伸上侧边框，左右和下侧不可动
+appEndOffsetTop = appStartOffsetTandL[0] + Math.min(vec[0], 0) _ (releaseMouseAppHeight - pressMouseAppHandW[0]);
+appEndOffsetLeft = appStartOffsetTandL[1] + Math.min(vec[1], 0) _ (releaseMouseAppWidth - pressMouseAppHandW[1]);
+
+wnapp.style.top = appEndOffsetTop + "px";
+wnapp.style.left = appEndOffsetLeft + "px";
+// 界面宽度和高度最小不能小于 360
+wnapp.style.height = Math.max(releaseMouseAppHeight, 360) + "px";
+wnapp.style.width = Math.max(releaseMouseAppWidth, 360) + "px";

@@ -117,7 +117,7 @@ export const Settings = () => {
                       switch (e.type) {
                         case "sysTop":
                           return (
-                            <div className={e.type}>
+                            <div className={e.type} key={e}>
                               <div className="left">
                                 <img
                                   src={`img/wallpaper/${wall.src}`}
